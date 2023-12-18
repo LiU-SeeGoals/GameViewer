@@ -1,0 +1,42 @@
+.football-field-container img {
+    width: 100%;
+    flex-grow: 1;
+}
+
+.football-field-canvas {
+    position: absolute;
+    top: 0;
+    transform: translate(-100%);
+    flex-grow: 0;
+    display: none;
+}
+
+/* .canvasContainer{
+    background-color: gray;
+    height:100vh;
+    position: relative;
+}
+
+.canvasBackground {
+    height: 100vh;
+    overflow: hidden;
+    text-align: center;
+  }
+  
+.canvasBackground img {
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.myCanvas{
+    height:100vh;
+    position: absolute;
+    top: 0;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%);
+} */
