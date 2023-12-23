@@ -1,14 +1,20 @@
 .football-field-container img {
-    width: 100%;
-    flex-grow: 1;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .football-field-canvas {
     position: absolute;
-    top: 0;
-    transform: translate(-100%);
-    flex-grow: 0;
-    display: none;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.football-field-container {
+    position: relative; /* Added to position children absolutely within it */
+    width: 100%; /* Adjust as necessary */
+    height: auto; /* Adjust based on your requirements */
+    margin: 0 auto; /* Center the container if necessary */
 }
 
 /* .canvasContainer{

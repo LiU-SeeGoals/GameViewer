@@ -2,11 +2,12 @@ import React from 'react';
 import './GameViewer.css';
 import useResizeSidebar from '../../hooks/useResizeSidebar';
 import FootBallField from './FootBallField';
+import { GameState } from '../../types/GameState';
 interface gameViewerProps {
-
+    gameState: GameState
 }
 
-const GameViewer: React.FC<gameViewerProps> = () => {
+const GameViewer: React.FC<gameViewerProps> = ({gameState}) => {
     const startHeightResizer = 800;
     const resizerWidth = 20;
 
@@ -15,13 +16,13 @@ const GameViewer: React.FC<gameViewerProps> = () => {
 
     return (
         <div className="game-viewer-container">
-            <FootBallField height={resizerValue}/>
+            <FootBallField height={resizerValue} gameState={gameState}/>
 
             <div className="game-viewer-resizer"
                  style={{height: resizerWidth}}
                  onMouseDown={startResizing}
             />
-            <div className="game-viewer-player"/>
+            <div className="game-viewer-player" style={{}}/>
         </div>
     )
 };
