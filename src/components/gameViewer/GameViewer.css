@@ -3,24 +3,24 @@
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    background: greenyellow;
+    background: rgb(96, 126, 61);
     z-index: 1;
     width: 100px;
 }
 .game-viewer-resizer {
     width: 100%;
     height: 20px;
-    background: purple;
+    background: rgb(44, 131, 190);
     flex-grow: 0;
 }
 
 .game-viewer-field {
     width: 100%; 
-    background: paleturquoise; 
+    background: white; 
 }
 
 .game-viewer-player {
     width: 100%;
-    background: peru;
+    background: white;
     flex-grow: 1;
 }

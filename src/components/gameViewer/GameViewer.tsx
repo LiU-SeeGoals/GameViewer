@@ -8,8 +8,8 @@ interface gameViewerProps {
 }
 
 const GameViewer: React.FC<gameViewerProps> = ({gameState}) => {
-    const startHeightResizer = 800;
-    const resizerWidth = 20;
+    const startHeightResizer = 850;
+    const resizerWidth = 10;
 
     const {value: resizerValue, startResizing} = useResizeSidebar(true, startHeightResizer);
 
@@ -17,7 +17,7 @@ const GameViewer: React.FC<gameViewerProps> = ({gameState}) => {
     return (
         <div className="game-viewer-container">
             <FootBallField height={resizerValue} gameState={gameState}/>
-
+        
             <div className="game-viewer-resizer"
                  style={{height: resizerWidth}}
                  onMouseDown={startResizing}

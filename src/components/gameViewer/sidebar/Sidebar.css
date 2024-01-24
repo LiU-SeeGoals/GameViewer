@@ -1,0 +1,73 @@
+.sidebar {
+    display: flex;
+    flex-grow: 0;
+    flex-direction: row;
+    background-color: black;
+    min-width: auto;
+    z-index: 2;
+}
+
+.sidebar-content {
+  flex: 1;
+  background-color: white;
+}
+
+.sidebar-resizer {
+  width: 5px;
+  background-color: rgb(44, 131, 190);
+}
+
+.sidebar-content h1 {
+  color: black;
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: 80px;
+  size: 50px;
+  text-align: center;
+}
+
+.sidebar-content h2 {
+  color: black;
+  text-align: center;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.sidebar-content p {
+  color: black;
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.leftdivision{
+  float: left;
+  column-width: 340px;
+}
+
+.rightdivision{
+  float: left;
+  column-width: 340px;
+}
+
+.container { 
+  height: 50px;
+  position: relative;
+  margin: 10px 
+}
+
+.center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+button.a {
+  background-color: rgb(44, 131, 190);
+}
+
+
+
+
