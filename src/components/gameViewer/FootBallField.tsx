@@ -12,7 +12,7 @@ const REAL_HEIGHT_FIELD: number = 6600;
 const ROBOT_RADIUS: number = 180; 
 
 const ARROW_HEAD_LENGTH: number = 3;
-const SPEED_ARROW_COLOR: string = 'rgba(0, 128, 128, 1)';
+const SPEED_ARROW_COLOR: string = 'rgba(0, 0, 0, 1)';
 const SPEED_ARROW_THICKNESS: number = 3;
 
 const COLOR_MAP: Record<string, string> = {"yellow": "rgba(255, 255, 0, 1)", "blue": "rgba(0, 0, 255, 1)"};
@@ -58,7 +58,9 @@ const FootBallField: React.FC<FootBallFieldProps> = ({height, gameState}) => {
 
     const drawRobot = (context: CanvasRenderingContext2D, robot: Robot) => {
 
-        drawArrow(context, robot, SPEED_ARROW_COLOR, SPEED_ARROW_THICKNESS);
+        if (robot.showArrow){
+            drawArrow(context, robot, SPEED_ARROW_COLOR, SPEED_ARROW_THICKNESS);
+        }
         drawCircle(context, robot, ROBOT_RADIUS * getScaler(context), COLOR_MAP[robot.team]);
 
         // Draw a black circle in the robot if it is selected
@@ -80,8 +82,8 @@ const FootBallField: React.FC<FootBallFieldProps> = ({height, gameState}) => {
     const drawArrow = (context: CanvasRenderingContext2D, robot: Robot, color: string, thickness: number) => {
 
         const angle: number = Math.atan2(robot.speed_y, robot.speed_x) - Math.PI/2;
-        const arrowLength: number = 10 * Math.hypot(robot.speed_x, robot.speed_y);
-
+        //const arrowLength: number = 10 * Math.hypot(robot.speed_x, robot.speed_y);
+        const arrowLength: number = 100;
         // Calculate the starting point of the arrow (on the circle)
         const {canvasX: startX, canvasY: startY} = getCanvasCoordinates(robot.x, robot.y, context);
 
