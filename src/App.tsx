@@ -19,8 +19,9 @@ function App() {
         if (!event.data) {
           return;
         }
+        //console.log(event.data);
         setGameState(parseGameState(gameState, event.data));
-        console.log(gameState);
+        //console.log(gameState);
       } catch (e) {
         console.error('Error parsing message JSON', e);
       }

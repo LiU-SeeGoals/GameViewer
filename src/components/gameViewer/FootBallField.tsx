@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import './FootBallField.css';
 import { Robot } from '../../types/Robot';
 import { GameState } from '../../types/GameState';
+import { Action, ActionToStr} from '../../types/Action';
 interface FootBallFieldProps {
     height: number
     gameState: GameState
@@ -15,7 +16,7 @@ const ARROW_HEAD_LENGTH: number = 3;
 const SPEED_ARROW_COLOR: string = 'rgba(0, 128, 128, 1)';
 const SPEED_ARROW_THICKNESS: number = 3;
 
-const COLOR_MAP: Record<string, string> = {"yellow": "rgba(255, 255, 0, 1)", "blue": "rgba(0, 0, 255, 1)"};
+const COLOR_MAP: Record<string, string> = {"yellow": "rgba(200, 200, 0, 1)", "blue": "rgba(0, 0, 255, 1)"};
 
 const FootBallField: React.FC<FootBallFieldProps> = ({height, gameState}) => {
     const canvasRef = React.useRef<HTMLCanvasElement>(null);
@@ -65,6 +66,21 @@ const FootBallField: React.FC<FootBallFieldProps> = ({height, gameState}) => {
         if (robot.selected) {
             drawCircle(context, robot, ROBOT_RADIUS/3, 'rgba(0, 0, 0, 1)');
         }
+
+        // Draw the robot's number in the robot
+        context.font = "30px Arial";
+        context.fillStyle = 'rgba(255, 255, 255, 1)';
+        context.textAlign = "center";
+        context.fillText(robot.id.toString(), getCanvasCoordinates(robot.x, robot.y, context).canvasX, getCanvasCoordinates(robot.x, robot.y, context).canvasY + 10);
+    
+        // Draw robot action over the robot
+        context.font = "20px Arial";
+        context.fillStyle = 'rgba(255, 0, 0, 1)';
+        context.textAlign = "center";
+        if (typeof robot.action === 'object' && robot.action !== null){
+            const action_number: string = ActionToStr(robot.action);
+            context.fillText(action_number, getCanvasCoordinates(robot.x, robot.y, context).canvasX, getCanvasCoordinates(robot.x, robot.y, context).canvasY - 10);
+        }
     };
 
     const drawCircle = (context: CanvasRenderingContext2D, robot: Robot, radius: number, color: string) => {
@@ -79,15 +95,15 @@ const FootBallField: React.FC<FootBallFieldProps> = ({height, gameState}) => {
 
     const drawArrow = (context: CanvasRenderingContext2D, robot: Robot, color: string, thickness: number) => {
 
-        const angle: number = Math.atan2(robot.speed_y, robot.speed_x) - Math.PI/2;
-        const arrowLength: number = 10 * Math.hypot(robot.speed_x, robot.speed_y);
+        const angle: number = Math.atan2(100*robot.speed_y, 100*robot.speed_x);
+        const arrowLength: number = 50000 * Math.abs(Math.hypot(robot.speed_x, robot.speed_y));
 
         // Calculate the starting point of the arrow (on the circle)
         const {canvasX: startX, canvasY: startY} = getCanvasCoordinates(robot.x, robot.y, context);
 
         // Calculate the end point of the arrow
         const endX: number = startX + arrowLength * Math.cos(angle);
-        const endY: number = startY + arrowLength * Math.sin(angle);
+        const endY: number = startY - arrowLength * Math.sin(angle);
 
         // Draw the line for the arrow
         context.beginPath();
