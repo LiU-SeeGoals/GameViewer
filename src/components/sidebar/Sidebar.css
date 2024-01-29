@@ -39,22 +39,6 @@
   padding-right: 10px;
 }
 
-.leftdivision{
-  float: left;
-  column-width: 340px;
-}
-
-.rightdivision{
-  float: left;
-  column-width: 340px;
-}
-
-.container { 
-  height: 50px;
-  position: relative;
-  margin: 10px 
-}
-
 .center {
   margin: 0;
   position: absolute;

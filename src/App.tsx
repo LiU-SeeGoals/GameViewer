@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { createContext } from 'react'
 
 import './App.css'
 
@@ -8,8 +7,19 @@ import Sidebar from './components/sidebar'
 import GameViewer from './components/gameViewer'
 import { GameState, parseGameState, getDefaultGameState} from './types/GameState';
 
+export const GameStateContext = createContext({
+  state: getDefaultGameState(),
+  setState: (_: any) => {},
+});
+
 function App() {
   const [gameState, setGameState] = useState<GameState>(getDefaultGameState());
+
+  // Setup context object
+  const gameStateCtx = {
+    state: gameState,
+    setState: (newState: GameState) => {setGameState(newState)} 
+  };
 
   useEffect(() => {
     const socket = new WebSocket('ws://localhost:8080/ws');
@@ -20,7 +30,6 @@ function App() {
           return;
         }
         setGameState(parseGameState(gameState, event.data));
-        console.log(gameState);
       } catch (e) {
         console.error('Error parsing message JSON', e);
       }
@@ -32,8 +41,10 @@ function App() {
 
   return (
     <div className="app-container">
-      <Sidebar/>
-      <GameViewer gameState={gameState}/>
+      <GameStateContext.Provider value={gameStateCtx}>
+        <Sidebar/>
+        <GameViewer gameState={gameState}/>
+      </GameStateContext.Provider>
     </div>
   )
 }

@@ -7,12 +7,11 @@ interface gameViewerProps {
     gameState: GameState
 }
 
-const GameViewer: React.FC<gameViewerProps> = ({gameState}) => {
+const GameViewer: React.FC<gameViewerProps> = ({gameState}: gameViewerProps) => {
     const startHeightResizer = 850;
     const resizerWidth = 10;
 
     const {value: resizerValue, startResizing} = useResizeSidebar(true, startHeightResizer);
-
 
     return (
         <div className="game-viewer-container">
@@ -24,7 +23,7 @@ const GameViewer: React.FC<gameViewerProps> = ({gameState}) => {
             />
             <div className="game-viewer-player" style={{}}/>
         </div>
-    )
+    );
 };
 
 export default GameViewer;

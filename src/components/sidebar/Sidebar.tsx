@@ -1,6 +1,7 @@
 import React, {useState, useEffect,useCallback} from 'react';
 import './Sidebar.css'
 import useResizeSidebar from '../../hooks/useResizeSidebar';
+import RobotInfo from '../robotInfo/RobotInfo';
 interface SidebarProps {
 }
 
@@ -45,73 +46,13 @@ const Sidebar: React.FC<SidebarProps> = () => {
     return (
         <div className="sidebar" style={{ width: sidebarWidth }}>
            <div className="sidebar-content" style={{ display: contentDisplay}}>
-               <h1> SeaGoals
-            
-            </h1>
-            <h2>Robot 1</h2>
-            <div class="leftdivision">
-                <p> {variableValue === 1 ? <span style={{ color: 'red' }}>Id: 1</span> : 'Id: 1'}</p>
-            </div>
-            <div class="rightdivision">
-                <button onClick={handleClick}>
-                    {arrow ? 'Enable arrow' : 'Disable arrow'} {/* Change the button text based on the state */}
-                </button>
-            </div>
-
-            <h2>Robot 2</h2>
-            <div class="leftdivision">
-                <p> {variableValue === 2 ? <span style={{ color: 'red' }}>Id: 2</span> : 'Id: 2'}</p>
-            </div>
-            <div class="rightdivision">
-                <button onClick={handleClick}>
-                    {arrow ? 'Enable arrow' : 'Disable arrow'} {/* Change the button text based on the state */}
-                </button>
-            </div>
-
-            <h2>Robot 3</h2>
-            <div class="leftdivision">
-                <p> {variableValue === 3 ? <span style={{ color: 'red' }}>Id: 3</span> : 'Id: 3'}</p>
-            </div>
-            <div class="rightdivision">
-                <button onClick={handleClick}>
-                    {arrow ? 'Enable arrow' : 'Disable arrow'} {/* Change the button text based on the state */}
-                </button>            </div>
-
-            <h2>Robot 4</h2>
-            <div class="leftdivision">
-            <   p> {variableValue === 4 ? <span style={{ color: 'red' }}>Id: 4</span> : 'Id: 4'}</p>
-            </div>
-            <div class="rightdivision">
-                <button onClick={handleClick}>
-                    {arrow ? 'Enable arrow' : 'Disable arrow'} {/* Change the button text based on the state */}
-                </button>            
-            </div>
-            <h2>Robot 5</h2>
-            <div class="leftdivision">
-            <   p> {variableValue === 5 ? <span style={{ color: 'red' }}>Id: 5</span> : 'Id: 5'}</p>
-            </div>
-            <div class="rightdivision">
-                <button onClick={handleClick}>
-                    {arrow ? 'Enable arrow' : 'Disable arrow'} {/* Change the button text based on the state */}
-                </button>  
-            </div>
-            <h2>Robot 6</h2>
-            <div class="leftdivision">
-                <p> {variableValue === 6 ? <span style={{ color: 'red' }}>Id: 6</span> : 'Id: 6'}</p>
-            </div>
-            <div class="rightdivision">
-                <button onClick={handleClick}>
-                    {arrow ? 'Enable arrow' : 'Disable arrow'} {/* Change the button text based on the state */}
-                </button>  
-            </div>
-               
-            <p>Variable Value: {variableValue}</p>
-            
-            <div class="container">
-                <div class="center">
-                    <button onClick={updateVariable}>Increase Variable</button>
-                </div>
-            </div>  
+            <h1> SeaGoals</h1>
+            <RobotInfo RobotId="1"></RobotInfo>
+            <RobotInfo RobotId="2"></RobotInfo>
+            <RobotInfo RobotId="3"></RobotInfo>
+            <RobotInfo RobotId="4"></RobotInfo>
+            <RobotInfo RobotId="5"></RobotInfo>
+            <RobotInfo RobotId="6"></RobotInfo>
             </div>
             <div 
                className="sidebar-resizer"
@@ -123,3 +64,6 @@ const Sidebar: React.FC<SidebarProps> = () => {
 };
 
 export default Sidebar;
+
+//<p> {variableValue === 6 ? <span style={{ color: 'red' }}>Id: 6</span> : 'Id: 6'}</p>
+//<button onClick={updateVariable}>Increase Variable</button>

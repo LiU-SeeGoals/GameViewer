@@ -17,7 +17,7 @@ const SPEED_ARROW_THICKNESS: number = 3;
 
 const COLOR_MAP: Record<string, string> = {"yellow": "rgba(255, 255, 0, 1)", "blue": "rgba(0, 0, 255, 1)"};
 
-const FootBallField: React.FC<FootBallFieldProps> = ({height, gameState}) => {
+const FootBallField: React.FC<FootBallFieldProps> = ({height, gameState}: FootBallFieldProps) => {
     const canvasRef = React.useRef<HTMLCanvasElement>(null);
     const containerRef = React.useRef<HTMLDivElement>(null);
 
