@@ -7,37 +7,10 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = () => {
     const minSidebarContentWidth = 100;
-    const startWidthSidebar = 700;
+    const startWidthSidebar = 500;
     const resizerWidth = 10;
 
     const {value: resizerValue, startResizing} = useResizeSidebar(false, startWidthSidebar);
-
-
-    const [variableValue, setVariableValue] = useState(0);
-    const updateVariable = () => {
-        setVariableValue(prevValue => (prevValue === 7 ? 0 : prevValue + 1));
-    };
-
-    
-    const [arrow, setArrow] = useState(false);
-    
-    const handleClick = () => {
-        // Toggle the state between start and stop
-        setArrow(prevState => !prevState);
-    
-        // Perform the corresponding action based on the current state
-        if (arrow) {
-        // Stop action
-        console.log('Stopping...');
-        // Add your stop logic here
-        } else {
-        // Start action
-        console.log('Starting...');
-        // Add your start logic here
-        }
-        };
-
-   
 
     const contentDisplay: string = resizerValue < minSidebarContentWidth + resizerWidth ? 'none' : 'inline';
     const sidebarWidth: number = resizerValue < minSidebarContentWidth + resizerWidth ? resizerWidth : resizerValue;
@@ -46,7 +19,7 @@ const Sidebar: React.FC<SidebarProps> = () => {
     return (
         <div className="sidebar" style={{ width: sidebarWidth }}>
            <div className="sidebar-content" style={{ display: contentDisplay}}>
-            <h1> SeaGoals</h1>
+            <h1> SeeGoals</h1>
             <RobotInfo RobotId="1"></RobotInfo>
             <RobotInfo RobotId="2"></RobotInfo>
             <RobotInfo RobotId="3"></RobotInfo>

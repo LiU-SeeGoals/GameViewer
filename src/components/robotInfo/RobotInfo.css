@@ -1,9 +1,9 @@
 .leftdivision{
     float: left;
-    column-width: 340px;
+    column-width: 240px;
 }
   
 .rightdivision{
     float: left;
-    column-width: 340px;
+    column-width: 240px;
 }

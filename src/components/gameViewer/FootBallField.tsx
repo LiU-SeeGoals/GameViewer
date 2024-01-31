@@ -51,6 +51,7 @@ const FootBallField: React.FC<FootBallFieldProps> = ({height, gameState}: FootBa
 
         //drawing all of gamestate here
         gameState.robots.map((robot) => {
+
             drawRobot(context, robot);
         });
         //drawRobot(context, {x: 0, y: 0, speed_x: 3, speed_y: 3, team: "yellow", selected: false});
