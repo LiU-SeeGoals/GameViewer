@@ -20,12 +20,12 @@ const Sidebar: React.FC<SidebarProps> = () => {
         <div className="sidebar" style={{ width: sidebarWidth }}>
            <div className="sidebar-content" style={{ display: contentDisplay}}>
             <h1> SeeGoals</h1>
+            <RobotInfo RobotId="0"></RobotInfo>
             <RobotInfo RobotId="1"></RobotInfo>
             <RobotInfo RobotId="2"></RobotInfo>
             <RobotInfo RobotId="3"></RobotInfo>
             <RobotInfo RobotId="4"></RobotInfo>
             <RobotInfo RobotId="5"></RobotInfo>
-            <RobotInfo RobotId="6"></RobotInfo>
             </div>
             <div 
                className="sidebar-resizer"

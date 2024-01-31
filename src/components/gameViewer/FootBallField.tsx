@@ -15,7 +15,7 @@ const ARROW_HEAD_LENGTH: number = 3;
 const SPEED_ARROW_COLOR: string = 'rgba(0, 0, 0, 1)';
 const SPEED_ARROW_THICKNESS: number = 3;
 
-const COLOR_MAP: Record<string, string> = {"yellow": "rgba(255, 255, 0, 1)", "blue": "rgba(0, 0, 255, 1)"};
+const COLOR_MAP: Record<string, string> = {"yellow": "rgba(245, 239, 66, 1)", "blue": "rgba(66, 135, 245, 1)"};
 
 const FootBallField: React.FC<FootBallFieldProps> = ({height, gameState}: FootBallFieldProps) => {
     const canvasRef = React.useRef<HTMLCanvasElement>(null);
@@ -54,7 +54,18 @@ const FootBallField: React.FC<FootBallFieldProps> = ({height, gameState}: FootBa
 
             drawRobot(context, robot);
         });
+        drawBall(context);
         //drawRobot(context, {x: 0, y: 0, speed_x: 3, speed_y: 3, team: "yellow", selected: false});
+    }
+
+    const drawBall = (context: CanvasRenderingContext2D) => {
+        const {canvasX, canvasY} = getCanvasCoordinates(gameState.ball.x, gameState.ball.y, context);
+        context.beginPath();
+        context.arc(canvasX, canvasY, 5, 0, 2 * Math.PI);
+        context.strokeStyle = 'rgba(0, 0, 0, 0)'; // make the border transparent
+        context.fillStyle = 'black';
+        context.fill();
+        context.stroke();
     }
 
     const drawRobot = (context: CanvasRenderingContext2D, robot: Robot) => {
@@ -63,7 +74,8 @@ const FootBallField: React.FC<FootBallFieldProps> = ({height, gameState}: FootBa
             drawArrow(context, robot, SPEED_ARROW_COLOR, SPEED_ARROW_THICKNESS);
         }
         drawCircle(context, robot, ROBOT_RADIUS * getScaler(context), COLOR_MAP[robot.team]);
-
+        drawId(context, robot)
+        
         // Draw a black circle in the robot if it is selected
         if (robot.selected) {
             drawCircle(context, robot, ROBOT_RADIUS/3, 'rgba(0, 0, 0, 1)');
@@ -79,6 +91,16 @@ const FootBallField: React.FC<FootBallFieldProps> = ({height, gameState}: FootBa
         context.fill();
         context.stroke();
     };
+
+    const drawId = (context: CanvasRenderingContext2D, robot: Robot) => {
+        const {canvasX, canvasY} = getCanvasCoordinates(robot.x, robot.y, context);
+        context.font = '28px Arial';
+        context.textAlign = 'center';
+        context.textBaseline = 'middle';
+        context.fillStyle = 'black';
+        context.fillText(robot.id, canvasX, canvasY);
+    }
+
 
     const drawArrow = (context: CanvasRenderingContext2D, robot: Robot, color: string, thickness: number) => {
 

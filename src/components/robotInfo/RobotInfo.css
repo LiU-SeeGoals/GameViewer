@@ -7,3 +7,26 @@
     float: left;
     column-width: 240px;
 }
+
+
+.RobotInfoContet h2 {
+    color: black;
+    text-align: center;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    font-size: 1.5em;
+    text-decoration: underline;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  }
+.hasBall {
+    width: 90px;
+    border-radius: 10px;
+    margin-left: 5px;
+}
+.hasBall p {
+    color: white;
+    text-align: center;
+}
+.rightdivision button {
+    margin-left: 2px;
+}
