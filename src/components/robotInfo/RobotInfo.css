@@ -8,6 +8,11 @@
     column-width: 240px;
 }
 
+.rightdivision button {
+    background-color: rgb(44, 131, 190);
+    color: white;
+}
+
 
 .RobotInfoContet h2 {
     color: black;
