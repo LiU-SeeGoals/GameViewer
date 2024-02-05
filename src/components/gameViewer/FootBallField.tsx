@@ -98,7 +98,7 @@ const FootBallField: React.FC<FootBallFieldProps> = ({height, gameState}: FootBa
         context.textAlign = 'center';
         context.textBaseline = 'middle';
         context.fillStyle = 'black';
-        context.fillText(robot.id, canvasX, canvasY);
+        context.fillText(String(robot.id), canvasX, canvasY);
     }
 
 

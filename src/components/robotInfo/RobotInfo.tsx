@@ -1,3 +1,5 @@
+import React from "react";
+
 import './RobotInfo.css'
 import ArrowButton from '../arrowButton/Arrowbutton'
 import { useContext, useState } from 'react';
@@ -9,7 +11,7 @@ interface RobotInfoProps {
     RobotId: number
 }
 
-const RobotInfo : React<RobotInfoProps>  = ({RobotId}: RobotInfoProps) => {
+const RobotInfo : React.FC<RobotInfoProps>  = ({RobotId}: RobotInfoProps) => {
     const gameStateCtx = useContext(GameStateContext);
 
     let robot = gameStateCtx.state.robots[RobotId];
@@ -23,29 +25,25 @@ const RobotInfo : React<RobotInfoProps>  = ({RobotId}: RobotInfoProps) => {
     
 
     return(
-        <div class="RobotInfoContet">
-        
+        <div className="robot-info-content">
             <h2>Robot {RobotId}</h2>
-                <div class="leftdivision"> 
-                    <p>Distnace to ball: {balldistance} cm</p>
-                    <div class="hasBall" style={{backgroundColor: hasBall ? 'rgb(96, 126, 61)' : 'rgb(186, 48, 48)'}}> 
+            <div className="content">
+                <div className="left-division"> 
+                    <p>{`Distnace to ball: ${balldistance} cm`}</p>
+                    <div className={hasBall ? "has-ball active" : "has-ball"}> 
                         <p> {hasBall ? 'Has ball' : 'No ball'} </p>
                     </div>
-                    
                 </div>
 
-                <div class="rightdivision">
+                <div className="right-division">
                     <ArrowButton id={RobotId}></ArrowButton>
                     <button onClick={() => setIsOpen(true)}>Open Popup</button>
                     <RobotPopUp isOpen={isOpen} onClose={() => setIsOpen(false)}>
                         <h2>This is a Popup</h2>
                         <p>Popup content goes here.</p>
                     </RobotPopUp>
-                    <p>hejsan</p>
-                    
-                    
                 </div>
-
+            </div>
         </div>
     );
 };

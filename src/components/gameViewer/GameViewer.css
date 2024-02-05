@@ -1,4 +1,4 @@
-.game-viewer-container {
+.game-viewer {
     flex: 1;
     flex-grow: 1;
     display: flex;
@@ -19,8 +19,7 @@
     background: white; 
 }
 
-.game-viewer-player {
-    width: 100%;
+.game-viewer-container {
     background: white;
     flex-grow: 1;
 }
@@ -30,4 +29,10 @@
     font-size: 2em;
     padding-left: 10px;
     padding-right: 10px;
+  }
+
+  .game-viewer-container button {
+      margin-left: 10px;
+      border-radius: 7px;
+      border: 2px solid black;
   }

@@ -1,20 +1,9 @@
-.leftdivision{
-    float: left;
-    column-width: 240px;
-}
-  
-.rightdivision{
-    float: left;
-    column-width: 240px;
+.robot-info-content {
+    display: flex;
+    flex-direction: column;
 }
 
-.rightdivision button {
-    background-color: rgb(44, 131, 190);
-    color: white;
-}
-
-
-.RobotInfoContet h2 {
+.robot-info-content h2 {
     color: black;
     text-align: center;
     margin-bottom: 10px;
@@ -22,16 +11,52 @@
     font-size: 1.5em;
     text-decoration: underline;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  }
-.hasBall {
-    width: 90px;
-    border-radius: 10px;
-    margin-left: 5px;
 }
-.hasBall p {
+
+.robot-info-content .content {
+    display: flex;
+    flex-direction: row;
+    /* justify-content: space-between; */
+}
+
+.robot-info-content .left-division,
+.robot-info-content .right-division {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.robot-info-content .left-division {
+    width: 60%;
+}
+
+.robot-info-content .right-division {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+}
+
+.robot-info-content button {
+    border-radius: 7px;
+    border: 2px solid black;
+}
+
+.robot-info-content .left-division p {
+    font-size: 1rem;
+}
+
+.robot-info-content .right-division button {
+    margin-top: 4px;
+    background-color: rgb(44, 131, 190);
+    color: white;
+}
+
+.robot-info-content .has-ball.active p {
+    background-color: rgb(96, 126, 61);
+}
+
+.robot-info-content .has-ball p {
+    background-color: rgb(186, 48, 48);
     color: white;
     text-align: center;
-}
-.rightdivision button {
-    margin-left: 2px;
+    border-radius: 4px;
 }
