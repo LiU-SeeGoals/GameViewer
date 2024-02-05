@@ -60,3 +60,15 @@ export function updateShowArrow(gameState: GameState, robotId: number, newShowAr
     // Update the game state with the updated robots
     return { ...gameState, robots: updatedRobots };
   }
+
+export function updateYellowShowArrow(gameState: GameState, robotId: number, newShowArrowValue: boolean): GameState {
+    const updatedRobots = gameState.robots.map(robot => {
+      if (robot.id == robotId && robot.team ==="yellow") {
+        return { ...robot, showArrow: newShowArrowValue };
+      }
+      return robot;
+    });
+  
+    // Update the game state with the updated robots
+    return { ...gameState, robots: updatedRobots };
+  }

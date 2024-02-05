@@ -23,6 +23,8 @@
   font-size: 3em;
   size: 50px;
   text-align: center;
+  margin-block-end: 0px;
+  margin-block-start: 10px;
 }
 
 .sidebar-content p {
