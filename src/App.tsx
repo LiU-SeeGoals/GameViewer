@@ -30,6 +30,7 @@ function App() {
           if (!event.data) {
             return;
           }
+          console.log(event.data);
           const newGameState = parseGameState(gameState, event.data);
           setGameState(newGameState);
         } catch (e) {
@@ -62,18 +63,18 @@ function App() {
 
   useEffect(() => {
 
-  //   const actionDTO: ActionDTO = {  // Used for testing to send an action to the server
-  //     Id: 0,
-  //     Action: 2,
-  //     PosX: 3,
-  //     PosY: 4,
-  //     PosW: 5.554,
-  //     DestX: 6,
-  //     DestY: 7,
-  //     DestW: 8.0,
-  //     Dribble: false
-  // };
-  // actionsToSend.push(actionDTO);
+    const actionDTO: ActionDTO = {  // Used for testing to send an action to the server
+      Id: 0,
+      Action: 2,
+      PosX: 3,
+      PosY: 4,
+      PosW: 5.554,
+      DestX: 6,
+      DestY: 7,
+      DestW: 8.0,
+      Dribble: false
+  };
+  actionsToSend.push(actionDTO);
 
     const intervalId = setInterval(() => {
       if (actionsToSend.length > 0) {

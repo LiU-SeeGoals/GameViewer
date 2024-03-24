@@ -18,22 +18,23 @@ export function parseGameState(oldGameState: GameState, data: string): GameState
         speed_y: parseData.Ball.VelY
     };
 
-    for (let i = 0; i < parseData.BlueTeam.length; i++) {
+    let team_size = Math.min(parseData.BlueTeam.length, 6);
+    for (let i = 0; i < team_size; i++) {
         newRobots[i].x = parseData.BlueTeam[i].PosX;
         newRobots[i].y = parseData.BlueTeam[i].PosY;
         newRobots[i].speed_x = parseData.BlueTeam[i].VelX;
         newRobots[i].speed_y = parseData.BlueTeam[i].VelY;
         newRobots[i].id = parseData.BlueTeam[i].Id;
     }
-    for (let i = 0; i < parseData.YellowTeam.length; i++) {
-        newRobots[i + parseData.BlueTeam.length].x = parseData.YellowTeam[i].PosX;
-        newRobots[i + parseData.BlueTeam.length].y = parseData.YellowTeam[i].PosY;
-        newRobots[i + parseData.BlueTeam.length].speed_x = parseData.YellowTeam[i].VelX;
-        newRobots[i + parseData.BlueTeam.length].speed_y = parseData.YellowTeam[i].VelY;
-        newRobots[i + parseData.BlueTeam.length].id = parseData.YellowTeam[i].Id;
+    for (let i = 0; i < team_size; i++) {
+        newRobots[i + team_size].x = parseData.YellowTeam[i].PosX;
+        newRobots[i + team_size].y = parseData.YellowTeam[i].PosY;
+        newRobots[i + team_size].speed_x = parseData.YellowTeam[i].VelX;
+        newRobots[i + team_size].speed_y = parseData.YellowTeam[i].VelY;
+        newRobots[i + team_size].id = parseData.YellowTeam[i].Id;
     }
     for (let i = 0; i < parseData.Actions.length; i++) {
-        const offset: number = parseData.Actions[i].Team === "blue" ? 0 : parseData.BlueTeam.length;
+        const offset: number = parseData.Actions[i].Team === "blue" ? 0 : team_size;
         newRobots[offset + parseData.Actions[i].Id].action = parseData.Actions[i];
     }
     return {robots: newRobots, ball: gameStateBall};
