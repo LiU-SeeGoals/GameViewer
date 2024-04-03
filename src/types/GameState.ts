@@ -34,9 +34,9 @@ export function getDefaultGameState(): GameState {
     const robots = [
         {"id": 0, "team":"blue", "x": 2000, "y": 0, "speed_x":1, "speed_y":1, "selected": false, "showArrow" : false, "hasBall" : false},
         {"id": 1, "team":"blue", "x": -4500, "y": 3000, "speed_x":0, "speed_y":0, "selected": false, "showArrow" : false, "hasBall" : false},
-        {"id": 2, "team":"blue", "x": -1000, "y": 1000, "speed_x":0, "speed_y":0, "selected": false, "showArrow" : false, "hasBall" : true},
+        {"id": 2, "team":"blue", "x": -1000, "y": 1000, "speed_x":0, "speed_y":0, "selected": false, "showArrow" : false, "hasBall" : false},
         {"id": 3, "team":"blue", "x": -1000, "y": -1000, "speed_x":0, "speed_y":0, "selected": false, "showArrow" : false, "hasBall" : false},
-        {"id": 4, "team":"blue", "x": 1000, "y": -1000, "speed_x":0, "speed_y":0, "selected": false, "showArrow" : false, "hasBall" : true},
+        {"id": 4, "team":"blue", "x": 1000, "y": -1000, "speed_x":0, "speed_y":0, "selected": false, "showArrow" : false, "hasBall" : false},
         {"id": 5, "team":"blue", "x": 1000, "y": 95, "speed_x":0, "speed_y":0, "selected": false, "showArrow" : false, "hasBall" : false},
         {"id": 0, "team":"yellow", "x": -3000, "y": 3000, "speed_x":0, "speed_y":0, "selected": false, "showArrow" : false, "hasBall" : false},
         {"id": 1, "team":"yellow", "x": 360, "y": 150, "speed_x":0, "speed_y":0, "selected": false, "showArrow" : false, "hasBall" : false},

@@ -21,8 +21,8 @@ const Sidebar: React.FC<SidebarProps> = () => {
                 <h1>SeeGoals</h1>
                 <div className="sidebar-content" style={{ display: contentDisplay}}>
                     <RobotInfo RobotId={0}></RobotInfo>
-                    <RobotInfo RobotId={2}></RobotInfo>
                     <RobotInfo RobotId={1}></RobotInfo>
+                    <RobotInfo RobotId={2}></RobotInfo>
                     <RobotInfo RobotId={3}></RobotInfo>
                     <RobotInfo RobotId={4}></RobotInfo>
                     <RobotInfo RobotId={5}></RobotInfo>
