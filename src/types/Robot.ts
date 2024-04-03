@@ -1,3 +1,5 @@
+import { Action } from "./Action";
+
 export type Robot = {
     id: number;
     team: string;
@@ -8,4 +10,5 @@ export type Robot = {
     selected: boolean;
     showArrow: boolean;
     hasBall: boolean;
+    action: null | Action;
 }
