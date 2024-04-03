@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import './FootBallField.css';
 import { Robot } from '../../types/Robot';
 import { GameState } from '../../types/GameState';
+import { Action, ActionToStr} from '../../types/Action';
 interface FootBallFieldProps {
     height: number
     gameState: GameState
@@ -80,6 +81,21 @@ const FootBallField: React.FC<FootBallFieldProps> = ({height, gameState}: FootBa
         if (robot.selected) {
             drawCircle(context, robot, ROBOT_RADIUS/3, 'rgba(0, 0, 0, 1)');
         }
+
+        // Draw the robot's number in the robot
+        context.font = "30px Arial";
+        context.fillStyle = 'rgba(255, 255, 255, 1)';
+        context.textAlign = "center";
+        context.fillText(robot.id.toString(), getCanvasCoordinates(robot.x, robot.y, context).canvasX, getCanvasCoordinates(robot.x, robot.y, context).canvasY + 10);
+    
+        // Draw robot action over the robot
+        context.font = "20px Arial";
+        context.fillStyle = 'rgba(255, 0, 0, 1)';
+        context.textAlign = "center";
+        if (typeof robot.action === 'object' && robot.action !== null){
+            const action_number: string = ActionToStr(robot.action);
+            context.fillText(action_number, getCanvasCoordinates(robot.x, robot.y, context).canvasX, getCanvasCoordinates(robot.x, robot.y, context).canvasY - 10);
+        }
     };
 
     const drawCircle = (context: CanvasRenderingContext2D, robot: Robot, radius: number, color: string) => {
@@ -112,7 +128,7 @@ const FootBallField: React.FC<FootBallFieldProps> = ({height, gameState}: FootBa
 
         // Calculate the end point of the arrow
         const endX: number = startX + arrowLength * Math.cos(angle);
-        const endY: number = startY + arrowLength * Math.sin(angle);
+        const endY: number = startY - arrowLength * Math.sin(angle);
 
         // Draw the line for the arrow
         context.beginPath();
