@@ -9,9 +9,9 @@ export type GameState = {
 export function parseGameState(oldGameState: GameState, data: string): GameState {
     const parseData = JSON.parse(data);
 
-    let newRobots: Robot[] = [...oldGameState.robots];
+    const newRobots: Robot[] = [...oldGameState.robots];
 
-    let gameStateBall: Ball = {
+    const gameStateBall: Ball = {
         x: parseData.Ball.PosX,
         y: parseData.Ball.PosY,
         speed_x: parseData.Ball.VelX,
