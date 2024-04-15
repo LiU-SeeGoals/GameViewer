@@ -82,12 +82,6 @@ const FootBallField: React.FC<FootBallFieldProps> = ({height, gameState}: FootBa
             drawCircle(context, robot, ROBOT_RADIUS/3, 'rgba(0, 0, 0, 1)');
         }
 
-        // Draw the robot's number in the robot
-        context.font = "30px Arial";
-        context.fillStyle = 'rgba(255, 255, 255, 1)';
-        context.textAlign = "center";
-        context.fillText(robot.id.toString(), getCanvasCoordinates(robot.x, robot.y, context).canvasX, getCanvasCoordinates(robot.x, robot.y, context).canvasY + 10);
-    
         // Draw robot action over the robot
         context.font = "20px Arial";
         context.fillStyle = 'rgba(255, 0, 0, 1)';
