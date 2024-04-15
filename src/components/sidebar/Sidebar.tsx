@@ -39,6 +39,3 @@ const Sidebar: React.FC<SidebarProps> = () => {
 };
 
 export default Sidebar;
-
-//<p> {variableValue === 6 ? <span style={{ color: 'red' }}>Id: 6</span> : 'Id: 6'}</p>
-//<button onClick={updateVariable}>Increase Variable</button>

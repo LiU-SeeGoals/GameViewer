@@ -3,8 +3,8 @@ import { createContext } from 'react'
 
 import './App.css'
 
-import Sidebar from './components/sidebar'
-import GameViewer from './components/gameViewer'
+import Sidebar from './components/sidebar/Sidebar'
+import GameViewer from './components/gameViewer/GameViewer'
 import { GameState, parseGameState, getDefaultGameState} from './types/GameState';
 
 export const GameStateContext = createContext({

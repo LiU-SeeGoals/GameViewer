@@ -14,13 +14,13 @@ interface RobotInfoProps {
 const RobotInfo : React.FC<RobotInfoProps>  = ({RobotId}: RobotInfoProps) => {
     const gameStateCtx = useContext(GameStateContext);
 
-    let robot = gameStateCtx.state.robots[RobotId];
-    let ball = gameStateCtx.state.ball;
+    const robot = gameStateCtx.state.robots[RobotId];
+    const ball = gameStateCtx.state.ball;
     const x = Math.abs(robot.x - ball.x);
     const y = Math.abs(robot.y - ball.y);
     const balldistance = Math.round(Math.hypot(x, y))/10;
 
-    let hasBall = robot.hasBall;
+    const hasBall = robot.hasBall;
     const [isOpen, setIsOpen] = useState(false);
     
 

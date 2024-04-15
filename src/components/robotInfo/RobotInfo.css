@@ -16,7 +16,6 @@
 .robot-info-content .content {
     display: flex;
     flex-direction: row;
-    /* justify-content: space-between; */
 }
 
 .robot-info-content .left-division,

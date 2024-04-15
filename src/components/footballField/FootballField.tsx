@@ -1,14 +1,13 @@
 import React, {useEffect} from 'react';
-import './FootBallField.css';
+import './FootballField.css';
 import { Robot } from '../../types/Robot';
 import { GameState } from '../../types/GameState';
-import { Action, ActionToStr} from '../../types/Action';
+import { ActionToStr} from '../../types/Action';
 interface FootBallFieldProps {
     height: number
     gameState: GameState
 }
 const REAL_WIDTH_FIELD: number = 9600;
-const REAL_HEIGHT_FIELD: number = 6600;
 
 const ROBOT_RADIUS: number = 180; 
 
@@ -18,12 +17,13 @@ const SPEED_ARROW_THICKNESS: number = 3;
 
 const COLOR_MAP: Record<string, string> = {"yellow": "rgba(245, 239, 66, 1)", "blue": "rgba(66, 135, 245, 1)"};
 
-const FootBallField: React.FC<FootBallFieldProps> = ({height, gameState}: FootBallFieldProps) => {
+const FootballField: React.FC<FootBallFieldProps> = ({height, gameState}: FootBallFieldProps) => {
     const canvasRef = React.useRef<HTMLCanvasElement>(null);
     const containerRef = React.useRef<HTMLDivElement>(null);
 
-    let scaleFactor = 1;
+    const scaleFactor = 1;
 
+    // Creats a canvas for the football field image
     const canvasInit = (event: any) => {
         // Check if the canvas is initialized
         if (!canvasRef.current) {
@@ -35,7 +35,6 @@ const FootBallField: React.FC<FootBallFieldProps> = ({height, gameState}: FootBa
         canvas.width = event.target.width;
         canvas.height = event.target.height;
 
-        canvas.addEventListener('click', handleClick); // event for mouse click
         draw(canvas);
 
     };
@@ -59,6 +58,7 @@ const FootBallField: React.FC<FootBallFieldProps> = ({height, gameState}: FootBa
         //drawRobot(context, {x: 0, y: 0, speed_x: 3, speed_y: 3, team: "yellow", selected: false});
     }
 
+    // Draws ball on the canvas
     const drawBall = (context: CanvasRenderingContext2D) => {
         const {canvasX, canvasY} = getCanvasCoordinates(gameState.ball.x, gameState.ball.y, context);
         context.beginPath();
@@ -69,6 +69,7 @@ const FootBallField: React.FC<FootBallFieldProps> = ({height, gameState}: FootBa
         context.stroke();
     }
 
+    // Draws all robots on the canvas
     const drawRobot = (context: CanvasRenderingContext2D, robot: Robot) => {
 
         if (robot.showArrow){
@@ -77,7 +78,7 @@ const FootBallField: React.FC<FootBallFieldProps> = ({height, gameState}: FootBa
         drawCircle(context, robot, ROBOT_RADIUS * getScaler(context), COLOR_MAP[robot.team]);
         drawId(context, robot)
         
-        // Draw a black circle in the robot if it is selected
+        
         if (robot.selected) {
             drawCircle(context, robot, ROBOT_RADIUS/3, 'rgba(0, 0, 0, 1)');
         }
@@ -92,6 +93,7 @@ const FootBallField: React.FC<FootBallFieldProps> = ({height, gameState}: FootBa
         }
     };
 
+    // Draw a black circle around the robot
     const drawCircle = (context: CanvasRenderingContext2D, robot: Robot, radius: number, color: string) => {
         const {canvasX, canvasY} = getCanvasCoordinates(robot.x, robot.y, context);
         context.beginPath();
@@ -102,6 +104,7 @@ const FootBallField: React.FC<FootBallFieldProps> = ({height, gameState}: FootBa
         context.stroke();
     };
 
+    // Draws the robots number id on the robot
     const drawId = (context: CanvasRenderingContext2D, robot: Robot) => {
         const {canvasX, canvasY} = getCanvasCoordinates(robot.x, robot.y, context);
         context.font = '28px Arial';
@@ -111,7 +114,7 @@ const FootBallField: React.FC<FootBallFieldProps> = ({height, gameState}: FootBa
         context.fillText(String(robot.id), canvasX, canvasY);
     }
 
-
+    // Draws a arrow showing the direction of the robot
     const drawArrow = (context: CanvasRenderingContext2D, robot: Robot, color: string, thickness: number) => {
 
         const angle: number = Math.atan2(robot.speed_y, robot.speed_x) - Math.PI/2;
@@ -156,47 +159,6 @@ const FootBallField: React.FC<FootBallFieldProps> = ({height, gameState}: FootBa
         }
     }, [gameState]); // Dependency array - redraws when gameState changes
 
-    const handleClick = (event: any) => {
-        // if (!canvasRef.current){
-        //     return;
-        // }
-        // const rect = canvasRef.current.getBoundingClientRect();
-        // const x = (event.clientX - rect.left)/scaleFactor;
-        // const y = (event.clientY - rect.top)/scaleFactor;
-        // let gameStateCopy = [...props.gameState];
-
-        // // Check if clicked on a robot
-        // let clickedOnRobot = false;
-        // let clickedOnRobotIndex = -1;
-        // props.gameState.map((robot, index) => {
-        //     if (Math.pow(x - robot.x, 2) + Math.pow(y - robot.y, 2) < Math.pow(3, 2)) {
-        //         clickedOnRobot = true;
-        //         clickedOnRobotIndex = index;
-        //     }
-        // });  
-
-        // // If a robot is selected, move it here
-        // if (!clickedOnRobot) {
-        //     props.gameState.map((robot, index) => {
-        //         if (robot.selected) {
-        //             gameStateCopy[index]["x"] = x;
-        //             gameStateCopy[index]["y"] = y;
-        //         }
-        //     }); 
-        // }
-
-        // // deselect all robots
-        // gameStateCopy.map((robot, index) => {
-        //     if(clickedOnRobot && index === clickedOnRobotIndex) {
-        //         gameStateCopy[index]["selected"] = !gameStateCopy[index]["selected"];
-        //     } else {
-        //         gameStateCopy[index]["selected"] = false;
-        //     }
-        // });
-        // props.setGameState(...gameStateCopy);
-        // draw(canvasRef.current);
-    };
-
     return (
         <div className="football-field-container" style={{ height: height }} ref={containerRef}>
             <img src="./src/assets/football_field.svg" alt="canvas" style={{height: height}} onLoad={canvasInit} />
@@ -205,6 +167,7 @@ const FootBallField: React.FC<FootBallFieldProps> = ({height, gameState}: FootBa
     );
 }
 
+// Returns the coordinates of where the robot is on the canvas
 function getCanvasCoordinates(x: number, y: number, context: CanvasRenderingContext2D) {
     const scaler = getScaler(context);
     const canvasX = x * scaler + context.canvas.width / 2;
@@ -212,10 +175,11 @@ function getCanvasCoordinates(x: number, y: number, context: CanvasRenderingCont
     return {canvasX, canvasY};
 }
 
+// Returns a scaler based on the canvas current size
 function getScaler(context: CanvasRenderingContext2D) {
     const widthScale = context.canvas.width / REAL_WIDTH_FIELD;
     const heightScale = context.canvas.height / REAL_WIDTH_FIELD;
     return Math.max(widthScale, heightScale);
 }
 
-export default FootBallField;
+export default FootballField;

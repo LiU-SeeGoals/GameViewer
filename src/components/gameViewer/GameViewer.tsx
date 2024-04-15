@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import './GameViewer.css';
 import useResizeSidebar from '../../hooks/useResizeSidebar';
-import FootBallField from './FootBallField';
+import FootballField from '../footballField/FootBallField';
 import { GameStateContext } from '../../App';
 import { GameState, updateYellowShowArrow } from '../../types/GameState';
 interface gameViewerProps {
@@ -21,11 +21,11 @@ const GameViewer: React.FC<gameViewerProps> = ({gameState}: gameViewerProps) => 
         for (let i = 0; i < 6; i++ ) {
             gameStateCtx.setState((prevState: GameState) => updateYellowShowArrow(prevState, i, !arrow));
         }
-        setArrow((prevArrow: any) => !prevArrow)};
+        setArrow((prevArrow: boolean) => !prevArrow)};
 
     return (
         <div className="game-viewer">
-            <FootBallField height={resizerValue} gameState={gameState}/>
+            <FootballField height={resizerValue} gameState={gameState}/>
             
             <div className="game-viewer-resizer"
                  style={{height: resizerWidth}}
