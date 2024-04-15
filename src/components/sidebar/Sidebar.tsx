@@ -18,7 +18,10 @@ const Sidebar: React.FC<SidebarProps> = () => {
     return (
         <div className="sidebar-wrapper">
             <div className="sidebar" style={{ width: sidebarWidth }}>
-                <h1>SeeGoals</h1>
+                <div className='row'>
+                    <img src="./src/assets/Fia_logo.png" alt="logga" className="logo"/>
+                    <h1>SeeGoals</h1>
+                </div>
                 <div className="sidebar-content" style={{ display: contentDisplay}}>
                     <RobotInfo RobotId={0}></RobotInfo>
                     <RobotInfo RobotId={1}></RobotInfo>

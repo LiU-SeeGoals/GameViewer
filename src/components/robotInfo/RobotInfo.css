@@ -39,7 +39,8 @@
     border: 2px solid black;
 }
 
-.robot-info-content .left-division p {
+.robot-info-content .left-division p,
+.robot-info-content .right-division p {
     font-size: 1rem;
 }
 
@@ -47,6 +48,7 @@
     margin-top: 4px;
     background-color: rgb(44, 131, 190);
     color: white;
+    font-size: 1rem;
 }
 
 .robot-info-content .has-ball.active p {

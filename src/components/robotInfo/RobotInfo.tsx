@@ -1,7 +1,6 @@
 import React from "react";
 
 import './RobotInfo.css'
-import ArrowButton from '../arrowButton/Arrowbutton'
 import { useContext, useState } from 'react';
 import { GameStateContext } from '../../App';
 import RobotPopUp from '../robotPopUp/RobotPopUp';
@@ -29,18 +28,17 @@ const RobotInfo : React.FC<RobotInfoProps>  = ({RobotId}: RobotInfoProps) => {
             <h2>Robot {RobotId}</h2>
             <div className="content">
                 <div className="left-division"> 
-                    <p>{`Distnace to ball: ${balldistance} cm`}</p>
+                    <p>{`Distance to ball: ${balldistance} cm`}</p>
+                    <p>x: {robot.x} y: {robot.y}</p>
+                    
+                </div>
+                <div className="right-division">
                     <div className={hasBall ? "has-ball active" : "has-ball"}> 
                         <p> {hasBall ? 'Has ball' : 'No ball'} </p>
                     </div>
-                </div>
-
-                <div className="right-division">
-                    <ArrowButton id={RobotId}></ArrowButton>
-                    <button onClick={() => setIsOpen(true)}>Open Popup</button>
-                    <RobotPopUp isOpen={isOpen} onClose={() => setIsOpen(false)}>
-                        <h2>This is a Popup</h2>
-                        <p>Popup content goes here.</p>
+                    <button onClick={() => setIsOpen(true)}>More information</button>
+                    <RobotPopUp isOpen={isOpen} onClose={() => setIsOpen(false)} id={RobotId} >
+                        
                     </RobotPopUp>
                 </div>
             </div>

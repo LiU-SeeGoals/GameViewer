@@ -6,9 +6,6 @@
   flex-direction: row;
 }
 
-.sidebar {
-}
-
 .sidebar-content {
   background-color: white;
 }
@@ -18,7 +15,7 @@
   background-color: rgb(44, 131, 190);
 }
 
-.sidebar h1 {
+.row h1 {
   color: black;
   font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   font-size: 3em;
@@ -41,6 +38,18 @@
   left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  width: 3em;
+  margin: 5px;
 }
 
 

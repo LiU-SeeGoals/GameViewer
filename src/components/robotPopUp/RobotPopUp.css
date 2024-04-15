@@ -10,13 +10,17 @@
     align-items: center;
   }
   
-  .modal-content {
+.modal-content {
     background-color: white;
     padding: 20px;
     border-radius: 5px;
+    display: flex;
+    flex-direction: column;
   }
   
-  .close-button {
-    margin-top: 10px;
+.close-button {
+    margin: 10px;
   }
+
+
   

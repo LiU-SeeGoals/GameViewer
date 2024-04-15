@@ -1,18 +1,19 @@
-import React from 'react';
 import './RobotPopUp.css';
+import ArrowButton from '../arrowButton/Arrowbutton'
 interface RobotPopUpProps{
     isOpen: boolean;
     onClose: () => void;
-    children: React.ReactNode;
+    id: number;
 }
 
-const RobotPopUp = ({ isOpen, onClose, children }: RobotPopUpProps) => {
+const RobotPopUp = ({ isOpen, onClose, id }: RobotPopUpProps) => {
   if (!isOpen) return null;
 
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        {children}
+        <h2>Robot {id}</h2>
+        <ArrowButton id={id}></ArrowButton>
         <button className="close-button" onClick={onClose}>Close</button>
       </div>
     </div>
