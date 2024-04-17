@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import './GameViewer.css';
 import useResizeSidebar from '../../hooks/useResizeSidebar';
-import FootballField from '../footballField/FootBallField';
+import FootballField from '../footballField/FootballField';
 import { GameStateContext } from '../../App';
 import { GameState, updateYellowShowArrow } from '../../types/GameState';
 interface gameViewerProps {
