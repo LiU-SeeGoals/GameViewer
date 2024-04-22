@@ -11,7 +11,7 @@ const REAL_WIDTH_FIELD: number = 9600;
 
 const ROBOT_RADIUS: number = 180; 
 
-const ARROW_HEAD_LENGTH: number = 3;
+const ARROW_HEAD_LENGTH: number = 5;
 const SPEED_ARROW_COLOR: string = 'rgba(0, 0, 0, 1)';
 const SPEED_ARROW_THICKNESS: number = 3;
 
@@ -20,8 +20,6 @@ const COLOR_MAP: Record<string, string> = {"yellow": "rgba(245, 239, 66, 1)", "b
 const FootballField: React.FC<FootBallFieldProps> = ({height, gameState}: FootBallFieldProps) => {
     const canvasRef = React.useRef<HTMLCanvasElement>(null);
     const containerRef = React.useRef<HTMLDivElement>(null);
-
-    const scaleFactor = 1;
 
     // Creats a canvas for the football field image
     const canvasInit = (event: any) => {
@@ -134,22 +132,25 @@ const FootballField: React.FC<FootBallFieldProps> = ({height, gameState}: FootBa
         context.strokeStyle = color;
         context.lineWidth = thickness;
         context.stroke();
+        
 
-        const angle1 = angle - Math.PI / 7;
-        const angle2 = angle + Math.PI / 7;
-        const headX = endX - ARROW_HEAD_LENGTH * Math.cos(angle1);
-        const headY = endY - ARROW_HEAD_LENGTH * Math.sin(angle1);
+        const angle1 = angle + Math.PI / 7;
+        const angle2 = angle - Math.PI / 7;
+        const headX = endX + ARROW_HEAD_LENGTH * Math.cos(angle);
+        const headY = endY - ARROW_HEAD_LENGTH * Math.sin(angle);
 
         // Draw the arrow head
         context.beginPath();
-        context.moveTo(endX * scaleFactor, endY * scaleFactor);
-        context.lineTo(headX * scaleFactor, headY * scaleFactor);
-        context.lineTo((endX - ARROW_HEAD_LENGTH * Math.cos(angle2)) * scaleFactor, (endY - ARROW_HEAD_LENGTH * Math.sin(angle2)) * scaleFactor);
-        context.lineTo(endX * scaleFactor, endY * scaleFactor);
+        context.moveTo(endX, endY);   
+        context.lineTo((headX - ARROW_HEAD_LENGTH * Math.cos(angle2)), (headY + ARROW_HEAD_LENGTH * Math.sin(angle2)));
+        context.lineTo(headX, headY);   
+        context.lineTo((headX - ARROW_HEAD_LENGTH * Math.cos(angle1)), (headY + ARROW_HEAD_LENGTH * Math.sin(angle1)));
+        context.lineTo(endX, endY);  
         context.fillStyle = color;
         context.fill();
         context.lineWidth = thickness;
         context.stroke();
+        
     };
 
     useEffect(() => {

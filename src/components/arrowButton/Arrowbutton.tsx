@@ -1,4 +1,4 @@
-import React, {useState, useContext, useEffect} from 'react';
+import React, {useState, useContext} from 'react';
 import './Arrowbutton.css'
 import { updateShowArrow } from '../../types/GameState';
 import { GameStateContext } from '../../App';
