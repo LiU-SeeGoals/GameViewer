@@ -9,7 +9,7 @@ interface FootBallFieldProps {
 }
 const REAL_WIDTH_FIELD: number = 9600;
 
-const ROBOT_RADIUS: number = 180; 
+const ROBOT_RADIUS: number = 90; 
 
 const ARROW_HEAD_LENGTH: number = 5;
 const SPEED_ARROW_COLOR: string = 'rgba(0, 0, 0, 1)';
@@ -105,7 +105,7 @@ const FootballField: React.FC<FootBallFieldProps> = ({height, gameState}: FootBa
     // Draws the robots number id on the robot
     const drawId = (context: CanvasRenderingContext2D, robot: Robot) => {
         const {canvasX, canvasY} = getCanvasCoordinates(robot.x, robot.y, context);
-        context.font = '28px Arial';
+        context.font = '14px Arial';
         context.textAlign = 'center';
         context.textBaseline = 'middle';
         context.fillStyle = 'black';
