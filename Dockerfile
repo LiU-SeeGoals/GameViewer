@@ -1,5 +1,5 @@
 # Use an official Node.js runtime as a parent image
-FROM node:16
+FROM node:18
 
 # Set the working directory in the container
 WORKDIR /var/GameViewer
@@ -18,7 +18,7 @@ COPY package.json pnpm-lock.yaml ./
 RUN pnpm install
 
 # Copy the rest of the application's code to the container
-#COPY . .
+COPY . .
 
 # The port your app will run on
 EXPOSE 5173
