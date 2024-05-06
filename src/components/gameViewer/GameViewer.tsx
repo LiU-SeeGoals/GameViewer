@@ -40,6 +40,15 @@ const GameViewer: React.FC<gameViewerProps> = ({gameState}: gameViewerProps) => 
                     >
                     {arrow ?"Hide opponent's arrows" : "Show opponent's arrows"}
                 </button>
+                <a href="">
+                    <button>link to something</button>
+                </a>
+                <a href="">
+                    <button>link to something else</button>
+                </a>
+                <a href="">
+                    <button>link to something other</button>
+                </a>
             </div>
         </div>
     );

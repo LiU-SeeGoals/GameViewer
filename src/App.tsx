@@ -22,6 +22,7 @@ function App() {
   };
 
   useEffect(() => {
+    console.log('im here 123');
     const socket = new WebSocket('ws://localhost:8080/ws');
 
     socket.onmessage = (event) => {
@@ -29,9 +30,9 @@ function App() {
         if (!event.data) {
           return;
         }
-        //console.log(event.data);
+        // console.log(event.data);
         setGameState(parseGameState(gameState, event.data));
-        //console.log(gameState);
+        // console.log(gameState);
       } catch (e) {
         console.error('Error parsing message JSON', e);
       }
