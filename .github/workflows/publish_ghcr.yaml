@@ -12,6 +12,6 @@ jobs:
       - uses: actions/checkout@v3
       - name: Build and push the image
         run: |
-          docker login --username ${{ secrets.GH_USERNAME }} --password ${{ secrets.GHCR_TOKEN }} ghcr.io
+          docker login --username ${{ secrets.GH_USERNAME }} --password ${{ secrets.GH_TOKEN }} ghcr.io
           docker build . --tag ghcr.io/liu-seegoals/game-viewer:latest
           docker push ghcr.io/liu-seegoals/game-viewer:latest
