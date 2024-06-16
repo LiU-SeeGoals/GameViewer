@@ -6,10 +6,27 @@
   flex-direction: row;
 }
 
-.sidebar-content {
-  background-color: white;
+.abcabc {
+  display: grid;
+  
+  grid-template-columns: 6fr 1fr;
+  grid-template-rows:  1fr 1fr;
+  color:black;
+  padding-left: 20px;
 }
 
+.temp2 {
+  display: grid;
+  
+  grid-template-columns: 1fr 2fr 2fr 1.5fr;
+  grid-template-rows:  1fr 1fr;
+  color:black;
+  padding-left: 20px;
+}
+
+.aaaa{
+  padding-left:20px;
+}
 .sidebar-resizer {
   width: 5px;
   background-color: rgb(44, 131, 190);
@@ -25,11 +42,6 @@
   margin-block-start: 10px;
 }
 
-.sidebar-content p {
-  color: black;
-  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  font-size: 1.2em;
-}
 
 .center {
   margin: 0;
@@ -51,6 +63,3 @@
   width: 3em;
   margin: 5px;
 }
-
-
-

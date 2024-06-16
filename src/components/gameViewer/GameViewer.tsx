@@ -2,11 +2,14 @@ import React, { useContext, useState } from 'react';
 import './GameViewer.css';
 import useResizeSidebar from '../../hooks/useResizeSidebar';
 import FootballField from '../footballField/FootballField';
+import Test from './Test'
 import { GameStateContext } from '../../App';
 import { GameState, updateYellowShowArrow } from '../../types/GameState';
 interface gameViewerProps {
     gameState: GameState
 }
+
+
 
 const GameViewer: React.FC<gameViewerProps> = ({gameState}: gameViewerProps) => {
     const startHeightResizer = 709;
@@ -33,23 +36,15 @@ const GameViewer: React.FC<gameViewerProps> = ({gameState}: gameViewerProps) => 
             />
 
             <div className="game-viewer-container" style={{}}>
-                <p>Game status: </p>
-                <button 
-                    onClick={handleClick}
-                    style={{ backgroundColor: arrow ? 'rgb(186, 48, 48)' : 'rgb(96, 126, 61)', color: 'white' }}
-                    >
-                    {arrow ?"Hide opponent's arrows" : "Show opponent's arrows"}
-                </button>
-                <a href="">
-                    <button>link to something</button>
-                </a>
-                <a href="">
-                    <button>link to something else</button>
-                </a>
-                <a href="">
-                    <button>link to something other</button>
-                </a>
+                <p>Logs</p>
+                <p>17:59{'>'} Using stratergy fiskmasen</p>
+                <p>18:51{'>'} Lost connection to controller</p>
+                
+              
+                
             </div>
+
+            
         </div>
     );
 };

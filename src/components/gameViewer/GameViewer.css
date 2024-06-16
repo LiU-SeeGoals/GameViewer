@@ -20,19 +20,9 @@
 }
 
 .game-viewer-container {
-    background: white;
+    background: black;
+    color: white;
     flex-grow: 1;
-}
-.game-viewer-container p {
-    color: black;
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    font-size: 2em;
     padding-left: 10px;
-    padding-right: 10px;
-  }
-
-  .game-viewer-container button {
-      margin-left: 10px;
-      border-radius: 7px;
-      border: 2px solid black;
-  }
+    font-family: "Courier New";
+}
