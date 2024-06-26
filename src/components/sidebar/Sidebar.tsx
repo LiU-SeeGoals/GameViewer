@@ -4,6 +4,9 @@ import useResizeSidebar from '../../hooks/useResizeSidebar';
 import Switch from '@mui/material/Switch';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import ExternalLinks from './externalLinks/ExternalLinks';
+import Header from './header/Header';
+import Settings from './settings/Settings';
 
 const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
@@ -21,40 +24,22 @@ const Sidebar: React.FC<SidebarProps> = () => {
     const contentDisplay: string = resizerValue < minSidebarContentWidth + resizerWidth ? 'none' : 'inline';
     const sidebarWidth: number = resizerValue < minSidebarContentWidth + resizerWidth ? resizerWidth : resizerValue;
 
-    const [isToggled, setIsToggled] = useState(false);
-
-    const handleToggle = () => {
-        setIsToggled(!isToggled);
-    };
     return (
 
         <div className="sidebar-wrapper">
             <div className="sidebar" style={{ width: sidebarWidth }}>
-                <div className='row'>
-                    <img src="./src/assets/Fia_logo.png" alt="logga" className="logo" />
-                    <h1>SeeGoals</h1>
-                </div>
+                
+                
+
+      
                 <div className="sidebar-content" style={{ display: contentDisplay }}>
+                    <Header />
                     <hr />
-                    <div className='aaaa'>
-                    <Stack spacing={2} direction="row">
-                        
-                        <Button variant="contained">Camera</Button>
-                        <Button variant="contained">GC</Button>
-                        <Button variant="contained">random</Button>
-                        
-                    </Stack>
-                    </div>
+                    <ExternalLinks />
                     <hr />
-                    <div className='abcabc'>
-                        <p>Show arrows</p>
-                        <Switch {...label} />
-                        <p>Display X</p>
-                        <Switch {...label} />
-                        <p>Enable Y</p>
-                        <Switch {...label} />
-                    </div>
+                    <Settings />
                     <hr />
+                    
                     <div className='temp2'>
                         <p>Robot</p>
                         <p>Curr. action</p>

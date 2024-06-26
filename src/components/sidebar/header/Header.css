@@ -1,0 +1,15 @@
+.header-wrapper {
+    display: flex;
+    align-items: center;
+    height: 60px;
+}
+
+.header-wrapper img{
+    height: 50px;
+    width: auto;
+}
+
+.header-wrapper h1 {
+    font-size: 3em;
+    font-family: 'Lucida Sans Unicode';
+}
