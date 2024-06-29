@@ -1,0 +1,19 @@
+.robotTable-wrapper {
+    padding: 10px;
+    display: grid
+}
+
+.robotTable-wrapper .robotItem {
+    display: grid;
+    grid-template-columns: .5fr 1fr 1fr .6fr .1fr;
+    padding: 5px;
+    align-items: center;
+}
+
+.robotTable-wrapper .robotItem:nth-child(odd) {
+    background-color: #f0f0f0; /* Light gray background for odd rows */
+}
+
+.robotTable-wrapper .icon {
+    font-size: 17px;
+}
