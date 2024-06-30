@@ -16,3 +16,8 @@
     height: auto; /* Adjust based on your requirements */
     margin: 0 auto; /* Center the container if necessary */
 }
+
+.football-field-container img {
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+}

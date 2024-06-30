@@ -9,15 +9,12 @@
 .sidebar {
   padding: 10px;
   box-sizing: border-box;
+  overflow: scroll;
 }
 
 .sidebar-resizer {
   background-color: rgb(44, 131, 190);
   cursor: ew-resize; /* Change the cursor to resize when hovering */
-}
-
-.sidebar-content {
-  display: grid;
 }
 
 .sidebar-wrapper hr {

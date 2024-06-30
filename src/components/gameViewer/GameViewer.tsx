@@ -10,13 +10,14 @@ interface gameViewerProps {
 
 const GameViewer: React.FC<gameViewerProps> = ({gameState}: gameViewerProps) => {
     const startHeightResizer = 709;
-    const resizerWidth = 10;
+    const resizerWidth = 5;
 
     const {value: resizerValue, startResizing} = useResizeSidebar(true, startHeightResizer);
-
+    const bottomBarHeight: number = window.innerHeight - resizerValue < resizerWidth ? window.innerHeight - resizerWidth : resizerValue;
+    console.log(resizerValue);
     return (
         <div className="game-viewer">
-            <FootballField height={resizerValue} gameState={gameState}/>
+            <FootballField height={bottomBarHeight} gameState={gameState}/>
             
             <div className="game-viewer-resizer"
                  style={{height: resizerWidth}}

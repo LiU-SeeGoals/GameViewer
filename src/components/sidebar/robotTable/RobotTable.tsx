@@ -51,7 +51,7 @@ const ExternalLinks: React.FC<ExternalLinksProps> = () => {
                 <LensIcon className='icon' style={{ color: 'green' }}/>
             </div>
             <div className='robotItem'>
-                <p>5</p>
+                <p>10</p>
                 <p>Moveto</p>
                 <p>Rotate</p>
                 <p>89%</p>
