@@ -1,12 +1,15 @@
 import React, {useEffect} from 'react';
 import './FootballField.css';
 import { Robot } from '../../types/Robot';
-import { GameState } from '../../types/GameState';
-import { ActionToStr} from '../../types/Action';
+import { Ball } from "../../types/Ball";
+import { ActionToStr} from '../../helper/defaultValues';
+
 interface FootBallFieldProps {
     height: number
-    gameState: GameState
+    robotPositions: Robot[],
+    ballPosition: Ball
 }
+
 const REAL_WIDTH_FIELD: number = 9600;
 
 const ROBOT_RADIUS: number = 90; 
@@ -17,7 +20,7 @@ const SPEED_ARROW_THICKNESS: number = 3;
 
 const COLOR_MAP: Record<string, string> = {"yellow": "rgba(245, 239, 66, 1)", "blue": "rgba(66, 135, 245, 1)"};
 
-const FootballField: React.FC<FootBallFieldProps> = ({height, gameState}: FootBallFieldProps) => {
+const FootballField: React.FC<FootBallFieldProps> = ({height, robotPositions, ballPosition}: FootBallFieldProps) => {
     const canvasRef = React.useRef<HTMLCanvasElement>(null);
     const containerRef = React.useRef<HTMLDivElement>(null);
 
@@ -48,8 +51,7 @@ const FootballField: React.FC<FootBallFieldProps> = ({height, gameState}: FootBa
         context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 
         //drawing all of gamestate here
-        gameState.robots.map((robot) => {
-
+        robotPositions.map((robot) => {
             drawRobot(context, robot);
         });
         drawBall(context);
@@ -58,37 +60,37 @@ const FootballField: React.FC<FootBallFieldProps> = ({height, gameState}: FootBa
 
     // Draws ball on the canvas
     const drawBall = (context: CanvasRenderingContext2D) => {
-        const {canvasX, canvasY} = getCanvasCoordinates(gameState.ball.x, gameState.ball.y, context);
-        context.beginPath();
-        context.arc(canvasX, canvasY, 5, 0, 2 * Math.PI);
-        context.strokeStyle = 'rgba(0, 0, 0, 0)'; // make the border transparent
-        context.fillStyle = 'black';
-        context.fill();
-        context.stroke();
+        // const {canvasX, canvasY} = getCanvasCoordinates(gameState.ball.x, gameState.ball.y, context);
+        // context.beginPath();
+        // context.arc(canvasX, canvasY, 5, 0, 2 * Math.PI);
+        // context.strokeStyle = 'rgba(0, 0, 0, 0)'; // make the border transparent
+        // context.fillStyle = 'black';
+        // context.fill();
+        // context.stroke();
     }
 
     // Draws all robots on the canvas
     const drawRobot = (context: CanvasRenderingContext2D, robot: Robot) => {
 
-        if (robot.showArrow){
-            drawArrow(context, robot, SPEED_ARROW_COLOR, SPEED_ARROW_THICKNESS);
-        }
+        // if (robot.showArrow){
+        //     drawArrow(context, robot, SPEED_ARROW_COLOR, SPEED_ARROW_THICKNESS);
+        // }
         drawCircle(context, robot, ROBOT_RADIUS * getScaler(context), COLOR_MAP[robot.team]);
         drawId(context, robot)
         
         
-        if (robot.selected) {
-            drawCircle(context, robot, ROBOT_RADIUS/3, 'rgba(0, 0, 0, 1)');
-        }
+        // if (robot.selected) {
+        //     drawCircle(context, robot, ROBOT_RADIUS/3, 'rgba(0, 0, 0, 1)');
+        // }
 
         // Draw robot action over the robot
         context.font = "20px Arial";
         context.fillStyle = 'rgba(255, 0, 0, 1)';
         context.textAlign = "center";
-        if (typeof robot.action === 'object' && robot.action !== null){
-            const action_number: string = ActionToStr(robot.action);
-            context.fillText(action_number, getCanvasCoordinates(robot.x, robot.y, context).canvasX, getCanvasCoordinates(robot.x, robot.y, context).canvasY - 10);
-        }
+        // if (typeof robot.action === 'object' && robot.action !== null){
+        //     const action_number: string = ActionToStr(robot.action);
+        //     context.fillText(action_number, getCanvasCoordinates(robot.x, robot.y, context).canvasX, getCanvasCoordinates(robot.x, robot.y, context).canvasY - 10);
+        // }
     };
 
     // Draw a black circle around the robot
@@ -158,7 +160,7 @@ const FootballField: React.FC<FootBallFieldProps> = ({height, gameState}: FootBa
         if (canvas) {
             draw(canvas);
         }
-    }, [gameState]); // Dependency array - redraws when gameState changes
+    }, [robotPositions]); // Dependency array - redraws when gameState changes
 
     return (
         <div className="football-field-container" style={{ height: height }} ref={containerRef}>

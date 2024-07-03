@@ -39,6 +39,7 @@
     transform: translateX(-50%);
     opacity: 0;
     transition: opacity 0.3s;
+    width: 150px;
 }
 
 .toggleSetting-wrapper .icon:hover .tooltip {

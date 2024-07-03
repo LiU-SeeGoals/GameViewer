@@ -4,10 +4,9 @@ import Button from '@mui/material/Button';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import InfoIcon from '@mui/icons-material/Info';
 
-
 interface SettingsProps {
 }
-const label = { inputProps: { 'aria-label': 'Switch demo' } };
+
 const Settings: React.FC<SettingsProps> = () => {
 
     const [isDropdownVisible, setDropdownVisible] = useState(false);
@@ -15,7 +14,6 @@ const Settings: React.FC<SettingsProps> = () => {
     const toggleDropdown = () => {
         setDropdownVisible(!isDropdownVisible);
     };
-
 
     return (
         <>
@@ -25,7 +23,7 @@ const Settings: React.FC<SettingsProps> = () => {
                     Set robot position
                     <span className="icon">
                         <InfoIcon className='icon-info' />
-                        <span className="tooltip">Note: this obviously only works in simulation.</span>
+                        <span className="tooltip">Not yet implemented</span>
                     </span>
                 </p>
                 <Button>Ugglan</Button>

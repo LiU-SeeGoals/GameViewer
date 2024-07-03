@@ -7,8 +7,4 @@ export type Robot = {
     y: number;
     speed_x: number;
     speed_y: number;
-    selected: boolean;
-    showArrow: boolean;
-    hasBall: boolean;
-    action: null | Action;
 }

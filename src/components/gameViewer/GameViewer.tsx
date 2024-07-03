@@ -1,14 +1,24 @@
 import React from 'react';
 import './GameViewer.css';
 import useResizeSidebar from '../../hooks/useResizeSidebar';
-import FootballField from '../footballField/FootballField';
-import BottomBar from '../bottomBar/BottomBar';
-import { GameState } from '../../types/GameState';
+import FootballField from './footballField/FootballField';
+import BottomBar from './bottomBar/BottomBar';
+import { Robot } from "../../types/Robot";
+import { Ball } from "../../types/Ball";
+
 interface gameViewerProps {
-    gameState: GameState
+    robotPositions: Robot[];
+    ballPosition: Ball;
+    terminalLog: string[];
 }
 
-const GameViewer: React.FC<gameViewerProps> = ({gameState}: gameViewerProps) => {
+const GameViewer: React.FC<gameViewerProps> = ({
+    robotPositions,
+    ballPosition,
+    terminalLog,
+}) => {
+    console.log(robotPositions);
+
     const startHeightResizer = 709;
     const resizerWidth = 5;
 
@@ -17,14 +27,14 @@ const GameViewer: React.FC<gameViewerProps> = ({gameState}: gameViewerProps) => 
     console.log(resizerValue);
     return (
         <div className="game-viewer">
-            <FootballField height={bottomBarHeight} gameState={gameState}/>
+            <FootballField height={bottomBarHeight} robotPositions={robotPositions} ballPosition={ballPosition} />
             
             <div className="game-viewer-resizer"
                  style={{height: resizerWidth}}
                  onMouseDown={startResizing}
             />
 
-            <BottomBar/>
+            <BottomBar terminalLog={terminalLog} />
         </div>
     );
 };

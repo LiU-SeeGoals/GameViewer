@@ -1,19 +1,31 @@
 import React, { useState } from 'react';
 import './Sidebar.css'
 import useResizeSidebar from '../../hooks/useResizeSidebar';
-import ExternalLinks from './externalLinks/ExternalLinks';
+import ExternalLink from './externalLink/ExternalLink';
 import Header from './header/Header';
 import ToggleSetting from './toggleSetting/ToggleSetting';
 import ButtonSetting from './buttonSetting/ButtonSetting';
 import RobotTable from './robotTable/RobotTable'
 
-const label = { inputProps: { 'aria-label': 'Switch demo' } };
-
+import { Action } from "../../types/Action";
 
 interface SidebarProps {
+    vectorSetting: boolean[];
+    setVectorSetting: React.Dispatch<React.SetStateAction<boolean[]>>;
+    traceSetting: boolean[];
+    setTraceSetting: React.Dispatch<React.SetStateAction<boolean[]>>;
+    robotActions: Action[];
 }
 
-const Sidebar: React.FC<SidebarProps> = () => {
+const Sidebar: React.FC<SidebarProps> = ({
+    vectorSetting,
+    setVectorSetting,
+    traceSetting,
+    setTraceSetting,
+    robotActions,
+  }) => {
+
+    // Resizeble sidebar stuff
     const minSidebarContentWidth = 250;
     const startWidthSidebar = 400;
     const resizerWidth = 5;
@@ -28,6 +40,9 @@ const Sidebar: React.FC<SidebarProps> = () => {
         display: contentDisplay,
     };
 
+    const vectorTip = "Are you stupid? It's kind of self-explanatory";
+    const traceTip = "Trace shows a line of where the robot has been. It's like a snail trail but for robots.";
+
     return (
 
         <div className="sidebar-wrapper">
@@ -35,13 +50,25 @@ const Sidebar: React.FC<SidebarProps> = () => {
                 <div className="sidebar-content">
                     <Header />
                     <hr />
-                    <ExternalLinks />
+                    <ExternalLink text={"SSL vision"} link={"https://www.google.com"} />
+                    <ExternalLink text={"Game controller"} link={"https://www.google.com"} />
+                    <ExternalLink text={"Jenking (container config)"} link={"https://www.google.com"} />
                     <hr />
-                    <ToggleSetting/>
-                    <ToggleSetting/>
+                    <ToggleSetting 
+                        name={"Show vector"} 
+                        settings={vectorSetting} 
+                        setSettings={setVectorSetting}
+                        itemName='Robot'
+                        tip={vectorTip}/>
+                    <ToggleSetting
+                        name={"Show trace"} 
+                        settings={traceSetting} 
+                        setSettings={setTraceSetting}
+                        itemName='Robot'
+                        tip={traceTip}/>
                     <ButtonSetting/>
                     <hr />
-                    <RobotTable/>
+                    <RobotTable robotActions={robotActions}/>
                 </div>
             </div>
             <div
