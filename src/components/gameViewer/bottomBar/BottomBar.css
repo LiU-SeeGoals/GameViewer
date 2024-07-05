@@ -5,7 +5,7 @@
     padding-left: 10px;
     font-family: "Courier New";
     overflow: auto;
-    height: 0px;
+    height: 0px; /* Added to make the bottom bar collapsible */
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column-reverse; /* Makes items appear at the bottom of terminal */
 }

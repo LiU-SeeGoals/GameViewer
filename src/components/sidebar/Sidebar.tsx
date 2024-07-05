@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Sidebar.css'
 import useResizeSidebar from '../../hooks/useResizeSidebar';
 import ExternalLink from './externalLink/ExternalLink';
@@ -15,6 +15,7 @@ interface SidebarProps {
     traceSetting: boolean[];
     setTraceSetting: React.Dispatch<React.SetStateAction<boolean[]>>;
     robotActions: Action[];
+    visibleRobots: boolean[];
 }
 
 const Sidebar: React.FC<SidebarProps> = ({
@@ -23,6 +24,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     traceSetting,
     setTraceSetting,
     robotActions,
+    visibleRobots,
   }) => {
 
     // Resizeble sidebar stuff
@@ -52,7 +54,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                     <hr />
                     <ExternalLink text={"SSL vision"} link={"https://www.google.com"} />
                     <ExternalLink text={"Game controller"} link={"https://www.google.com"} />
-                    <ExternalLink text={"Jenking (container config)"} link={"https://www.google.com"} />
+                    <ExternalLink text={"Jenkins (container config)"} link={"https://www.youtube.com/watch?v=dQw4w9WgXcQ"} />
                     <hr />
                     <ToggleSetting 
                         name={"Show vector"} 
@@ -68,7 +70,9 @@ const Sidebar: React.FC<SidebarProps> = ({
                         tip={traceTip}/>
                     <ButtonSetting/>
                     <hr />
-                    <RobotTable robotActions={robotActions}/>
+                    <RobotTable 
+                        robotActions={robotActions}
+                        visibleRobots={visibleRobots}/>
                 </div>
             </div>
             <div

@@ -1,13 +1,13 @@
 import React, {useEffect} from 'react';
 import './FootballField.css';
-import { Robot } from '../../types/Robot';
-import { Ball } from "../../types/Ball";
-import { ActionToStr} from '../../helper/defaultValues';
+import { Robot } from '../../../types/Robot';
+import { Ball } from "../../../types/Ball";
 
 interface FootBallFieldProps {
-    height: number
-    robotPositions: Robot[],
-    ballPosition: Ball
+    height: number;
+    robotPositions: Robot[];
+    ballPosition: Ball;
+    errorOverlay: string;
 }
 
 const REAL_WIDTH_FIELD: number = 9600;
@@ -20,7 +20,7 @@ const SPEED_ARROW_THICKNESS: number = 3;
 
 const COLOR_MAP: Record<string, string> = {"yellow": "rgba(245, 239, 66, 1)", "blue": "rgba(66, 135, 245, 1)"};
 
-const FootballField: React.FC<FootBallFieldProps> = ({height, robotPositions, ballPosition}: FootBallFieldProps) => {
+const FootballField: React.FC<FootBallFieldProps> = ({height, robotPositions, ballPosition, errorOverlay}: FootBallFieldProps) => {
     const canvasRef = React.useRef<HTMLCanvasElement>(null);
     const containerRef = React.useRef<HTMLDivElement>(null);
 
@@ -164,6 +164,7 @@ const FootballField: React.FC<FootBallFieldProps> = ({height, robotPositions, ba
 
     return (
         <div className="football-field-container" style={{ height: height }} ref={containerRef}>
+            <p className='overlay-warning'>{errorOverlay}</p>
             <img src="./src/assets/football_field.svg" alt="canvas" style={{height: height}} onLoad={canvasInit} />
             <canvas className="football-field-canvas" ref={canvasRef} style={{height: height}}></canvas>
         </div>

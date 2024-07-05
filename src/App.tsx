@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css'
 import Sidebar from './components/sidebar/Sidebar'
 import GameViewer from './components/gameViewer/GameViewer'
@@ -8,19 +8,21 @@ import {getDefaultTraceSetting,
   getDefaultActions, 
   getDefaultBallPos, 
   getDefaultRobotPos,
-  getDefaultLog} from './helper/defaultValues'
+  getDefaultLog,
+  getDefaultVisibleRobots} from './helper/defaultValues'
 
 function App() {
-  // The useState are defined here
+  // The useStates are defined here
   const [robotPositions, setRobotPositions] = useState(getDefaultRobotPos());
   const [ballPosition, setBallPosition] = useState(getDefaultBallPos());
   const [robotActions, setRobotActions] = useState(getDefaultActions());
   const [vectorSetting, setVectorSetting] = useState(getDefaultVectorSetting());
   const [traceSetting, setTraceSetting] = useState(getDefaultTraceSetting());
+  const [visibleRobots, setvisibleRobots] = useState(getDefaultVisibleRobots());
   const [terminalLog, setTerminalLog] = useState(getDefaultLog());
+  const [errorOverlay, setErrorOverlay] = useState("No connection to controller.");
 
   useEffect(() => {
-    console.log('im here 123');
     const socket = new WebSocket('ws://localhost:8080/ws');
 
     socket.onmessage = (event) => {
@@ -29,13 +31,15 @@ function App() {
           return;
         }
 
-        // TODO: Uncomment and implement this function
-        // parseProto(
-        //   setRobotPositions, 
-        //   setBallPosition,
-        //   setRobotActions,
-        //   setTerminalLog,
-        //   event.data);
+        parseProto(
+          event.data,
+          setRobotPositions, 
+          setBallPosition,
+          setRobotActions,
+          setTerminalLog,
+          setErrorOverlay,
+          setvisibleRobots,
+          );
 
       } catch (e) {
         console.error('Error parsing message JSON', e);
@@ -46,6 +50,11 @@ function App() {
     return () => {};
   }, []);
 
+  // Setting the text shown in the browser tab
+  useEffect(() => {
+    document.title = "SeaGoals";
+  }, []);
+
   return (
     <div className="app-container">
       <Sidebar
@@ -54,11 +63,13 @@ function App() {
         traceSetting={traceSetting}
         setTraceSetting={setTraceSetting}
         robotActions={robotActions}
+        visibleRobots={visibleRobots}
         />
       <GameViewer
-        robotPositions={robotPositions} // Note: we should not not be passing setters to GameViewer
+        robotPositions={robotPositions}
         ballPosition={ballPosition}
         terminalLog={terminalLog}
+        errorOverlay={errorOverlay}
         />
     </div>
   );

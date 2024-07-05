@@ -3,51 +3,40 @@ import './RobotTable.css';
 import LensIcon from '@mui/icons-material/Lens';
 import InfoIcon from '@mui/icons-material/Info';
 import { Action } from "../../../types/Action";
+import { actionToStr } from '../../../helper/defaultValues';
 
-interface ExternalLinksProps {
+interface RobotTableProps {
   robotActions: Action[];
+  visibleRobots: boolean[];
 }
 
-const getActionName = (actionCode: number) => {
-  switch (actionCode) {
-    case 0:
-      return "IDLE";
-    case 1:
-      return "STOP";
-    case 2:
-      return "KICK";
-    case 3:
-      return "MOVE";
-    case 4:
-      return "INIT";
-    case 5:
-      return "SET_NAVIGATION_DIRECTION";
-    case 6:
-      return "ROTATE";
-    default:
-      return "UNKNOWN";
-  }
-};
-
-const ExternalLinks: React.FC<ExternalLinksProps> = ({ robotActions }) => {
+const RobotTable: React.FC<RobotTableProps> = ({ robotActions, visibleRobots }) => {
+  
+  const tip = "This only shows if the SSL vision can currenty see the robot";
+  
   return (
     <div className="robotTable-wrapper">
       <div className='robotItem header'>
         <p>ID</p>
         <p>Curr. act.</p>
         <p>Prev. act.</p>
-        <InfoIcon className='icon' />
+        <p>batt.</p>
+        <span className="icon-info">
+            <InfoIcon className='icon' />
+            <span className="tooltip">{tip}</span>
+          </span>
       </div>
       {robotActions.map((action, index) => (
         <div className='robotItem' key={index}>
           <p>{action.Id}</p>
-          <p>{getActionName(action.Action)}</p>
-          <p>{getActionName(action.previousAction)}</p>
-          <LensIcon className='icon' style={{ color: action.Action === 0 ? 'red' : 'green' }} />
+          <p>{actionToStr(action.Action)}</p>
+          <p>{actionToStr(action.PreviousAction)}</p>
+          <p>-</p>
+          <LensIcon className='icon' style={{ color: visibleRobots[index] ? 'green' : 'red' }} />
         </div>
       ))}
     </div>
   );
 };
 
-export default ExternalLinks;
+export default RobotTable;

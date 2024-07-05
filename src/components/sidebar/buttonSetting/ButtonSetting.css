@@ -4,6 +4,10 @@
     width: 100%;
 }
 
+.button-dropdown-content .buttonSetting-wrapper p {
+    padding-left: 50px;
+}
+
 .buttonSetting-wrapper .icon-right-arrow {
     margin-right: 5px;
     font-size: 25px;
@@ -15,10 +19,6 @@
     font-size: 18px;
     vertical-align: middle;
     padding-left: 10px;
-}
-
-.button-dropdown-content .buttonSetting-wrapper p {
-    padding-left: 50px;
 }
 
 .buttonSetting-wrapper .icon {

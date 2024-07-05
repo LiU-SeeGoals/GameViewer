@@ -10,29 +10,31 @@ interface gameViewerProps {
     robotPositions: Robot[];
     ballPosition: Ball;
     terminalLog: string[];
+    errorOverlay: string;
 }
 
 const GameViewer: React.FC<gameViewerProps> = ({
     robotPositions,
     ballPosition,
     terminalLog,
+    errorOverlay,
 }) => {
-    console.log(robotPositions);
-
     const startHeightResizer = 709;
     const resizerWidth = 5;
 
     const {value: resizerValue, startResizing} = useResizeSidebar(true, startHeightResizer);
     const bottomBarHeight: number = window.innerHeight - resizerValue < resizerWidth ? window.innerHeight - resizerWidth : resizerValue;
-    console.log(resizerValue);
     return (
         <div className="game-viewer">
-            <FootballField height={bottomBarHeight} robotPositions={robotPositions} ballPosition={ballPosition} />
+            <FootballField 
+                height={bottomBarHeight} 
+                robotPositions={robotPositions} 
+                ballPosition={ballPosition}
+                errorOverlay={errorOverlay} />
             
             <div className="game-viewer-resizer"
                  style={{height: resizerWidth}}
-                 onMouseDown={startResizing}
-            />
+                 onMouseDown={startResizing} />
 
             <BottomBar terminalLog={terminalLog} />
         </div>

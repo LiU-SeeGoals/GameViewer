@@ -11,13 +11,22 @@
 }
 
 .football-field-container {
-    position: relative; /* Added to position children absolutely within it */
-    width: 100%; /* Adjust as necessary */
-    height: auto; /* Adjust based on your requirements */
-    margin: 0 auto; /* Center the container if necessary */
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
 }
 
+/* looks better with border only left and right :) */
 .football-field-container img {
     border-left: 1px solid black;
     border-right: 1px solid black;
+}
+
+.football-field-container .overlay-warning {
+    position: absolute;
+    z-index: 1;
+    padding: 30px;
+    font-size: 1.5rem;
+    color: red;
 }

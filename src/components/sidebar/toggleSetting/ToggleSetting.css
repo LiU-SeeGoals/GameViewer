@@ -4,21 +4,21 @@
     width: 100%;
 }
 
+.toggle-dropdown-content .toggleSetting-wrapper p {
+    padding-left: 50px;
+}
+
 .toggleSetting-wrapper .icon-right-arrow {
     margin-right: 5px;
     font-size: 25px;
     vertical-align: middle;
-        cursor: pointer;
+    cursor: pointer;
 }
 
 .toggleSetting-wrapper .icon-info {
     font-size: 18px;
     vertical-align: middle;
     padding-left: 10px;
-}
-
-.toggle-dropdown-content .toggleSetting-wrapper p {
-    padding-left: 50px;
 }
 
 .toggleSetting-wrapper .icon {
