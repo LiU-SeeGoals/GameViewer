@@ -68,7 +68,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                         setSettings={setTraceSetting}
                         itemName='Robot'
                         tip={traceTip}/>
-                    <ButtonSetting/>
+                    <ButtonSetting/> {/* Not implemented yet */}
                     <hr />
                     <RobotTable 
                         robotActions={robotActions}
