@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import './App.css'
 import Sidebar from './components/sidebar/Sidebar'
 import GameViewer from './components/gameViewer/GameViewer'
-import {parseProto} from './helper/ParseProto'
+import {parseJson} from './helper/ParseJson'
 import {getDefaultTraceSetting, 
   getDefaultVectorSetting, 
   getDefaultActions, 
@@ -21,17 +21,17 @@ function App() {
   const [visibleRobots, setvisibleRobots] = useState(getDefaultVisibleRobots());
   const [terminalLog, setTerminalLog] = useState(getDefaultLog());
   const [errorOverlay, setErrorOverlay] = useState("No connection to controller.");
-
+  
   useEffect(() => {
     const socket = new WebSocket('ws://localhost:8080/ws');
-
+    
     socket.onmessage = (event) => {
       try {
         if (!event.data) {
           return;
         }
 
-        parseProto(
+        parseJson(
           event.data,
           setRobotPositions, 
           setBallPosition,
@@ -44,6 +44,7 @@ function App() {
       } catch (e) {
         console.error('Error parsing message JSON', e);
       }
+      
     };
 
     // Clean up the WebSocket connection on unmount

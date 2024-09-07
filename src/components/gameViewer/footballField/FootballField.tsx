@@ -18,7 +18,7 @@ const ARROW_HEAD_LENGTH: number = 5;
 const SPEED_ARROW_COLOR: string = 'rgba(0, 0, 0, 1)';
 const SPEED_ARROW_THICKNESS: number = 3;
 
-const COLOR_MAP: Record<string, string> = {"yellow": "rgba(245, 239, 66, 1)", "blue": "rgba(66, 135, 245, 1)"};
+const COLOR_MAP: Record<string, string> = {0: "rgba(245, 239, 66, 1)", 1: "rgba(66, 135, 245, 1)"};
 
 const FootballField: React.FC<FootBallFieldProps> = ({height, robotPositions, ballPosition, errorOverlay}: FootBallFieldProps) => {
     const canvasRef = React.useRef<HTMLCanvasElement>(null);
@@ -75,7 +75,7 @@ const FootballField: React.FC<FootBallFieldProps> = ({height, robotPositions, ba
         // if (robot.showArrow){
         //     drawArrow(context, robot, SPEED_ARROW_COLOR, SPEED_ARROW_THICKNESS);
         // }
-        drawCircle(context, robot, ROBOT_RADIUS * getScaler(context), COLOR_MAP[robot.team]);
+        drawCircle(context, robot, ROBOT_RADIUS * getScaler(context), COLOR_MAP[robot.Team]);
         drawId(context, robot)
         
         
@@ -95,7 +95,7 @@ const FootballField: React.FC<FootBallFieldProps> = ({height, robotPositions, ba
 
     // Draw a black circle around the robot
     const drawCircle = (context: CanvasRenderingContext2D, robot: Robot, radius: number, color: string) => {
-        const {canvasX, canvasY} = getCanvasCoordinates(robot.x, robot.y, context);
+        const {canvasX, canvasY} = getCanvasCoordinates(robot.PosX, robot.PosY, context);
         context.beginPath();
         context.arc(canvasX, canvasY, radius, 0, 2 * Math.PI);
         context.strokeStyle = 'rgba(0, 0, 0, 0)'; // make the border transparent
@@ -106,22 +106,22 @@ const FootballField: React.FC<FootBallFieldProps> = ({height, robotPositions, ba
 
     // Draws the robots number id on the robot
     const drawId = (context: CanvasRenderingContext2D, robot: Robot) => {
-        const {canvasX, canvasY} = getCanvasCoordinates(robot.x, robot.y, context);
+        const {canvasX, canvasY} = getCanvasCoordinates(robot.PosX, robot.PosY, context);
         context.font = '14px Arial';
         context.textAlign = 'center';
         context.textBaseline = 'middle';
         context.fillStyle = 'black';
-        context.fillText(String(robot.id), canvasX, canvasY);
+        context.fillText(String(robot.Id), canvasX, canvasY);
     }
 
     // Draws a arrow showing the direction of the robot
     const drawArrow = (context: CanvasRenderingContext2D, robot: Robot, color: string, thickness: number) => {
 
-        const angle: number = Math.atan2(robot.speed_y, robot.speed_x) - Math.PI/2;
+        const angle: number = Math.atan2(robot.VelY, robot.VelX) - Math.PI/2;
         //const arrowLength: number = 10 * Math.hypot(robot.speed_x, robot.speed_y);
         const arrowLength: number = 100;
         // Calculate the starting point of the arrow (on the circle)
-        const {canvasX: startX, canvasY: startY} = getCanvasCoordinates(robot.x, robot.y, context);
+        const {canvasX: startX, canvasY: startY} = getCanvasCoordinates(robot.PosX, robot.PosY, context);
 
         // Calculate the end point of the arrow
         const endX: number = startX + arrowLength * Math.cos(angle);

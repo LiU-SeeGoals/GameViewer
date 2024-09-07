@@ -3,18 +3,17 @@ import { Ball } from "../types/Ball";
 import { Action } from "../types/Action";
 
 export function getDefaultRobotPos(): Robot[] {
-    const robots = [
-        {"id": 0, "team":"blue", "x": 2000, "y": 0, "speed_x":1, "speed_y":1},
-        {"id": 1, "team":"blue", "x": -4500, "y": 3000, "speed_x":2, "speed_y":1},
-        {"id": 2, "team":"blue", "x": -1000, "y": 1000, "speed_x":3, "speed_y":2},
-        {"id": 3, "team":"blue", "x": -1000, "y": -1000, "speed_x":0, "speed_y":0},
-
-        {"id": 0, "team":"yellow", "x": -3000, "y": 3000, "speed_x":0, "speed_y":0},
-        {"id": 1, "team":"yellow", "x": 360, "y": 150, "speed_x":0, "speed_y":0},
-        {"id": 2, "team":"yellow", "x": 95, "y": 600, "speed_x":0, "speed_y":0},
-        {"id": 3, "team":"yellow", "x": 300, "y": 1000, "speed_x":0, "speed_y":0},
-    ];
-    return robots;
+  const robots: Robot[] = [
+      { Id: 0, Team: 0, PosW: 0, PosX: 2000, PosY: 0, VelW: 0, VelX: 1, VelY: 1 },
+      { Id: 1, Team: 0, PosW: 0, PosX: -4500, PosY: 3000, VelW: 0, VelX: 2, VelY: 1 },
+      { Id: 2, Team: 0, PosW: 0, PosX: -1000, PosY: 1000, VelW: 0, VelX: 3, VelY: 2 },
+      { Id: 3, Team: 0, PosW: 0, PosX: -1000, PosY: -1000, VelW: 0, VelX: 0, VelY: 0 },
+      { Id: 0, Team: 1, PosW: 0, PosX: -3000, PosY: 3000, VelW: 0, VelX: 0, VelY: 0 },
+      { Id: 1, Team: 1, PosW: 0, PosX: 360, PosY: 150, VelW: 0, VelX: 0, VelY: 0 },
+      { Id: 2, Team: 1, PosW: 0, PosX: 95, PosY: 600, VelW: 0, VelX: 0, VelY: 0 },
+      { Id: 3, Team: 1, PosW: 0, PosX: 300, PosY: 1000, VelW: 0, VelX: 0, VelY: 0 }
+  ];
+  return robots;
 }
 
 export function getDefaultBallPos(): Ball {
