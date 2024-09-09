@@ -18,7 +18,7 @@ export function parseGameState(oldGameState: GameState, data: string): GameState
         speed_y: parseData.Ball.VelY
     };
 
-    let team_size = 11;
+    const team_size = 5;
 
     for (let i = 0; i < team_size; i++) {
         newRobots[i].x = parseData.BlueTeam[i].PosX;
@@ -34,10 +34,6 @@ export function parseGameState(oldGameState: GameState, data: string): GameState
         newRobots[i + team_size].speed_y = parseData.YellowTeam[i].VelY;
         newRobots[i + team_size].id = parseData.YellowTeam[i].Id;
     }
-    // for (let i = 0; i < parseData.Actions.length; i++) {
-    //     const offset: number = parseData.Actions[i].Team === "blue" ? 0 : team_size;
-    //     newRobots[offset + parseData.Actions[i].Id].action = parseData.Actions[i];
-    // }
     return {robots: newRobots, ball: gameStateBall};
 }
 
@@ -50,24 +46,13 @@ export function getDefaultGameState(): GameState {
         {"id": 3, "team":"blue", "x": -1000, "y": -1000, "speed_x":0, "speed_y":0},
         {"id": 4, "team":"blue", "x": 1000, "y": -1000, "speed_x":0, "speed_y":0},
         {"id": 5, "team":"blue", "x": 1000, "y": 95, "speed_x":0, "speed_y":0},
-        {"id": 6, "team":"blue", "x": 2000, "y": 0, "speed_x":1, "speed_y":1},
-        {"id": 7, "team":"blue", "x": -4500, "y": 3000, "speed_x":2, "speed_y":1},
-        {"id": 8, "team":"blue", "x": -1000, "y": 1000, "speed_x":3, "speed_y":2},
-        {"id": 9, "team":"blue", "x": -1000, "y": -1000, "speed_x":0, "speed_y":0},
-        {"id": 10, "team":"blue", "x": 1000, "y": -1000, "speed_x":0, "speed_y":0},
-        {"id": 11, "team":"blue", "x": 1000, "y": 95, "speed_x":0, "speed_y":0},
         {"id": 0, "team":"yellow", "x": -3000, "y": 3000, "speed_x":0, "speed_y":0},
         {"id": 1, "team":"yellow", "x": 360, "y": 150, "speed_x":0, "speed_y":0},
         {"id": 2, "team":"yellow", "x": 95, "y": 600, "speed_x":0, "speed_y":0},
         {"id": 3, "team":"yellow", "x": 300, "y": 1000, "speed_x":0, "speed_y":0},
         {"id": 4, "team":"yellow", "x": -300, "y": -450, "speed_x":0, "speed_y":0},
         {"id": 5, "team":"yellow", "x": -900, "y": 200, "speed_x":0, "speed_y":0},
-        {"id": 6, "team":"yellow", "x": -3000, "y": 3000, "speed_x":0, "speed_y":0},
-        {"id": 7, "team":"yellow", "x": -3000, "y": 3000, "speed_x":0, "speed_y":0},
-        {"id": 8, "team":"yellow", "x": 360, "y": 150, "speed_x":0, "speed_y":0},
-        {"id": 9, "team":"yellow", "x": 95, "y": 600, "speed_x":0, "speed_y":0},
-        {"id": 10, "team":"yellow", "x": 300, "y": 1000, "speed_x":0, "speed_y":0},
-        {"id": 11, "team":"yellow", "x": -300, "y": -450, "speed_x":0, "speed_y":0},
+
     ];
     const ball = {"x": 500, "y": 500, "speed_x":0, "speed_y":0};
     return {robots, ball};
