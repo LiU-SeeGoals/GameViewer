@@ -3,6 +3,7 @@ import React from "react";
 import './RobotInfo.css'
 import { useContext, useState } from 'react';
 import { GameStateContext } from '../../App';
+import { ActionToStr } from '../../types/Action';
 import RobotPopUp from '../robotPopUp/RobotPopUp';
 
 
@@ -32,13 +33,15 @@ const RobotInfo : React.FC<RobotInfoProps>  = ({RobotId}: RobotInfoProps) => {
                     
                 </div>
                 <div className="right-division">
-                    <div className={hasBall ? "has-ball active" : "has-ball"}> 
+                    {/*<div className={hasBall ? "has-ball active" : "has-ball"}> 
                         <p> {hasBall ? 'Has ball' : 'No ball'} </p>
-                    </div>
+                    </div>*/}
+                    <p>{robot.action ? ActionToStr(robot.action) : "NO ACTION"}</p>
                     <button onClick={() => setIsOpen(true)}>More information</button>
                     <RobotPopUp isOpen={isOpen} onClose={() => setIsOpen(false)} id={RobotId} >
                         
                     </RobotPopUp>
+                    
                 </div>
             </div>
         </div>
