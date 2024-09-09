@@ -10,7 +10,7 @@ interface FootBallFieldProps {
 }
 
 const REAL_WIDTH_FIELD: number = 9600;
-const ROBOT_RADIUS: number = 100;
+const ROBOT_RADIUS: number = 130;
 const ARROW_HEAD_LENGTH: number = 5;
 const SPEED_ARROW_COLOR: string = 'rgba(0, 0, 0, 1)';
 const SPEED_ARROW_THICKNESS: number = 3;
@@ -66,18 +66,10 @@ const FootballField: React.FC<FootBallFieldProps> = ({ height, gameState }: Foot
         drawCircle(context, robot, ROBOT_RADIUS * getScaler(context), COLOR_MAP[robot.team]);
         drawId(context, robot);
 
-        //if (robot.selected) {
-        //    drawCircle(context, robot, ROBOT_RADIUS / 3, 'rgba(0, 0, 0, 1)');
-        //}
-
-        // Draw robot action over the robot
-        context.font = "20px Arial";
-        context.fillStyle = 'rgba(255, 0, 0, 1)';
-        context.textAlign = "center";
-        if (typeof robot.action === 'object' && robot.action !== null) {
-            const action_number: string = ActionToStr(robot.action);
-            context.fillText(action_number, getCanvasCoordinates(robot.x, robot.y, context).canvasX, getCanvasCoordinates(robot.x, robot.y, context).canvasY - 10);
+        if (robot.selected) {
+            drawRing(context, robot, ROBOT_RADIUS * getScaler(context), 'rgba(0, 0, 0, 1)');
         }
+
     };
 
     // Utility function to draw a circle
@@ -89,10 +81,19 @@ const FootballField: React.FC<FootBallFieldProps> = ({ height, gameState }: Foot
         context.fill();
     };
 
+    const drawRing = (context: CanvasRenderingContext2D, robot: Robot, radius: number, color: string) => {
+        const { canvasX, canvasY } = getCanvasCoordinates(robot.x, robot.y, context);
+        context.beginPath();
+        context.arc(canvasX, canvasY, radius, 0, 2 * Math.PI);
+        context.fillStyle = color;
+        context.stroke();
+    };
+
     // Utility function to draw the robot ID
     const drawId = (context: CanvasRenderingContext2D, robot: Robot) => {
         const {canvasX, canvasY} = getCanvasCoordinates(robot.x, robot.y, context);
-        context.font = '14px Arial';
+        const fontSize = ROBOT_RADIUS/8;
+        context.font = `${fontSize}px Arial`;
         context.textAlign = 'center';
         context.textBaseline = 'middle';
         context.fillStyle = 'black';

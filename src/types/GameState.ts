@@ -39,8 +39,19 @@ export function parseGameState(oldGameState: GameState, data: string): GameState
 
 
 export function getDefaultGameState(): GameState {
+    const testAction = {
+      "Id": 1,
+      "Action": 1,
+      "PosX": 0,
+      "PosY": 0,
+      "PosW": 0,
+      "DestX": 0,
+      "DestY": 0,
+      "DestW": 0,
+      "Dribble": false,
+  }
     const robots = [
-        {"id": 0, "team":"blue", "x": 2000, "y": 0, "speed_x":1, "speed_y":1},
+        {"id": 0, "team":"blue", "x": 2000, "y": 0, "speed_x":1, "speed_y":1, "action":testAction},
         {"id": 1, "team":"blue", "x": -4500, "y": 3000, "speed_x":2, "speed_y":1},
         {"id": 2, "team":"blue", "x": -1000, "y": 1000, "speed_x":3, "speed_y":2},
         {"id": 3, "team":"blue", "x": -1000, "y": -1000, "speed_x":0, "speed_y":0},
