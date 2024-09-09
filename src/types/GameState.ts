@@ -18,23 +18,21 @@ export function parseGameState(oldGameState: GameState, data: string): GameState
         speed_y: parseData.Ball.VelY
     };
 
-    for (let i = 0; i < parseData.BlueTeam.length; i++) {
+    const team_size = 5;
+
+    for (let i = 0; i < team_size; i++) {
         newRobots[i].x = parseData.BlueTeam[i].PosX;
         newRobots[i].y = parseData.BlueTeam[i].PosY;
         newRobots[i].speed_x = parseData.BlueTeam[i].VelX;
         newRobots[i].speed_y = parseData.BlueTeam[i].VelY;
         newRobots[i].id = parseData.BlueTeam[i].Id;
     }
-    for (let i = 0; i < parseData.YellowTeam.length; i++) {
-        newRobots[i + parseData.BlueTeam.length].x = parseData.YellowTeam[i].PosX;
-        newRobots[i + parseData.BlueTeam.length].y = parseData.YellowTeam[i].PosY;
-        newRobots[i + parseData.BlueTeam.length].speed_x = parseData.YellowTeam[i].VelX;
-        newRobots[i + parseData.BlueTeam.length].speed_y = parseData.YellowTeam[i].VelY;
-        newRobots[i + parseData.BlueTeam.length].id = parseData.YellowTeam[i].Id;
-    }
-    for (let i = 0; i < parseData.Actions.length; i++) {
-        const offset: number = parseData.Actions[i].Team === "blue" ? 0 : parseData.BlueTeam.length;
-        newRobots[offset + parseData.Actions[i].Id].action = parseData.Actions[i];
+    for (let i = 0; i < team_size; i++) {
+        newRobots[i + team_size].x = parseData.YellowTeam[i].PosX;
+        newRobots[i + team_size].y = parseData.YellowTeam[i].PosY;
+        newRobots[i + team_size].speed_x = parseData.YellowTeam[i].VelX;
+        newRobots[i + team_size].speed_y = parseData.YellowTeam[i].VelY;
+        newRobots[i + team_size].id = parseData.YellowTeam[i].Id;
     }
     return {robots: newRobots, ball: gameStateBall};
 }
@@ -54,6 +52,7 @@ export function getDefaultGameState(): GameState {
         {"id": 3, "team":"yellow", "x": 300, "y": 1000, "speed_x":0, "speed_y":0},
         {"id": 4, "team":"yellow", "x": -300, "y": -450, "speed_x":0, "speed_y":0},
         {"id": 5, "team":"yellow", "x": -900, "y": 200, "speed_x":0, "speed_y":0},
+
     ];
     const ball = {"x": 500, "y": 500, "speed_x":0, "speed_y":0};
     return {robots, ball};

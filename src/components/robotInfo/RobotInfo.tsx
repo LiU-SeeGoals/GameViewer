@@ -22,14 +22,13 @@ const RobotInfo : React.FC<RobotInfoProps>  = ({RobotId}: RobotInfoProps) => {
     const hasBall = robot.hasBall;
     const [isOpen, setIsOpen] = useState(false);
     
-
     return(
         <div className="robot-info-content">
             <h2>Robot {RobotId}</h2>
             <div className="content">
                 <div className="left-division"> 
                     <p>{`Distance to ball: ${balldistance} cm`}</p>
-                    <p>x: {robot.x} y: {robot.y}</p>
+                    <p>x: {Math.round(robot.x)} y: {Math.round(robot.y)}</p>
                     
                 </div>
                 <div className="right-division">
