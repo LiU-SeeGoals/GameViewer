@@ -1,0 +1,3 @@
+[submodule "src/proto-messages"]
+	path = src/proto-messages
+	url = git@github.com:LiU-SeeGoals/proto-messages.git
