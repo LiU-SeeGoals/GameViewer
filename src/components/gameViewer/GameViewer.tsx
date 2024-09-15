@@ -1,55 +1,42 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import './GameViewer.css';
 import useResizeSidebar from '../../hooks/useResizeSidebar';
-import FootballField from '../footballField/FootballField';
-import { GameStateContext } from '../../App';
-import { GameState, updateYellowShowArrow } from '../../types/GameState';
+import FootballField from './footballField/FootballField';
+import BottomBar from './bottomBar/BottomBar';
+import { Robot } from "../../types/Robot";
+import { Ball } from "../../types/Ball";
+
 interface gameViewerProps {
-    gameState: GameState
+    robotPositions: Robot[];
+    ballPosition: Ball;
+    terminalLog: string[];
+    errorOverlay: string;
 }
 
-const GameViewer: React.FC<gameViewerProps> = ({gameState}: gameViewerProps) => {
+const GameViewer: React.FC<gameViewerProps> = ({
+    robotPositions,
+    ballPosition,
+    terminalLog,
+    errorOverlay,
+}) => {
     const startHeightResizer = 709;
-    const resizerWidth = 10;
+    const resizerWidth = 5;
 
     const {value: resizerValue, startResizing} = useResizeSidebar(true, startHeightResizer);
-    const gameStateCtx = useContext(GameStateContext);
-    
-    const [arrow, setArrow] = useState(gameStateCtx.state.robots[6].showArrow);
-
-    const handleClick = () => {
-        for (let i = 0; i < 6; i++ ) {
-            gameStateCtx.setState((prevState: GameState) => updateYellowShowArrow(prevState, i, !arrow));
-        }
-        setArrow((prevArrow: boolean) => !prevArrow)};
-
+    const bottomBarHeight: number = window.innerHeight - resizerValue < resizerWidth ? window.innerHeight - resizerWidth : resizerValue;
     return (
         <div className="game-viewer">
-            <FootballField height={resizerValue} gameState={gameState}/>
+            <FootballField 
+                height={bottomBarHeight} 
+                robotPositions={robotPositions} 
+                ballPosition={ballPosition}
+                errorOverlay={errorOverlay} />
             
             <div className="game-viewer-resizer"
                  style={{height: resizerWidth}}
-                 onMouseDown={startResizing}
-            />
+                 onMouseDown={startResizing} />
 
-            <div className="game-viewer-container" style={{}}>
-                <p>Game status: </p>
-                <button 
-                    onClick={handleClick}
-                    style={{ backgroundColor: arrow ? 'rgb(186, 48, 48)' : 'rgb(96, 126, 61)', color: 'white' }}
-                    >
-                    {arrow ?"Hide opponent's arrows" : "Show opponent's arrows"}
-                </button>
-                <a href="">
-                    <button>link to something</button>
-                </a>
-                <a href="">
-                    <button>link to something else</button>
-                </a>
-                <a href="">
-                    <button>link to something other</button>
-                </a>
-            </div>
+            <BottomBar terminalLog={terminalLog} />
         </div>
     );
 };
