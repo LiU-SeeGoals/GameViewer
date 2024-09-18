@@ -47,3 +47,11 @@
     opacity: 1;
 }
 
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.test {
+    text-align: center;
+}

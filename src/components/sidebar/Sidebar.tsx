@@ -10,8 +10,10 @@ import RobotTable from './robotTable/RobotTable'
 import { Action } from "../../types/Action";
 
 interface SidebarProps {
-    vectorSetting: boolean[];
-    setVectorSetting: React.Dispatch<React.SetStateAction<boolean[]>>;
+    vectorSettingBlue: boolean[];
+    setVectorSettingBlue: React.Dispatch<React.SetStateAction<boolean[]>>;
+    vectorSettingYellow: boolean[];
+    setVectorSettingYellow: React.Dispatch<React.SetStateAction<boolean[]>>;
     traceSetting: boolean[];
     setTraceSetting: React.Dispatch<React.SetStateAction<boolean[]>>;
     robotActions: Action[];
@@ -19,8 +21,10 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({
-    vectorSetting,
-    setVectorSetting,
+    vectorSettingBlue,
+    setVectorSettingBlue,
+    vectorSettingYellow,
+    setVectorSettingYellow,
     traceSetting,
     setTraceSetting,
     robotActions,
@@ -58,14 +62,20 @@ const Sidebar: React.FC<SidebarProps> = ({
                     <hr />
                     <ToggleSetting 
                         name={"Show vector"} 
-                        settings={vectorSetting} 
-                        setSettings={setVectorSetting}
+                        settingsBlue={vectorSettingBlue} 
+                        settingsYellow={vectorSettingYellow} 
+                        setSettingsBlue={setVectorSettingBlue}
+                        setSettingsYellow={setVectorSettingYellow}
+
+
                         itemName='Robot'
                         tip={vectorTip}/>
                     <ToggleSetting
                         name={"Show trace"} 
-                        settings={traceSetting} 
-                        setSettings={setTraceSetting}
+                        settingsBlue={traceSetting} 
+                        settingsYellow={traceSetting} 
+                        setSettingsBlue={setTraceSetting}
+                        setSettingsYellow={setTraceSetting}
                         itemName='Robot'
                         tip={traceTip}/>
                     <ButtonSetting/> {/* Not implemented yet */}
