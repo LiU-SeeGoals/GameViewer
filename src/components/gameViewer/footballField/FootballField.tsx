@@ -19,6 +19,7 @@ const ROBOT_RADIUS: number = 90;
 const ARROW_HEAD_LENGTH: number = 5;
 const SPEED_ARROW_COLOR: string = 'rgba(0, 0, 0, 1)';
 const SPEED_ARROW_THICKNESS: number = 3;
+const ARROW_DRAW_MIN_SPEED_THRESHOLD: number = 0.005
 
 const COLOR_MAP: Record<string, string> = {0: "rgba(245, 239, 66, 1)", 1: "rgba(66, 135, 245, 1)"};
 
@@ -126,8 +127,9 @@ const FootballField: React.FC<FootBallFieldProps> = ({height, robotPositions, ba
 
         const angle: number = Math.atan2(robot.VelY, robot.VelX) - Math.PI/2;
         const arrowLength: number = 10 * Math.hypot(robot.VelX, robot.VelY);
+        
         // Don't draw the arrow if the velocity is too small
-        if (arrowLength < 0.005) {
+        if (arrowLength < ARROW_DRAW_MIN_SPEED_THRESHOLD) {
             return;
         }
         //const arrowLength: number = 100;
