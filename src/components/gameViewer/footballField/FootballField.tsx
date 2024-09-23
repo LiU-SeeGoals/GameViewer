@@ -15,13 +15,15 @@ interface FootBallFieldProps {
 const REAL_WIDTH_FIELD: number = 9600;
 
 const ROBOT_RADIUS: number = 90; 
+const BALL_RADIUS = 40;
 
 const ARROW_HEAD_LENGTH: number = 5;
 const SPEED_ARROW_COLOR: string = 'rgba(0, 0, 0, 1)';
 const SPEED_ARROW_THICKNESS: number = 3;
 const ARROW_DRAW_MIN_SPEED_THRESHOLD: number = 0.005
 
-const COLOR_MAP: Record<string, string> = {0: "rgba(245, 239, 66, 1)", 1: "rgba(66, 135, 245, 1)"};
+const BALL_COLOR_ID: number = 2; 
+const COLOR_MAP: Record<string, string> = {0: "rgba(245, 239, 66, 1)", 1: "rgba(66, 135, 245, 1)", 2: "rgba(0, 0, 0, 1)"};
 
 const FootballField: React.FC<FootBallFieldProps> = ({height, robotPositions, ballPosition, errorOverlay, vectorSettingBlue, vectorSettingYellow}: FootBallFieldProps) => {
     const canvasRef = React.useRef<HTMLCanvasElement>(null);
@@ -38,9 +40,8 @@ const FootballField: React.FC<FootBallFieldProps> = ({height, robotPositions, ba
         // Adjust canvas width to match the image width
         canvas.width = event.target.width;
         canvas.height = event.target.height;
-
+        
         draw(canvas);
-
     };
 
     // draws everything on canvas
@@ -58,25 +59,19 @@ const FootballField: React.FC<FootBallFieldProps> = ({height, robotPositions, ba
             drawRobot(context, robot);
         });
         drawBall(context);
-        //drawRobot(context, {x: 0, y: 0, speed_x: 3, speed_y: 3, team: "yellow", selected: false});
 
     }
 
     // Draws ball on the canvas
     const drawBall = (context: CanvasRenderingContext2D) => {
-        // const {canvasX, canvasY} = getCanvasCoordinates(gameState.ball.x, gameState.ball.y, context);
-        // context.beginPath();
-        // context.arc(canvasX, canvasY, 5, 0, 2 * Math.PI);
-        // context.strokeStyle = 'rgba(0, 0, 0, 0)'; // make the border transparent
-        // context.fillStyle = 'black';
-        // context.fill();
-        // context.stroke();
+        const {canvasX, canvasY} = getCanvasCoordinates(ballPosition.x, ballPosition.y, context);
+        drawCircle(context, BALL_RADIUS * getScaler(context), COLOR_MAP[BALL_COLOR_ID], canvasX, canvasY);
     }
 
     // Draws all robots on the canvas
     const drawRobot = (context: CanvasRenderingContext2D, robot: Robot) => {
-
-        drawCircle(context, robot, ROBOT_RADIUS * getScaler(context), COLOR_MAP[robot.Team]);
+        const {canvasX, canvasY} = getCanvasCoordinates(robot.PosX, robot.PosY, context);
+        drawCircle(context, ROBOT_RADIUS * getScaler(context), COLOR_MAP[robot.Team], canvasX, canvasY);
         drawId(context, robot)
 
         if (vectorSettingYellow[robot.Id] && robot.Team == 0) {
@@ -86,24 +81,16 @@ const FootballField: React.FC<FootBallFieldProps> = ({height, robotPositions, ba
             drawArrow(context, robot, SPEED_ARROW_COLOR, SPEED_ARROW_THICKNESS);
         }
         
-        
-        // if (robot.selected) {
-        //     drawCircle(context, robot, ROBOT_RADIUS/3, 'rgba(0, 0, 0, 1)');
-        // }
 
         // Draw robot action over the robot
         context.font = "20px Arial";
         context.fillStyle = 'rgba(255, 0, 0, 1)';
         context.textAlign = "center";
-        // if (typeof robot.action === 'object' && robot.action !== null){
-        //     const action_number: string = ActionToStr(robot.action);
-        //     context.fillText(action_number, getCanvasCoordinates(robot.x, robot.y, context).canvasX, getCanvasCoordinates(robot.x, robot.y, context).canvasY - 10);
-        // }
+
     };
 
     // Draw a black circle around the robot
-    const drawCircle = (context: CanvasRenderingContext2D, robot: Robot, radius: number, color: string) => {
-        const {canvasX, canvasY} = getCanvasCoordinates(robot.PosX, robot.PosY, context);
+    const drawCircle = (context: CanvasRenderingContext2D, radius: number, color: string, canvasX: number, canvasY: number) => {
         context.beginPath();
         context.arc(canvasX, canvasY, radius, 0, 2 * Math.PI);
         context.strokeStyle = 'rgba(0, 0, 0, 0)'; // make the border transparent

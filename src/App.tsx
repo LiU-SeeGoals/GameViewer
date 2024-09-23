@@ -22,10 +22,10 @@ function App() {
   const [visibleRobots, setvisibleRobots] = useState(getDefaultVisibleRobots());
   const [terminalLog, setTerminalLog] = useState(getDefaultLog());
   const [errorOverlay, setErrorOverlay] = useState("No connection to controller.");
-  
+  const [strategy, setStrategy] = useState(null);
+
   useEffect(() => {
     const socket = new WebSocket('ws://localhost:8080/ws');
-    
     socket.onmessage = (event) => {
       try {
         if (!event.data) {
@@ -45,7 +45,6 @@ function App() {
       } catch (e) {
         console.error('Error parsing message JSON', e);
       }
-      
     };
 
     // Clean up the WebSocket connection on unmount

@@ -15,7 +15,8 @@ export function parseJson(
     try {
         // Parse the binary data into a WebsiteCommand message
         const parsedData = JSON.parse(input_data);
-        // console.log('Received Data:', parsedData); // If we want to print the message for debugging
+
+        console.log('Received Data:', parsedData); // If we want to print the message for debugging
 
         // Now we update all the useState varibles with the recieved json
         setRobotPositions(parsedData.RobotPositions)
