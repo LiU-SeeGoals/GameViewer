@@ -11,6 +11,8 @@ interface gameViewerProps {
     ballPosition: Ball;
     terminalLog: string[];
     errorOverlay: string;
+    vectorSettingBlue: boolean[];
+    vectorSettingYellow: boolean[];
 }
 
 const GameViewer: React.FC<gameViewerProps> = ({
@@ -18,6 +20,8 @@ const GameViewer: React.FC<gameViewerProps> = ({
     ballPosition,
     terminalLog,
     errorOverlay,
+    vectorSettingBlue,
+    vectorSettingYellow,
 }) => {
     const startHeightResizer = 709;
     const resizerWidth = 5;
@@ -30,7 +34,9 @@ const GameViewer: React.FC<gameViewerProps> = ({
                 height={bottomBarHeight} 
                 robotPositions={robotPositions} 
                 ballPosition={ballPosition}
-                errorOverlay={errorOverlay} />
+                errorOverlay={errorOverlay} 
+                vectorSettingBlue={vectorSettingBlue}
+                vectorSettingYellow={vectorSettingYellow}/>
             
             <div className="game-viewer-resizer"
                  style={{height: resizerWidth}}

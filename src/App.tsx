@@ -16,7 +16,8 @@ function App() {
   const [robotPositions, setRobotPositions] = useState(getDefaultRobotPos());
   const [ballPosition, setBallPosition] = useState(getDefaultBallPos());
   const [robotActions, setRobotActions] = useState(getDefaultActions());
-  const [vectorSetting, setVectorSetting] = useState(getDefaultVectorSetting());
+  const [vectorSettingBlue, setVectorSettingBlue] = useState(getDefaultVectorSetting());
+  const [vectorSettingYellow, setVectorSettingYellow] = useState(getDefaultVectorSetting());
   const [traceSetting, setTraceSetting] = useState(getDefaultTraceSetting());
   const [visibleRobots, setvisibleRobots] = useState(getDefaultVisibleRobots());
   const [terminalLog, setTerminalLog] = useState(getDefaultLog());
@@ -59,8 +60,10 @@ function App() {
   return (
     <div className="app-container">
       <Sidebar
-        vectorSetting={vectorSetting}
-        setVectorSetting={setVectorSetting}
+        vectorSettingBlue={vectorSettingBlue}
+        setVectorSettingBlue={setVectorSettingBlue}
+        vectorSettingYellow={vectorSettingYellow}
+        setVectorSettingYellow={setVectorSettingYellow}
         traceSetting={traceSetting}
         setTraceSetting={setTraceSetting}
         robotActions={robotActions}
@@ -71,6 +74,8 @@ function App() {
         ballPosition={ballPosition}
         terminalLog={terminalLog}
         errorOverlay={errorOverlay}
+        vectorSettingBlue={vectorSettingBlue}
+        vectorSettingYellow={vectorSettingYellow}
         />
     </div>
   );

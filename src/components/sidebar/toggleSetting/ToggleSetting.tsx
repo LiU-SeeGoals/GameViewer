@@ -4,10 +4,13 @@ import Switch from '@mui/material/Switch';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import InfoIcon from '@mui/icons-material/Info';
 
+
 interface SettingsProps {
   name: string;
-  settings: boolean[];
-  setSettings: React.Dispatch<React.SetStateAction<boolean[]>>;
+  settingsBlue: boolean[];
+  settingsYellow: boolean[];
+  setSettingsBlue: React.Dispatch<React.SetStateAction<boolean[]>>;
+  setSettingsYellow: React.Dispatch<React.SetStateAction<boolean[]>>;
   itemName: string;
   tip: string;
 }
@@ -16,37 +19,44 @@ const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
 const Settings: React.FC<SettingsProps> = ({
   name,
-  settings,
-  setSettings,
+  settingsBlue,
+  setSettingsBlue,
+  settingsYellow,
+  setSettingsYellow,
   itemName,
   tip,
 }) => {
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const [topSwitch, setTopSwitch] = useState(false);
 
-  // Update the topSwitch state based on the settings state
-  useEffect(() => {
-    setTopSwitch(settings.some(setting => setting));
-  }, [settings]);
 
   const toggleDropdown = () => {
     setDropdownVisible(!isDropdownVisible);
   };
 
-  const toggleSetting = (index: number) => {
-    const newSettings = [...settings];
+  const toggleSettingBlue = (index: number) => {
+    const newSettings = [...settingsBlue];
     newSettings[index] = !newSettings[index];
-    setSettings(newSettings);
+    setSettingsBlue(newSettings);
+  };
+  const toggleSettingYellow = (index: number) => {
+    const newSettings = [...settingsYellow];
+    newSettings[index] = !newSettings[index];
+    setSettingsYellow(newSettings);
   };
 
-  const toggleAllSettings = (value: boolean) => {
-    setSettings(settings.map(() => value));
+  const toggleAllSettingsBlue = (value: boolean) => {
+    setSettingsBlue(settingsBlue.map(() => value));
+  };
+  const toggleAllSettingsYellow = (value: boolean) => {
+    setSettingsYellow(settingsYellow.map(() => value));
   };
 
   const handleTopSwitchChange = () => {
     const newValue = !topSwitch;
     setTopSwitch(newValue);
-    toggleAllSettings(newValue);
+    toggleAllSettingsBlue(newValue);
+    toggleAllSettingsYellow(newValue);
   };
 
   return (
@@ -63,18 +73,36 @@ const Settings: React.FC<SettingsProps> = ({
         <Switch {...label} checked={topSwitch} onChange={handleTopSwitchChange} />
       </div>
       {isDropdownVisible && (
-        <div className="toggle-dropdown-content">
-          {settings.map((setting, index) => (
-            <div className="toggleSetting-wrapper" key={index}>
-              <p>{`${itemName} ${index + 1}`}</p>
-              <Switch
-                {...label}
-                checked={setting}
-                onChange={() => toggleSetting(index)}
-              />
+        <div className='row'>
+          <div className="toggle-dropdown-content">
+            <h3 className='test'>Blue robots</h3>
+            
+            {settingsBlue.map((setting, index) => (
+              <div className="toggleSetting-wrapper" key={index}>
+                <p>{`${itemName} ${index}`}</p>
+                <Switch
+                  {...label}
+                  checked={setting}
+                  onChange={() => toggleSettingBlue(index)}
+                  />
+              </div>
+            ))}
+          </div>
+
+          <div className="toggle-dropdown-content">
+            <h3 className='test'>Yellow robots</h3>
+            {settingsYellow.map((setting, index) => (
+              <div className="toggleSetting-wrapper" key={index}>
+                <p>{`${itemName} ${index}`}</p>
+                <Switch
+                  {...label}
+                  checked={setting}
+                  onChange={() => toggleSettingYellow(index)}
+                  />
+              </div>
+            ))}
             </div>
-          ))}
-        </div>
+      </div>
       )}
     </>
   );

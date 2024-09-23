@@ -8,6 +8,8 @@ interface FootBallFieldProps {
     robotPositions: Robot[];
     ballPosition: Ball;
     errorOverlay: string;
+    vectorSettingBlue: boolean[];
+    vectorSettingYellow: boolean[];
 }
 
 const REAL_WIDTH_FIELD: number = 9600;
@@ -17,10 +19,11 @@ const ROBOT_RADIUS: number = 90;
 const ARROW_HEAD_LENGTH: number = 5;
 const SPEED_ARROW_COLOR: string = 'rgba(0, 0, 0, 1)';
 const SPEED_ARROW_THICKNESS: number = 3;
+const ARROW_DRAW_MIN_SPEED_THRESHOLD: number = 0.005
 
 const COLOR_MAP: Record<string, string> = {0: "rgba(245, 239, 66, 1)", 1: "rgba(66, 135, 245, 1)"};
 
-const FootballField: React.FC<FootBallFieldProps> = ({height, robotPositions, ballPosition, errorOverlay}: FootBallFieldProps) => {
+const FootballField: React.FC<FootBallFieldProps> = ({height, robotPositions, ballPosition, errorOverlay, vectorSettingBlue, vectorSettingYellow}: FootBallFieldProps) => {
     const canvasRef = React.useRef<HTMLCanvasElement>(null);
     const containerRef = React.useRef<HTMLDivElement>(null);
 
@@ -56,6 +59,7 @@ const FootballField: React.FC<FootBallFieldProps> = ({height, robotPositions, ba
         });
         drawBall(context);
         //drawRobot(context, {x: 0, y: 0, speed_x: 3, speed_y: 3, team: "yellow", selected: false});
+
     }
 
     // Draws ball on the canvas
@@ -72,11 +76,15 @@ const FootballField: React.FC<FootBallFieldProps> = ({height, robotPositions, ba
     // Draws all robots on the canvas
     const drawRobot = (context: CanvasRenderingContext2D, robot: Robot) => {
 
-        // if (robot.showArrow){
-        //     drawArrow(context, robot, SPEED_ARROW_COLOR, SPEED_ARROW_THICKNESS);
-        // }
         drawCircle(context, robot, ROBOT_RADIUS * getScaler(context), COLOR_MAP[robot.Team]);
         drawId(context, robot)
+
+        if (vectorSettingYellow[robot.Id] && robot.Team == 0) {
+        drawArrow(context, robot, SPEED_ARROW_COLOR, SPEED_ARROW_THICKNESS);
+        }
+        if (vectorSettingBlue[robot.Id] && robot.Team == 1) {
+            drawArrow(context, robot, SPEED_ARROW_COLOR, SPEED_ARROW_THICKNESS);
+        }
         
         
         // if (robot.selected) {
@@ -118,8 +126,13 @@ const FootballField: React.FC<FootBallFieldProps> = ({height, robotPositions, ba
     const drawArrow = (context: CanvasRenderingContext2D, robot: Robot, color: string, thickness: number) => {
 
         const angle: number = Math.atan2(robot.VelY, robot.VelX) - Math.PI/2;
-        //const arrowLength: number = 10 * Math.hypot(robot.speed_x, robot.speed_y);
-        const arrowLength: number = 100;
+        const arrowLength: number = 10 * Math.hypot(robot.VelX, robot.VelY);
+        
+        // Don't draw the arrow if the velocity is too small
+        if (arrowLength < ARROW_DRAW_MIN_SPEED_THRESHOLD) {
+            return;
+        }
+        //const arrowLength: number = 100;
         // Calculate the starting point of the arrow (on the circle)
         const {canvasX: startX, canvasY: startY} = getCanvasCoordinates(robot.PosX, robot.PosY, context);
 
