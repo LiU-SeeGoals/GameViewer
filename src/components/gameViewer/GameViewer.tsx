@@ -9,7 +9,6 @@ import { Ball } from "../../types/Ball";
 interface gameViewerProps {
     robotPositions: Robot[];
     ballPosition: Ball;
-    terminalLog: string[];
     errorOverlay: string;
     vectorSettingBlue: boolean[];
     vectorSettingYellow: boolean[];
@@ -18,7 +17,6 @@ interface gameViewerProps {
 const GameViewer: React.FC<gameViewerProps> = ({
     robotPositions,
     ballPosition,
-    terminalLog,
     errorOverlay,
     vectorSettingBlue,
     vectorSettingYellow,
@@ -42,7 +40,7 @@ const GameViewer: React.FC<gameViewerProps> = ({
                  style={{height: resizerWidth}}
                  onMouseDown={startResizing} />
 
-            <BottomBar terminalLog={terminalLog} />
+            <BottomBar />
         </div>
     );
 };

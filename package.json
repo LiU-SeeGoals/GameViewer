@@ -12,6 +12,7 @@
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
+    "@melloware/react-logviewer": "^5.2.3",
     "@mui/icons-material": "^5.15.20",
     "@mui/material": "^5.15.19",
     "@solidjs/router": "^0.12.5",
@@ -35,7 +36,7 @@
     "eslint-plugin-react-refresh": "^0.4.5",
     "style-loader": "^3.3.4",
     "typescript": "^5.2.2",
-    "vite": "^5.2.10",
+    "vite": "^5.4.8",
     "webpack": "^5.90.0",
     "webpack-cli": "^5.1.4"
   }

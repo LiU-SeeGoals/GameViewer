@@ -8,7 +8,6 @@ import {getDefaultTraceSetting,
   getDefaultActions, 
   getDefaultBallPos, 
   getDefaultRobotPos,
-  getDefaultLog,
   getDefaultVisibleRobots} from './helper/defaultValues'
 
 function App() {
@@ -20,9 +19,10 @@ function App() {
   const [vectorSettingYellow, setVectorSettingYellow] = useState(getDefaultVectorSetting());
   const [traceSetting, setTraceSetting] = useState(getDefaultTraceSetting());
   const [visibleRobots, setvisibleRobots] = useState(getDefaultVisibleRobots());
-  const [terminalLog, setTerminalLog] = useState(getDefaultLog());
   const [errorOverlay, setErrorOverlay] = useState("No connection to controller.");
-  
+ 
+
+//-----------WebSocket for gamestate----------------
   useEffect(() => {
     const socket = new WebSocket('ws://localhost:8080/ws');
     
@@ -37,7 +37,6 @@ function App() {
           setRobotPositions, 
           setBallPosition,
           setRobotActions,
-          setTerminalLog,
           setErrorOverlay,
           setvisibleRobots,
           );
@@ -51,6 +50,19 @@ function App() {
     // Clean up the WebSocket connection on unmount
     return () => {};
   }, []);
+
+
+//-----------WebSocket for logs----------------
+  useEffect(() => {
+    const logSocket = new WebSocket('ws://localhost:8080/logs'); // Different URL for logs
+
+    // Clean up the WebSocket connection on unmount
+    return () => {
+    console.log('Closing WebSocket connection');
+    logSocket.close();
+  };
+  }, []);
+
 
   // Setting the text shown in the browser tab
   useEffect(() => {
@@ -72,7 +84,6 @@ function App() {
       <GameViewer
         robotPositions={robotPositions}
         ballPosition={ballPosition}
-        terminalLog={terminalLog}
         errorOverlay={errorOverlay}
         vectorSettingBlue={vectorSettingBlue}
         vectorSettingYellow={vectorSettingYellow}

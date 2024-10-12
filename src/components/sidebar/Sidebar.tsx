@@ -57,7 +57,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                     <Header />
                     <hr />
                     <ExternalLink text={"SSL vision"} link={"https://www.google.com"} />
-                    <ExternalLink text={"Game controller"} link={"https://www.google.com"} />
+                    <ExternalLink text={"Game controller"} link={"http://localhost:8081"} />
                     <ExternalLink text={"Jenkins (container config)"} link={"https://www.youtube.com/watch?v=dQw4w9WgXcQ"} />
                     <hr />
                     <ToggleSetting 

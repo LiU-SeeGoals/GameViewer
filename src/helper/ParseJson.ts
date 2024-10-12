@@ -8,7 +8,6 @@ export function parseJson(
     setRobotPositions: React.Dispatch<React.SetStateAction<Robot[]>>,
     setBallPosition: React.Dispatch<React.SetStateAction<Ball>>,
     setRobotActions: React.Dispatch<React.SetStateAction<Action[]>>,
-    setTerminalLog: React.Dispatch<React.SetStateAction<string[]>>,
     setErrorOverlay: React.Dispatch<React.SetStateAction<string>>,
     setvisibleRobots: React.Dispatch<React.SetStateAction<boolean[]>>,
 ): void {
@@ -21,7 +20,7 @@ export function parseJson(
         setRobotPositions(parsedData.RobotPositions)
         setBallPosition(parsedData.BallPosition)
         setRobotActions(parsedData.RobotActions)
-        setTerminalLog(parsedData.TerminalLog)
+
         setErrorOverlay('') // Remove default error since we have recieved message
         //setvisibleRobots() // all robots that have position is visible, not yet implemented
 
