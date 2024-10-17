@@ -10,6 +10,8 @@ import {getDefaultTraceSetting,
   getDefaultRobotPos,
   getDefaultVisibleRobots} from './helper/defaultValues'
 
+type Log = Record<string, any>;
+
 function App() {
   // The useStates are defined here
   const [robotPositions, setRobotPositions] = useState(getDefaultRobotPos());
@@ -19,6 +21,7 @@ function App() {
   const [vectorSettingYellow, setVectorSettingYellow] = useState(getDefaultVectorSetting());
   const [traceSetting, setTraceSetting] = useState(getDefaultTraceSetting());
   const [visibleRobots, setvisibleRobots] = useState(getDefaultVisibleRobots());
+  const [logs, setLogs] = useState<Log[]>([]);
   const [errorOverlay, setErrorOverlay] = useState("No connection to controller.");
  
 
@@ -39,6 +42,7 @@ function App() {
           setRobotActions,
           setErrorOverlay,
           setvisibleRobots,
+          setLogs,
           );
 
       } catch (e) {
@@ -49,18 +53,6 @@ function App() {
 
     // Clean up the WebSocket connection on unmount
     return () => {};
-  }, []);
-
-
-//-----------WebSocket for logs----------------
-  useEffect(() => {
-    const logSocket = new WebSocket('ws://localhost:8080/logs'); // Different URL for logs
-
-    // Clean up the WebSocket connection on unmount
-    return () => {
-    console.log('Closing WebSocket connection');
-    logSocket.close();
-  };
   }, []);
 
 
@@ -87,6 +79,7 @@ function App() {
         errorOverlay={errorOverlay}
         vectorSettingBlue={vectorSettingBlue}
         vectorSettingYellow={vectorSettingYellow}
+        logs={logs}
         />
     </div>
   );

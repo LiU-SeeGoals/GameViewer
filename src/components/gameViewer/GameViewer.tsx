@@ -6,12 +6,15 @@ import BottomBar from './bottomBar/BottomBar';
 import { Robot } from "../../types/Robot";
 import { Ball } from "../../types/Ball";
 
+type Log = Record<string, any>;
+
 interface gameViewerProps {
     robotPositions: Robot[];
     ballPosition: Ball;
     errorOverlay: string;
     vectorSettingBlue: boolean[];
     vectorSettingYellow: boolean[];
+    logs: Log[];
 }
 
 const GameViewer: React.FC<gameViewerProps> = ({
@@ -20,6 +23,7 @@ const GameViewer: React.FC<gameViewerProps> = ({
     errorOverlay,
     vectorSettingBlue,
     vectorSettingYellow,
+    logs,
 }) => {
     const startHeightResizer = 709;
     const resizerWidth = 5;
@@ -40,7 +44,7 @@ const GameViewer: React.FC<gameViewerProps> = ({
                  style={{height: resizerWidth}}
                  onMouseDown={startResizing} />
 
-            <BottomBar />
+            <BottomBar logs={logs}/>
         </div>
     );
 };
