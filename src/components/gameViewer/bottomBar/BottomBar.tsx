@@ -1,17 +1,31 @@
-import React from 'react';
-import './BottomBar.css'
+import React  from 'react';
+import './BottomBar.css';
+// import LogToolbar from './LogToolbar';
+import { LazyLog, ScrollFollow } from "@melloware/react-logviewer";
 
-interface BottomBarProps {
-    terminalLog: string[];
-}
+type Log = Record<string, any>;
 
-const BottomBar: React.FC<BottomBarProps> = ( {terminalLog} ) => {
+interface BottomBarProps {logs: Log[]}
+
+const BottomBar: React.FC<BottomBarProps> = ({logs}) => {
+
 
     return (
-        <div className="bottomBar-wrapper">
-            {terminalLog.map((log, index) => (
-                <p key={index}>{log}</p>
-            ))}
+        <div className="bottomBar-wrapper" >
+        <ScrollFollow
+            startFollowing={true}
+            render={({ follow, onScroll }) => (
+            <LazyLog
+                caseInsensitive
+                enableSearch
+                selectableLines
+                onScroll={onScroll}
+                follow={follow}
+                enableHotKeys
+                text={logs.map((log) => JSON.stringify(log)).join('\n')}
+            />
+            )}
+        />
         </div>
     );
 };
