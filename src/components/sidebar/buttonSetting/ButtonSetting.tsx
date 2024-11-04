@@ -15,6 +15,22 @@ const Settings: React.FC<SettingsProps> = () => {
         setDropdownVisible(!isDropdownVisible);
     };
 
+    const handleUgglanClick = () => {
+        console.log('Ugglan clicked!');
+    };
+
+    const handleKråkanClick = () => {
+        console.log('Kråkan clicked!');
+    };
+
+    const handleÖrnenClick = () => {
+        console.log('Örnen clicked!');
+    };
+
+    const handleLärkenClick = () => {
+        console.log('Lärken clicked!');
+    };
+
     return (
         <>
             <div className="buttonSetting-wrapper">
@@ -32,19 +48,19 @@ const Settings: React.FC<SettingsProps> = () => {
                 <div className="button-dropdown-content">
                     <div className="buttonSetting-wrapper">
                         <p>Alt 1</p>
-                        <Button>Kråkan</Button>
+                        <Button onClick={handleKråkanClick}>Kråkan</Button>
                     </div>
                     <div className="buttonSetting-wrapper">
                         <p>Alt 2</p>
-                        <Button>Örnen</Button>
+                        <Button onClick={handleÖrnenClick}>Örnen</Button>
                     </div>
                     <div className="buttonSetting-wrapper">
                         <p>Alt 3</p>
-                        <Button>Lärkan</Button>
+                        <Button onClick={handleLärkenClick}>Lärkan</Button>
                     </div>
                     <div className="buttonSetting-wrapper">
                         <p>Alt 4</p>
-                        <Button>Ugglan</Button>
+                        <Button onClick={handleUgglanClick}>Ugglan</Button>
                     </div>
                 </div>
             )}
