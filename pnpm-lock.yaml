@@ -23,6 +23,9 @@ importers:
       '@solidjs/router':
         specifier: ^0.12.5
         version: 0.12.5(solid-js@1.8.17)
+      proto:
+        specifier: link:src/proto
+        version: link:src/proto
       protobufjs:
         specifier: ^7.4.0
         version: 7.4.0
@@ -32,9 +35,6 @@ importers:
       react-dom:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
-      ssl_vision:
-        specifier: link:proto-messages/proto_js/ssl_vision
-        version: link:proto-messages/proto_js/ssl_vision
       ws:
         specifier: ^8.18.0
         version: 8.18.0

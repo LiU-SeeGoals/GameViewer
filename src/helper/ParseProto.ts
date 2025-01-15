@@ -1,7 +1,7 @@
 // Import the types
 import { SSLFieldUpdate } from "../types/SSLFieldUpdate";
 
-import { SSLWrapperPacket } from '../proto-messages/proto_js/ssl_vision/ssl_wrapper'
+import { SSLWrapperPacket } from '../proto/ssl_wrapper'
 
 
 export function parseProto(
