@@ -21,3 +21,29 @@
   margin-top: 15px;
   margin-bottom: 15px;
 }
+
+
+/* Ensures the header and status circle are placed in a row */
+.header-status-container {
+  display: flex;
+  justify-content: flex-start;  /* Aligns both items to the left */
+  align-items: center;          /* Centers them vertically */
+}
+
+/* Optional: Adds space between the header and the status circle */
+.header-status-container > *:not(:last-child) {
+  margin-right: 10px; /* Adds space between the header and the circle */
+}
+
+/* Optional: Styling for the status circle if you want it to be smaller or more specific */
+.status-circle {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid black;
+}
+
+/* Styling the sidebar content if needed */
+.sidebar-content {
+  padding: 10px;
+}

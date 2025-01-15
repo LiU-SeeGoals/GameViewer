@@ -6,6 +6,7 @@ import Header from './header/Header';
 import ToggleSetting from './toggleSetting/ToggleSetting';
 import ButtonSetting from './buttonSetting/ButtonSetting';
 import RobotTable from './robotTable/RobotTable'
+import StatusCircle from './statusCircle/StatusCircle';
 
 import { Action } from "../../types/Action";
 
@@ -18,6 +19,7 @@ interface SidebarProps {
     setTraceSetting: React.Dispatch<React.SetStateAction<boolean[]>>;
     robotActions: Action[];
     visibleRobots: boolean[];
+    isConnectedToController:boolean;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({
@@ -29,6 +31,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     setTraceSetting,
     robotActions,
     visibleRobots,
+    isConnectedToController
   }) => {
 
     // Resizeble sidebar stuff
@@ -54,7 +57,10 @@ const Sidebar: React.FC<SidebarProps> = ({
         <div className="sidebar-wrapper">
             <div className="sidebar" style={sidebarStyle}>
                 <div className="sidebar-content">
-                    <Header />
+                    <div className="header-status-container">
+                        <Header />
+                        <StatusCircle isConnected={isConnectedToController} />
+                    </div>
                     <hr />
                     <ExternalLink text={"SSL vision"} link={"https://www.google.com"} />
                     <ExternalLink text={"Game controller"} link={"https://www.google.com"} />
