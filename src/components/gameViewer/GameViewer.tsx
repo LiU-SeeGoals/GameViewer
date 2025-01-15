@@ -3,12 +3,10 @@ import './GameViewer.css';
 import useResizeSidebar from '../../hooks/useResizeSidebar';
 import FootballField from './footballField/FootballField';
 import BottomBar from './bottomBar/BottomBar';
-import { Robot } from "../../types/Robot";
-import { Ball } from "../../types/Ball";
+import { SSLFieldUpdate } from "../../types/SSLFieldUpdate";
 
 interface gameViewerProps {
-    robotPositions: Robot[];
-    ballPosition: Ball;
+    sslFieldUpdate: SSLFieldUpdate;
     terminalLog: string[];
     errorOverlay: string;
     vectorSettingBlue: boolean[];
@@ -16,8 +14,7 @@ interface gameViewerProps {
 }
 
 const GameViewer: React.FC<gameViewerProps> = ({
-    robotPositions,
-    ballPosition,
+    sslFieldUpdate,
     terminalLog,
     errorOverlay,
     vectorSettingBlue,
@@ -32,8 +29,7 @@ const GameViewer: React.FC<gameViewerProps> = ({
         <div className="game-viewer">
             <FootballField 
                 height={bottomBarHeight} 
-                robotPositions={robotPositions} 
-                ballPosition={ballPosition}
+                sslFieldUpdate={sslFieldUpdate}
                 errorOverlay={errorOverlay} 
                 vectorSettingBlue={vectorSettingBlue}
                 vectorSettingYellow={vectorSettingYellow}/>

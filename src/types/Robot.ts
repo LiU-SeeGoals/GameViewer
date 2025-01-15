@@ -1,10 +1,10 @@
 export type Robot = {
-    Id: number;
-    PosW: number;
-    PosX: number;
-    PosY: number;
-    Team: number;
-    VelW: number;
-    VelX: number;
-    VelY: number;
+    x: number;
+    y: number;
+    orientation?: number | undefined;
+    robotId?: number | undefined;
+    // Team: number;
+    // VelW: number;
+    // VelX: number;
+    // VelY: number;
 }

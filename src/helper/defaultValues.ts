@@ -1,23 +1,35 @@
 import { Robot } from "../types/Robot";
 import { Ball } from "../types/Ball";
 import { Action } from "../types/Action";
+import { SSLFieldUpdate } from "../types/SSLFieldUpdate";
 
-export function getDefaultRobotPos(): Robot[] {
+export function getDefaultSSLFieldUpdate(): SSLFieldUpdate {
+  const fieldUpdate: SSLFieldUpdate = {balls: [], robotsBlue: [], robotsYellow: []};
+  return fieldUpdate;
+}
+
+export function getDefaultRobotPosBlue(): Robot[] {
   const robots: Robot[] = [
-      { Id: 0, Team: 0, PosW: 0, PosX: 2000, PosY: 0, VelW: 0, VelX: 1, VelY: 1 },
-      { Id: 1, Team: 0, PosW: 0, PosX: -4500, PosY: 3000, VelW: 0, VelX: 2, VelY: 1 },
-      { Id: 2, Team: 0, PosW: 0, PosX: -1000, PosY: 1000, VelW: 0, VelX: 3, VelY: 2 },
-      { Id: 3, Team: 0, PosW: 0, PosX: -1000, PosY: -1000, VelW: 0, VelX: 0, VelY: 0 },
-      { Id: 0, Team: 1, PosW: 0, PosX: -3000, PosY: 3000, VelW: 0, VelX: 0, VelY: 0 },
-      { Id: 1, Team: 1, PosW: 0, PosX: 360, PosY: 150, VelW: 0, VelX: 0, VelY: 0 },
-      { Id: 2, Team: 1, PosW: 0, PosX: 95, PosY: 600, VelW: 0, VelX: 0, VelY: 0 },
-      { Id: 3, Team: 1, PosW: 0, PosX: 300, PosY: 1000, VelW: 0, VelX: 0, VelY: 0 }
+      { robotId: 0, orientation: 0, x: 2000,  y: 0      },
+      { robotId: 1, orientation: 0, x: -4500, y: 3000   },
+      { robotId: 2, orientation: 0, x: -1000, y: 1000   },
+      { robotId: 3, orientation: 0, x: -1000, y: -1000  },
+  ];
+  return robots;
+}
+
+export function getDefaultRobotPosYellow(): Robot[] {
+  const robots: Robot[] = [
+      { robotId: 0, orientation: 0, x: -3000, y: 3000   },
+      { robotId: 1, orientation: 0, x: 360,   y: 150    },
+      { robotId: 2, orientation: 0, x: 95,    y: 600    },
+      { robotId: 3, orientation: 0, x: 300,   y: 1000   }
   ];
   return robots;
 }
 
 export function getDefaultBallPos(): Ball {
-    const ball = {"x": 500, "y": 500, "speed_x":0, "speed_y":0};
+    const ball = {x: 500, y: 500};
     return ball;
 }
 

@@ -1,29 +1,40 @@
 import React, {useEffect} from 'react';
 import './FootballField.css';
+import { SSLFieldUpdate } from '../../../types/SSLFieldUpdate';
 import { Robot } from '../../../types/Robot';
 import { Ball } from "../../../types/Ball";
 
 interface FootBallFieldProps {
     height: number;
-    robotPositions: Robot[];
-    ballPosition: Ball;
+    sslFieldUpdate: SSLFieldUpdate;
     errorOverlay: string;
     vectorSettingBlue: boolean[];
     vectorSettingYellow: boolean[];
 }
 
 const REAL_WIDTH_FIELD: number = 9600;
-
 const ROBOT_RADIUS: number = 90; 
+const FONT_SIZE: number = 120;
 
 const ARROW_HEAD_LENGTH: number = 5;
 const SPEED_ARROW_COLOR: string = 'rgba(0, 0, 0, 1)';
 const SPEED_ARROW_THICKNESS: number = 3;
 const ARROW_DRAW_MIN_SPEED_THRESHOLD: number = 0.005
 
-const COLOR_MAP: Record<string, string> = {0: "rgba(245, 239, 66, 1)", 1: "rgba(66, 135, 245, 1)"};
+const COLOR_MAP: Record<string, string> = {
+    yellow: "rgba(245, 239, 66, 1)", 
+    blue: "rgb(19, 109, 253)", 
+    black: "rgba(0, 0, 0, 1)", 
+    white: "rgba(255, 255, 255, 1)"
+};
 
-const FootballField: React.FC<FootBallFieldProps> = ({height, robotPositions, ballPosition, errorOverlay, vectorSettingBlue, vectorSettingYellow}: FootBallFieldProps) => {
+const FootballField: React.FC<FootBallFieldProps> = ({
+    height, 
+    sslFieldUpdate, 
+    errorOverlay, 
+    vectorSettingBlue, 
+    vectorSettingYellow
+}) => {
     const canvasRef = React.useRef<HTMLCanvasElement>(null);
     const containerRef = React.useRef<HTMLDivElement>(null);
 
@@ -53,10 +64,7 @@ const FootballField: React.FC<FootBallFieldProps> = ({height, robotPositions, ba
         // Clear the canvas
         context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 
-        //drawing all of gamestate here
-        robotPositions.map((robot) => {
-            drawRobot(context, robot);
-        });
+        drawAllRobots(context);
         drawBall(context);
         //drawRobot(context, {x: 0, y: 0, speed_x: 3, speed_y: 3, team: "yellow", selected: false});
 
@@ -64,37 +72,91 @@ const FootballField: React.FC<FootBallFieldProps> = ({height, robotPositions, ba
 
     // Draws ball on the canvas
     const drawBall = (context: CanvasRenderingContext2D) => {
-        // const {canvasX, canvasY} = getCanvasCoordinates(gameState.ball.x, gameState.ball.y, context);
-        // context.beginPath();
-        // context.arc(canvasX, canvasY, 5, 0, 2 * Math.PI);
-        // context.strokeStyle = 'rgba(0, 0, 0, 0)'; // make the border transparent
-        // context.fillStyle = 'black';
-        // context.fill();
-        // context.stroke();
+        try {
+            const ball: Ball = sslFieldUpdate.balls[0];
+            const {canvasX, canvasY} = getCanvasCoordinates(ball.x, ball.y, context);
+            context.beginPath();
+            context.arc(canvasX, canvasY, 5, 0, 2 * Math.PI);
+            context.strokeStyle = 'rgba(0, 0, 0, 0)'; // make the border transparent
+            context.fillStyle = 'orange';
+            context.fill();
+            context.stroke();
+        }
+        catch (e) {
+            console.error("Ball does not exist to draw");
+        }
+    }
+
+    const drawAllRobots = (context: CanvasRenderingContext2D) => {
+        //drawing all of gamestate here
+        
+        
+        sslFieldUpdate.robotsBlue.map((robot) => {
+            drawRobot(context, robot, COLOR_MAP.blue, COLOR_MAP.white);
+            // if (robot.robotId) {
+            //     if (vectorSettingBlue[robot.robotId]) {
+            //         drawArrow(context, robot, SPEED_ARROW_COLOR, SPEED_ARROW_THICKNESS);
+            //     }
+            // }
+        });
+        
+        sslFieldUpdate.robotsYellow.map((robot) => {
+            drawRobot(context, robot, COLOR_MAP.yellow, COLOR_MAP.black);
+            // if (robot.robotId) {
+            //     if (vectorSettingYellow[robot.robotId]) {
+            //         drawArrow(context, robot, SPEED_ARROW_COLOR, SPEED_ARROW_THICKNESS);
+            //     }
+            // }
+        });
     }
 
     // Draws all robots on the canvas
-    const drawRobot = (context: CanvasRenderingContext2D, robot: Robot) => {
+    const drawRobot = (context: CanvasRenderingContext2D, robot: Robot, fillColor: string, textColor: string) => {
+        const {canvasX, canvasY} = getCanvasCoordinates(robot.x, robot.y, context);
+        const canvasRadius = ROBOT_RADIUS * getScaler(context);
+        const flatStartFrontAngle = 45*Math.PI/180;
+        const robotOrientation = robot.orientation != undefined ? robot.orientation : 0;
 
-        drawCircle(context, robot, ROBOT_RADIUS * getScaler(context), COLOR_MAP[robot.Team]);
-        drawId(context, robot)
+        // const start
+        // Draw the "half moon" of the robot, leaving a flat front.
+        context.beginPath();
+        context.arc(
+            canvasX, 
+            canvasY, 
+            canvasRadius, 
+            -flatStartFrontAngle - robotOrientation, // Offset the start angle with the robots current orientation
+            flatStartFrontAngle - robotOrientation, 
+            true // Draw counter clockwise
+        );
+        context.fillStyle = fillColor;
+        context.fill();
+        context.strokeStyle = "black";
+        context.stroke();
+        
+        // Draw the flat front of the robot (added 1 degree of extra )
+        const flatFrontStartX = canvasX + canvasRadius * Math.cos(-flatStartFrontAngle - robotOrientation);
+        const flatFrontStartY = canvasY + canvasRadius * Math.sin(-flatStartFrontAngle - robotOrientation);
+        const flatFrontEndX = canvasX + canvasRadius * Math.cos(flatStartFrontAngle - robotOrientation);
+        const flatFrontEndY = canvasY + canvasRadius * Math.sin(flatStartFrontAngle - robotOrientation);
 
-        if (vectorSettingYellow[robot.Id] && robot.Team == 0) {
-        drawArrow(context, robot, SPEED_ARROW_COLOR, SPEED_ARROW_THICKNESS);
-        }
-        if (vectorSettingBlue[robot.Id] && robot.Team == 1) {
-            drawArrow(context, robot, SPEED_ARROW_COLOR, SPEED_ARROW_THICKNESS);
-        }
+        context.moveTo(flatFrontStartX, flatFrontStartY);
+        context.lineTo(flatFrontEndX, flatFrontEndY);
+        context.strokeStyle = "black";
+        context.stroke();
+
+        drawId(context, robot, textColor)        
         
-        
+
+        //// TODO: ADD THESE
+
         // if (robot.selected) {
         //     drawCircle(context, robot, ROBOT_RADIUS/3, 'rgba(0, 0, 0, 1)');
         // }
 
         // Draw robot action over the robot
-        context.font = "20px Arial";
-        context.fillStyle = 'rgba(255, 0, 0, 1)';
-        context.textAlign = "center";
+        // context.font = "20px Arial";
+        // context.fillStyle = 'rgba(255, 0, 0, 1)';
+        // context.textAlign = "center";
         // if (typeof robot.action === 'object' && robot.action !== null){
         //     const action_number: string = ActionToStr(robot.action);
         //     context.fillText(action_number, getCanvasCoordinates(robot.x, robot.y, context).canvasX, getCanvasCoordinates(robot.x, robot.y, context).canvasY - 10);
@@ -103,7 +165,7 @@ const FootballField: React.FC<FootBallFieldProps> = ({height, robotPositions, ba
 
     // Draw a black circle around the robot
     const drawCircle = (context: CanvasRenderingContext2D, robot: Robot, radius: number, color: string) => {
-        const {canvasX, canvasY} = getCanvasCoordinates(robot.PosX, robot.PosY, context);
+        const {canvasX, canvasY} = getCanvasCoordinates(robot.x, robot.y, context);
         context.beginPath();
         context.arc(canvasX, canvasY, radius, 0, 2 * Math.PI);
         context.strokeStyle = 'rgba(0, 0, 0, 0)'; // make the border transparent
@@ -113,67 +175,68 @@ const FootballField: React.FC<FootBallFieldProps> = ({height, robotPositions, ba
     };
 
     // Draws the robots number id on the robot
-    const drawId = (context: CanvasRenderingContext2D, robot: Robot) => {
-        const {canvasX, canvasY} = getCanvasCoordinates(robot.PosX, robot.PosY, context);
-        context.font = '14px Arial';
+    const drawId = (context: CanvasRenderingContext2D, robot: Robot, textColor: string) => {
+        const {canvasX, canvasY} = getCanvasCoordinates(robot.x, robot.y, context);
+        context.font = `bold ${FONT_SIZE * getScaler(context)}px Arial`;
         context.textAlign = 'center';
         context.textBaseline = 'middle';
-        context.fillStyle = 'black';
-        context.fillText(String(robot.Id), canvasX, canvasY);
+        context.fillStyle = textColor;
+        context.fillText(String(robot.robotId), canvasX, canvasY);
     }
 
     // Draws a arrow showing the direction of the robot
-    const drawArrow = (context: CanvasRenderingContext2D, robot: Robot, color: string, thickness: number) => {
-
-        const angle: number = Math.atan2(robot.VelY, robot.VelX) - Math.PI/2;
-        const arrowLength: number = 10 * Math.hypot(robot.VelX, robot.VelY);
+    /// TODO: When AI starts sending packets again:))))
+    // const drawArrow = (context: CanvasRenderingContext2D, robot: Robot, color: string, thickness: number) => {
+    //     context.save();
+    //     const angle: number = Math.atan2(robot.VelY, robot.VelX) - Math.PI/2;
+    //     const arrowLength: number = 10 * Math.hypot(robot.VelX, robot.VelY);
         
-        // Don't draw the arrow if the velocity is too small
-        if (arrowLength < ARROW_DRAW_MIN_SPEED_THRESHOLD) {
-            return;
-        }
-        //const arrowLength: number = 100;
-        // Calculate the starting point of the arrow (on the circle)
-        const {canvasX: startX, canvasY: startY} = getCanvasCoordinates(robot.PosX, robot.PosY, context);
+    //     // Don't draw the arrow if the velocity is too small
+    //     if (arrowLength < ARROW_DRAW_MIN_SPEED_THRESHOLD) {
+    //         return;
+    //     }
+    //     //const arrowLength: number = 100;
+    //     // Calculate the starting point of the arrow (on the circle)
+    //     const {canvasX: startX, canvasY: startY} = getCanvasCoordinates(robot.PosX, robot.PosY, context);
 
-        // Calculate the end point of the arrow
-        const endX: number = startX + arrowLength * Math.cos(angle);
-        const endY: number = startY - arrowLength * Math.sin(angle);
+    //     // Calculate the end point of the arrow
+    //     const endX: number = startX + arrowLength * Math.cos(angle);
+    //     const endY: number = startY - arrowLength * Math.sin(angle);
 
-        // Draw the line for the arrow
-        context.beginPath();
-        context.moveTo(startX, startY);
-        context.lineTo(endX, endY);
-        context.strokeStyle = color;
-        context.lineWidth = thickness;
-        context.stroke();
+    //     // Draw the line for the arrow
+    //     context.beginPath();
+    //     context.moveTo(startX, startY);
+    //     context.lineTo(endX, endY);
+    //     context.strokeStyle = color;
+    //     context.lineWidth = thickness;
+    //     context.stroke();
         
 
-        const angle1 = angle + Math.PI / 7;
-        const angle2 = angle - Math.PI / 7;
-        const headX = endX + ARROW_HEAD_LENGTH * Math.cos(angle);
-        const headY = endY - ARROW_HEAD_LENGTH * Math.sin(angle);
+    //     const angle1 = angle + Math.PI / 7;
+    //     const angle2 = angle - Math.PI / 7;
+    //     const headX = endX + ARROW_HEAD_LENGTH * Math.cos(angle);
+    //     const headY = endY - ARROW_HEAD_LENGTH * Math.sin(angle);
 
-        // Draw the arrow head
-        context.beginPath();
-        context.moveTo(endX, endY);   
-        context.lineTo((headX - ARROW_HEAD_LENGTH * Math.cos(angle2)), (headY + ARROW_HEAD_LENGTH * Math.sin(angle2)));
-        context.lineTo(headX, headY);   
-        context.lineTo((headX - ARROW_HEAD_LENGTH * Math.cos(angle1)), (headY + ARROW_HEAD_LENGTH * Math.sin(angle1)));
-        context.lineTo(endX, endY);  
-        context.fillStyle = color;
-        context.fill();
-        context.lineWidth = thickness;
-        context.stroke();
-        
-    };
+    //     // Draw the arrow head
+    //     context.beginPath();
+    //     context.moveTo(endX, endY);   
+    //     context.lineTo((headX - ARROW_HEAD_LENGTH * Math.cos(angle2)), (headY + ARROW_HEAD_LENGTH * Math.sin(angle2)));
+    //     context.lineTo(headX, headY);   
+    //     context.lineTo((headX - ARROW_HEAD_LENGTH * Math.cos(angle1)), (headY + ARROW_HEAD_LENGTH * Math.sin(angle1)));
+    //     context.lineTo(endX, endY);  
+    //     context.fillStyle = color;
+    //     context.fill();
+    //     context.lineWidth = thickness;
+    //     context.stroke();
+    //     context.restore(); // Used to only change the line thickness for the arrow and not for everything
+    // };
 
     useEffect(() => {
         const canvas = canvasRef.current;
         if (canvas) {
             draw(canvas);
         }
-    }, [robotPositions]); // Dependency array - redraws when gameState changes
+    }, [sslFieldUpdate]); // Dependency array - redraws when gameState changes
 
     return (
         <div className="football-field-container" style={{ height: height }} ref={containerRef}>
