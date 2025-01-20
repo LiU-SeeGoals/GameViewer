@@ -9,7 +9,7 @@ const wsPort = 3000;
 const wss = new ws.WebSocketServer({port: wsPort, 'Access-Control-Allow-Origin': "*"});
 
 wss.on('connection', ws => {
-    console.log('WebSocket client connected.');
+    console.log('Websocket client connected to SSLVisionServer.');
 
     ws.on('message', (message) => {
         console.log(`Received message from client: ${message}`);

@@ -60,6 +60,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                     <div className="header-status-container">
                         <Header />
                         <StatusCircle isConnected={isConnectedToController} />
+                        <ExternalLink text={"Feature Request"} link={"https://github.com/LiU-SeeGoals/GameViewer/issues/new?template=Blank+issue"} title={"Feel a feature is missing? Create a feature request on the GitHub!"}></ExternalLink>
                     </div>
                     <hr />
                     <ExternalLink text={"SSL vision"} link={"https://www.google.com"} />
