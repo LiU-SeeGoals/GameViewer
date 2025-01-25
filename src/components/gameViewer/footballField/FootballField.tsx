@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
 import './FootballField.css';
 import { SSLFieldUpdate } from '../../../types/SSLFieldUpdate';
-import { SSLRobot } from '../../../types/Robot';
-import { Ball } from "../../../types/SSLBall";
+import { SSLRobot } from '../../../types/SSLRobot';
+import { SSLBall } from "../../../types/SSLBall";
 import { AIRobotUpdate } from '../../../types/AIRobotUpdate';
 
 interface FootBallFieldProps {
@@ -76,7 +76,7 @@ const FootballField: React.FC<FootBallFieldProps> = ({
     // Draws ball on the canvas
     const drawBall = (context: CanvasRenderingContext2D) => {
         try {
-            const ball: Ball = sslFieldUpdate.balls[0];
+            const ball: SSLBall = sslFieldUpdate.balls[0];
             const {canvasX, canvasY} = getCanvasCoordinates(ball.x, ball.y, context);
             context.beginPath();
             context.arc(canvasX, canvasY, 5, 0, 2 * Math.PI);
