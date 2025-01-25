@@ -1,15 +1,22 @@
-import { Robot } from "../types/Robot";
-import { Ball } from "../types/Ball";
+import { SSLRobot } from "../types/SSLRobot";
 import { Action } from "../types/Action";
+import { SSLBall } from "../types/SSLBall";
 import { SSLFieldUpdate } from "../types/SSLFieldUpdate";
+import { AIRobotUpdate } from "../types/AIRobotUpdate";
+import { AIBall } from "../types/AIBall";
 
 export function getDefaultSSLFieldUpdate(): SSLFieldUpdate {
   const fieldUpdate: SSLFieldUpdate = {balls: [], robotsBlue: [], robotsYellow: []};
   return fieldUpdate;
 }
 
-export function getDefaultRobotPosBlue(): Robot[] {
-  const robots: Robot[] = [
+export function getDefaultAIRobotUpdate(): AIRobotUpdate {
+  const robotUpdate: AIRobotUpdate = {Robots: [], BallPosition: getDefaultAIBall(), RobotActions: getDefaultActions()};
+  return robotUpdate;
+}
+
+export function getDefaultRobotPosBlue(): SSLRobot[] {
+  const robots: SSLRobot[] = [
       { robotId: 0, orientation: 0, x: 2000,  y: 0      },
       { robotId: 1, orientation: 0, x: -4500, y: 3000   },
       { robotId: 2, orientation: 0, x: -1000, y: 1000   },
@@ -18,8 +25,8 @@ export function getDefaultRobotPosBlue(): Robot[] {
   return robots;
 }
 
-export function getDefaultRobotPosYellow(): Robot[] {
-  const robots: Robot[] = [
+export function getDefaultRobotPosYellow(): SSLRobot[] {
+  const robots: SSLRobot[] = [
       { robotId: 0, orientation: 0, x: -3000, y: 3000   },
       { robotId: 1, orientation: 0, x: 360,   y: 150    },
       { robotId: 2, orientation: 0, x: 95,    y: 600    },
@@ -28,9 +35,14 @@ export function getDefaultRobotPosYellow(): Robot[] {
   return robots;
 }
 
-export function getDefaultBallPos(): Ball {
+export function getDefaultBallPos(): SSLBall {
     const ball = {x: 500, y: 500};
     return ball;
+}
+
+export function getDefaultAIBall(): AIBall {
+  const ball = {VelX: 0, VelY: 0, VelW: 0}
+  return ball;
 }
 
 export function getDefaultVisibleRobots(): boolean[] {

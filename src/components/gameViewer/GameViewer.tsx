@@ -4,9 +4,11 @@ import useResizeSidebar from '../../hooks/useResizeSidebar';
 import FootballField from './footballField/FootballField';
 import BottomBar from './bottomBar/BottomBar';
 import { SSLFieldUpdate } from "../../types/SSLFieldUpdate";
+import { AIRobotUpdate } from "../../types/AIRobotUpdate";
 
 interface gameViewerProps {
     sslFieldUpdate: SSLFieldUpdate;
+    aiRobotUpdate: AIRobotUpdate;
     terminalLog: string[];
     errorOverlay: string;
     vectorSettingBlue: boolean[];
@@ -15,6 +17,7 @@ interface gameViewerProps {
 
 const GameViewer: React.FC<gameViewerProps> = ({
     sslFieldUpdate,
+    aiRobotUpdate,
     terminalLog,
     errorOverlay,
     vectorSettingBlue,
@@ -30,6 +33,7 @@ const GameViewer: React.FC<gameViewerProps> = ({
             <FootballField 
                 height={bottomBarHeight} 
                 sslFieldUpdate={sslFieldUpdate}
+                aiRobotUpdate={aiRobotUpdate}
                 errorOverlay={errorOverlay} 
                 vectorSettingBlue={vectorSettingBlue}
                 vectorSettingYellow={vectorSettingYellow}/>

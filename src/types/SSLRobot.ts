@@ -1,4 +1,4 @@
-export type Robot = {
+export type SSLRobot = {
     x: number;
     y: number;
     orientation?: number | undefined;

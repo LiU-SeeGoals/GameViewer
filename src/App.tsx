@@ -6,6 +6,7 @@ import { parseProto } from './helper/ParseProto'
 import { parseJson } from './helper/ParseJson'
 import {
   getDefaultSSLFieldUpdate,
+  getDefaultAIRobotUpdate,
   getDefaultTraceSetting, 
   getDefaultVectorSetting, 
   getDefaultActions, 
@@ -15,7 +16,8 @@ import {
 function App() {
   // The useStates are defined here
   const [sslFieldUpdate, setSSLFieldUpdate] = useState(getDefaultSSLFieldUpdate());
-  const [robotActions, setRobotActions] = useState(getDefaultActions());
+  const [aiRobotUpdate, setAIUpdate] = useState(getDefaultAIRobotUpdate());
+  // const [robotActions, setRobotActions] = useState(getDefaultActions());
   const [vectorSettingBlue, setVectorSettingBlue] = useState(getDefaultVectorSetting());
   const [vectorSettingYellow, setVectorSettingYellow] = useState(getDefaultVectorSetting());
   const [traceSetting, setTraceSetting] = useState(getDefaultTraceSetting());
@@ -67,7 +69,7 @@ function App() {
     };
     
     ai_socket.onopen = (event) => {
-      setErrorOverlay("");
+      setErrorOverlay("Connected!!!!");
       setIsConnectedToController(true);
     }
   
@@ -76,10 +78,10 @@ function App() {
         if (!event.data) {
           return;
         }
-
+        // console.log(event.data)
         parseJson(
           event.data,
-          setRobotActions,
+          setAIUpdate,
           setTerminalLog,
           setErrorOverlay,
           setvisibleRobots,
@@ -109,12 +111,13 @@ function App() {
         setVectorSettingYellow={setVectorSettingYellow}
         traceSetting={traceSetting}
         setTraceSetting={setTraceSetting}
-        robotActions={robotActions}
+        robotActions={aiRobotUpdate.RobotActions}
         visibleRobots={visibleRobots}
         isConnectedToController={isConnectedToController}
         />
       <GameViewer
         sslFieldUpdate={sslFieldUpdate}
+        aiRobotInfo={aiRobotUpdate}
         terminalLog={terminalLog}
         errorOverlay={errorOverlay}
         vectorSettingBlue={vectorSettingBlue}

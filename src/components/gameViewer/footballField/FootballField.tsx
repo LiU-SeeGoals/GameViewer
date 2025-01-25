@@ -1,12 +1,14 @@
 import React, {useEffect} from 'react';
 import './FootballField.css';
 import { SSLFieldUpdate } from '../../../types/SSLFieldUpdate';
-import { Robot } from '../../../types/Robot';
-import { Ball } from "../../../types/Ball";
+import { SSLRobot } from '../../../types/Robot';
+import { Ball } from "../../../types/SSLBall";
+import { AIRobotUpdate } from '../../../types/AIRobotUpdate';
 
 interface FootBallFieldProps {
     height: number;
     sslFieldUpdate: SSLFieldUpdate;
+    aiRobotUpdate: AIRobotUpdate
     errorOverlay: string;
     vectorSettingBlue: boolean[];
     vectorSettingYellow: boolean[];
@@ -31,6 +33,7 @@ const COLOR_MAP: Record<string, string> = {
 const FootballField: React.FC<FootBallFieldProps> = ({
     height, 
     sslFieldUpdate, 
+    aiRobotUpdate,
     errorOverlay, 
     vectorSettingBlue, 
     vectorSettingYellow
@@ -111,7 +114,7 @@ const FootballField: React.FC<FootBallFieldProps> = ({
     }
 
     // Draws all robots on the canvas
-    const drawRobot = (context: CanvasRenderingContext2D, robot: Robot, fillColor: string, textColor: string) => {
+    const drawRobot = (context: CanvasRenderingContext2D, robot: SSLRobot, fillColor: string, textColor: string) => {
         const {canvasX, canvasY} = getCanvasCoordinates(robot.x, robot.y, context);
         const canvasRadius = ROBOT_RADIUS * getScaler(context);
         const flatStartFrontAngle = 45*Math.PI/180;
@@ -164,7 +167,7 @@ const FootballField: React.FC<FootBallFieldProps> = ({
     };
 
     // Draw a black circle around the robot
-    const drawCircle = (context: CanvasRenderingContext2D, robot: Robot, radius: number, color: string) => {
+    const drawCircle = (context: CanvasRenderingContext2D, robot: SSLRobot, radius: number, color: string) => {
         const {canvasX, canvasY} = getCanvasCoordinates(robot.x, robot.y, context);
         context.beginPath();
         context.arc(canvasX, canvasY, radius, 0, 2 * Math.PI);
@@ -175,7 +178,7 @@ const FootballField: React.FC<FootBallFieldProps> = ({
     };
 
     // Draws the robots number id on the robot
-    const drawId = (context: CanvasRenderingContext2D, robot: Robot, textColor: string) => {
+    const drawId = (context: CanvasRenderingContext2D, robot: SSLRobot, textColor: string) => {
         const {canvasX, canvasY} = getCanvasCoordinates(robot.x, robot.y, context);
         context.font = `bold ${FONT_SIZE * getScaler(context)}px Arial`;
         context.textAlign = 'center';

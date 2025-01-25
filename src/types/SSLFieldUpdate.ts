@@ -1,8 +1,8 @@
-import { Ball } from './Ball'
-import { Robot } from './Robot'
+import { SSLBall } from './SSLBall'
+import { SSLRobot } from './SSLRobot'
 
 export type SSLFieldUpdate = {
-    balls: Ball[],
-    robotsBlue: Robot[],
-    robotsYellow: Robot[]
+    balls: SSLBall[],
+    robotsBlue: SSLRobot[],
+    robotsYellow: SSLRobot[]
 }
