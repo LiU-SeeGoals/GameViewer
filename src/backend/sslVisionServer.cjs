@@ -1,8 +1,8 @@
 const dgram = require('dgram');
 const ws = require('ws');
 
-const multicastAddress = '224.5.23.2';
-const multicastPort = 10020;
+const multicastAddress = process.env.SSL_VISION_MULTICAST_ADDR;
+const multicastPort = process.env.SSL_VISION_MULTICAST_PORT;
 const wsPort = 3000;
 
 // WebSocket server
