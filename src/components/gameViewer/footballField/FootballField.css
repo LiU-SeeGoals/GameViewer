@@ -1,32 +1,32 @@
 .football-field-container img {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .football-field-canvas {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .football-field-container {
-    position: relative;
-    width: 100%;
-    height: auto;
-    margin: 0 auto;
+  position: relative;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
 }
 
 /* looks better with border only left and right :) */
 .football-field-container img {
-    border-left: 1px solid black;
-    border-right: 1px solid black;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
 }
 
 .football-field-container .overlay-warning {
-    position: absolute;
-    z-index: 1;
-    padding: 30px;
-    font-size: 1.5rem;
-    color: red;
+  position: absolute;
+  z-index: 1;
+  padding: 30px;
+  font-size: 1.5rem;
+  color: red;
 }

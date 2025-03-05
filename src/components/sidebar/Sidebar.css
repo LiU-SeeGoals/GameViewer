@@ -22,12 +22,11 @@
   margin-bottom: 15px;
 }
 
-
 /* Ensures the header and status circle are placed in a row */
 .header-status-container {
   display: flex;
-  justify-content: flex-start;  /* Aligns both items to the left */
-  align-items: center;          /* Centers them vertically */
+  justify-content: flex-start; /* Aligns both items to the left */
+  align-items: center; /* Centers them vertically */
 }
 
 /* Optional: Adds space between the header and the status circle */

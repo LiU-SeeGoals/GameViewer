@@ -1,22 +1,22 @@
 .game-viewer {
-    flex: 1;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    background: rgb(96, 126, 61);
-    overflow: hidden;
+  flex: 1;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  background: rgb(96, 126, 61);
+  overflow: hidden;
 }
 .game-viewer-resizer {
-    width: 100%;
-    background: rgb(44, 131, 190);
-    flex-grow: 0;
-    cursor: ns-resize;
+  width: 100%;
+  background: rgb(44, 131, 190);
+  flex-grow: 0;
+  cursor: ns-resize;
 }
 
 .game-viewer-container {
-    background: black;
-    color: white;
-    flex-grow: 1;
-    padding-left: 10px;
-    font-family: "Courier New";
+  background: black;
+  color: white;
+  flex-grow: 1;
+  padding-left: 10px;
+  font-family: 'Courier New';
 }

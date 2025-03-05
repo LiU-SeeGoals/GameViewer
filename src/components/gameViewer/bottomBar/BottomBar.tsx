@@ -1,19 +1,18 @@
 import React from 'react';
-import './BottomBar.css'
+import './BottomBar.css';
 
 interface BottomBarProps {
-    terminalLog: string[];
+  terminalLog: string[];
 }
 
-const BottomBar: React.FC<BottomBarProps> = ( {terminalLog} ) => {
-
-    return (
-        <div className="bottomBar-wrapper">
-            {terminalLog.map((log, index) => (
-                <p key={index}>{log}</p>
-            ))}
-        </div>
-    );
+const BottomBar: React.FC<BottomBarProps> = ({ terminalLog }) => {
+  return (
+    <div className="bottomBar-wrapper">
+      {terminalLog.map((log, index) => (
+        <p key={index}>{log}</p>
+      ))}
+    </div>
+  );
 };
 
 export default BottomBar;

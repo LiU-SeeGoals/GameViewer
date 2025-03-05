@@ -1,47 +1,47 @@
 .robotTable-wrapper {
-    padding: 10px;
-    display: grid
+  padding: 10px;
+  display: grid;
 }
 
 .robotTable-wrapper .robotItem {
-    display: grid;
-    grid-template-columns: .5fr 1fr 1fr .6fr .1fr;
-    padding: 5px;
-    align-items: center;
+  display: grid;
+  grid-template-columns: 0.5fr 1fr 1fr 0.6fr 0.1fr;
+  padding: 5px;
+  align-items: center;
 }
 
 .robotTable-wrapper .robotItem:nth-child(odd) {
-    background-color: #f0f0f0; /* Light gray background for odd rows */
+  background-color: #f0f0f0; /* Light gray background for odd rows */
 }
 
 .robotTable-wrapper .icon {
-    font-size: 17px;
-    display: grid;
-    align-items: center;
+  font-size: 17px;
+  display: grid;
+  align-items: center;
 }
 
 .robotTable-wrapper .icon-info {
-    position: relative;
+  position: relative;
 }
 
 .robotTable-wrapper .tooltip {
-    visibility: hidden;
-    background-color: #555;
-    color: #fff;
-    text-align: center;
-    border-radius: 5px;
-    padding: 5px 10px;
-    position: absolute;
-    z-index: 1;
-    bottom: 125%;
-    left: 100%;
-    transform: translateX(-90%);
-    opacity: 0;
-    transition: opacity 0.3s;
-    width: 150px;
+  visibility: hidden;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px 10px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 100%;
+  transform: translateX(-90%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  width: 150px;
 }
 
 .robotTable-wrapper .icon-info:hover .tooltip {
-    visibility: visible;
-    opacity: 1;
+  visibility: visible;
+  opacity: 1;
 }

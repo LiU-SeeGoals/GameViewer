@@ -4,7 +4,6 @@ import Switch from '@mui/material/Switch';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import InfoIcon from '@mui/icons-material/Info';
 
-
 interface SettingsProps {
   name: string;
   settingsBlue: boolean[];
@@ -28,7 +27,6 @@ const Settings: React.FC<SettingsProps> = ({
 }) => {
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const [topSwitch, setTopSwitch] = useState(false);
-
 
   const toggleDropdown = () => {
     setDropdownVisible(!isDropdownVisible);
@@ -63,20 +61,24 @@ const Settings: React.FC<SettingsProps> = ({
     <>
       <div className="toggleSetting-wrapper">
         <p onClick={toggleDropdown}>
-          <ArrowRightIcon className='icon-right-arrow' />
+          <ArrowRightIcon className="icon-right-arrow" />
           {name}
           <span className="icon">
-            <InfoIcon className='icon-info' />
+            <InfoIcon className="icon-info" />
             <span className="tooltip">{tip}</span>
           </span>
         </p>
-        <Switch {...label} checked={topSwitch} onChange={handleTopSwitchChange} />
+        <Switch
+          {...label}
+          checked={topSwitch}
+          onChange={handleTopSwitchChange}
+        />
       </div>
       {isDropdownVisible && (
-        <div className='row'>
+        <div className="row">
           <div className="toggle-dropdown-content">
-            <h3 className='test'>Blue robots</h3>
-            
+            <h3 className="test">Blue robots</h3>
+
             {settingsBlue.map((setting, index) => (
               <div className="toggleSetting-wrapper" key={index}>
                 <p>{`${itemName} ${index}`}</p>
@@ -84,13 +86,13 @@ const Settings: React.FC<SettingsProps> = ({
                   {...label}
                   checked={setting}
                   onChange={() => toggleSettingBlue(index)}
-                  />
+                />
               </div>
             ))}
           </div>
 
           <div className="toggle-dropdown-content">
-            <h3 className='test'>Yellow robots</h3>
+            <h3 className="test">Yellow robots</h3>
             {settingsYellow.map((setting, index) => (
               <div className="toggleSetting-wrapper" key={index}>
                 <p>{`${itemName} ${index}`}</p>
@@ -98,11 +100,11 @@ const Settings: React.FC<SettingsProps> = ({
                   {...label}
                   checked={setting}
                   onChange={() => toggleSettingYellow(index)}
-                  />
+                />
               </div>
             ))}
-            </div>
-      </div>
+          </div>
+        </div>
       )}
     </>
   );

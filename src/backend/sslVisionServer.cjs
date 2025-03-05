@@ -6,14 +6,17 @@ const multicastPort = process.env.SSL_VISION_MULTICAST_PORT;
 const wsPort = 3000;
 
 // WebSocket server
-const wss = new ws.WebSocketServer({port: wsPort, 'Access-Control-Allow-Origin': "*"});
+const wss = new ws.WebSocketServer({
+  port: wsPort,
+  'Access-Control-Allow-Origin': '*',
+});
 
-wss.on('connection', ws => {
-    console.log('Websocket client connected to SSLVisionServer.');
+wss.on('connection', (ws) => {
+  console.log('Websocket client connected to SSLVisionServer.');
 
-    ws.on('message', (message) => {
-        console.log(`Received message from client: ${message}`);
-    });
+  ws.on('message', (message) => {
+    console.log(`Received message from client: ${message}`);
+  });
 });
 
 // UDP socket to listen to multicast packages

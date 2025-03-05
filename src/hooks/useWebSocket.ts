@@ -14,7 +14,7 @@ const useWebSocket = (url: string) => {
 
     socket.onmessage = (event) => {
       try {
-        console.log("event data: " + event.data);
+        console.log('event data: ' + event.data);
         // const parsedData: any = JSON.parse(event.data);
         // setData(parsedData);
       } catch (e) {
