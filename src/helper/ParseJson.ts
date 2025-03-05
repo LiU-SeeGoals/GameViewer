@@ -9,7 +9,7 @@ export function parseJson(
     // setRobotPositions: React.Dispatch<React.SetStateAction<Robot[]>>,
     // setBallPosition: React.Dispatch<React.SetStateAction<Ball>>,
     setAIUpdate: React.Dispatch<React.SetStateAction<AIRobotUpdate>>,
-    // setRobotActions: React.Dispatch<React.SetStateAction<Action[]>>,
+    setRobotActions: React.Dispatch<React.SetStateAction<Action[]>>,
     setTerminalLog: React.Dispatch<React.SetStateAction<string[]>>,
     setErrorOverlay: React.Dispatch<React.SetStateAction<string>>,
     setvisibleRobots: React.Dispatch<React.SetStateAction<boolean[]>>,
@@ -44,13 +44,23 @@ export function parseJson(
         // Now we update all the useState varibles with the recieved json
         // setRobotPositions(parsedData.RobotPositions)
         // setBallPosition(parsedData.BallPosition)
+        // console.log(parsedData.RobotActions[0]);
         setAIUpdate(parsedData);
         // setRobotActions(parsedData.RobotActions);
+
+        // let actions: Action[] = [];
+        // console.log(parsedData.RobotActions);
+        // parsedData.RobotActions.forEach((a: Action) => {
+        //     console.log(a);
+        //     actions.push(a);
+        // });
+        setRobotActions([...parsedData.RobotActions]);
+
         setTerminalLog(parsedData.TerminalLog);
         setErrorOverlay(''); // Remove default error since we have recieved message
         //setvisibleRobots() // all robots that have position is visible, not yet implemented
 
     } catch (e) {
-        console.error("Error parsin JSON, see ");
+        console.error("Error parsing JSON, see ", e);
     }
 }

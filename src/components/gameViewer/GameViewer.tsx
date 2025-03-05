@@ -5,10 +5,12 @@ import FootballField from './footballField/FootballField';
 import BottomBar from './bottomBar/BottomBar';
 import { SSLFieldUpdate } from "../../types/SSLFieldUpdate";
 import { AIRobotUpdate } from "../../types/AIRobotUpdate";
+import { Action } from "../../types/Action"
 
 interface gameViewerProps {
     sslFieldUpdate: SSLFieldUpdate;
     aiRobotUpdate: AIRobotUpdate;
+    robotActions: Action[];
     terminalLog: string[];
     errorOverlay: string;
     vectorSettingBlue: boolean[];
@@ -18,6 +20,7 @@ interface gameViewerProps {
 const GameViewer: React.FC<gameViewerProps> = ({
     sslFieldUpdate,
     aiRobotUpdate,
+    robotActions,
     terminalLog,
     errorOverlay,
     vectorSettingBlue,
@@ -34,6 +37,7 @@ const GameViewer: React.FC<gameViewerProps> = ({
                 height={bottomBarHeight} 
                 sslFieldUpdate={sslFieldUpdate}
                 aiRobotUpdate={aiRobotUpdate}
+                robotActions={robotActions}
                 errorOverlay={errorOverlay} 
                 vectorSettingBlue={vectorSettingBlue}
                 vectorSettingYellow={vectorSettingYellow}/>

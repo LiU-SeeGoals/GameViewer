@@ -17,7 +17,7 @@ function App() {
   // The useStates are defined here
   const [sslFieldUpdate, setSSLFieldUpdate] = useState(getDefaultSSLFieldUpdate());
   const [aiRobotUpdate, setAIUpdate] = useState(getDefaultAIRobotUpdate());
-  // const [robotActions, setRobotActions] = useState(getDefaultActions());
+  const [robotActions, setRobotActions] = useState(getDefaultActions());
   const [vectorSettingBlue, setVectorSettingBlue] = useState(getDefaultVectorSetting());
   const [vectorSettingYellow, setVectorSettingYellow] = useState(getDefaultVectorSetting());
   const [traceSetting, setTraceSetting] = useState(getDefaultTraceSetting());
@@ -82,11 +82,11 @@ function App() {
         parseJson(
           event.data,
           setAIUpdate,
+          setRobotActions,
           setTerminalLog,
           setErrorOverlay,
           setvisibleRobots,
           );
-
       } catch (e) {
         console.error('Error parsing message JSON', e);
       }
@@ -111,13 +111,14 @@ function App() {
         setVectorSettingYellow={setVectorSettingYellow}
         traceSetting={traceSetting}
         setTraceSetting={setTraceSetting}
-        robotActions={aiRobotUpdate.RobotActions}
+        robotActions={robotActions}
         visibleRobots={visibleRobots}
         isConnectedToController={isConnectedToController}
         />
       <GameViewer
         sslFieldUpdate={sslFieldUpdate}
-        aiRobotInfo={aiRobotUpdate}
+        aiRobotUpdate={aiRobotUpdate}
+        robotActions={robotActions}
         terminalLog={terminalLog}
         errorOverlay={errorOverlay}
         vectorSettingBlue={vectorSettingBlue}

@@ -11,7 +11,7 @@ export function getDefaultSSLFieldUpdate(): SSLFieldUpdate {
 }
 
 export function getDefaultAIRobotUpdate(): AIRobotUpdate {
-  const robotUpdate: AIRobotUpdate = {Robots: [], BallPosition: getDefaultAIBall(), RobotActions: getDefaultActions()};
+  const robotUpdate: AIRobotUpdate = {Robots: [], BallPosition: getDefaultAIBall()};
   return robotUpdate;
 }
 
@@ -51,14 +51,15 @@ export function getDefaultVisibleRobots(): boolean[] {
 }
 
 export function getDefaultActions(): Action[] {
-    const actions = [
-        {"Id": 0, "Action": -1, "PreviousAction": -1},
-        {"Id": 1, "Action": -1, "PreviousAction": -1},
-        {"Id": 2, "Action": -1, "PreviousAction": -1},
-        {"Id": 3, "Action": -1, "PreviousAction": -1},
-        {"Id": 4, "Action": -1, "PreviousAction": -1},
-        {"Id": 5, "Action": -1, "PreviousAction": -1},
-    ];
+    const actions: Action[] = [
+        // {"Id": 0, "Action": -1, "PosX": -3000, "PosY": 3000, "PosW": 0, "DestX": 0, "DestY": 0, "DestW": 0, "Dribble": false, "PreviousAction": -1},
+        // {"Id": 1, "Action": -1, "PosX": -3000, "PosY": 3000, "PosW": 0, "DestX": 0, "DestY": 0, "DestW": 0, "Dribble": false, "PreviousAction": -1},
+        // {"Id": 2, "Action": -1, "PosX": -3000, "PosY": 3000, "PosW": 0, "DestX": 0, "DestY": 0, "DestW": 0, "Dribble": false, "PreviousAction": -1},
+        // {"Id": 3, "Action": -1, "PosX": -3000, "PosY": 3000, "PosW": 0, "DestX": 0, "DestY": 0, "DestW": 0, "Dribble": false, "PreviousAction": -1},
+        // {"Id": 4, "Action": -1, "PosX": -3000, "PosY": 3000, "PosW": 0, "DestX": 0, "DestY": 0, "DestW": 0, "Dribble": false, "PreviousAction": -1},
+        // {"Id": 5, "Action": -1, "PosX": -3000, "PosY": 3000, "PosW": 0, "DestX": 0, "DestY": 0, "DestW": 0, "Dribble": false, "PreviousAction": -1},
+        // {"Id": 6, "Action": -1, "PosX": -3000, "PosY": 3000, "PosW": 0, "DestX": 0, "DestY": 0, "DestW": 0, "Dribble": false, "PreviousAction": -1},
+      ];
     return actions;
 }
 
