@@ -36,7 +36,10 @@ function App() {
   const [isConnectedToController, setIsConnectedToController] = useState(false);
 
   useEffect(() => {
-    const ssl_vision_socket = new WebSocket('ws://localhost:3000/');
+    const ssl_vision_address = import.meta.env.VITE_SSL_VISION_MULTICAST_ADDR;
+    const ssl_vision_sim_port = import.meta.env.VITE_SSL_VISION_SIM_MAIN_PORT;
+    const ssl_vision_real_port = import.meta.env.VITE_SSL_VISION_REAL_MAIN_PORT;
+    const ssl_vision_socket = new WebSocket(`ws://localhost:3000/`);
     ssl_vision_socket.binaryType = 'arraybuffer'; // Set binary type to 'arraybuffer'
 
     ssl_vision_socket.onmessage = (event) => {
@@ -63,7 +66,9 @@ function App() {
       }
     };
 
-    const ai_socket = new WebSocket('ws://localhost:8080/ws');
+    const ai_address = import.meta.env.VITE_AI_GAME_VIEWER_SOCKET_ADDR;
+    const ai_port = import.meta.env.VITE_AI_GAME_VIEWER_SOCKET_PORT;
+    const ai_socket = new WebSocket(`ws://${ai_address}:${ai_port}/ws`);
 
     ai_socket.onerror = (event) => {
       setErrorOverlay('Failed to connect to AI Controller:(');
