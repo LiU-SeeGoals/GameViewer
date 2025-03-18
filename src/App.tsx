@@ -36,10 +36,9 @@ function App() {
   const [isConnectedToController, setIsConnectedToController] = useState(false);
 
   useEffect(() => {
-    const ssl_vision_address = import.meta.env.VITE_SSL_VISION_MULTICAST_ADDR;
-    const ssl_vision_sim_port = import.meta.env.VITE_SSL_VISION_SIM_MAIN_PORT;
-    const ssl_vision_real_port = import.meta.env.VITE_SSL_VISION_REAL_MAIN_PORT;
-    const ssl_vision_socket = new WebSocket(`ws://localhost:3000/`);
+    const vision_addr = import.meta.env.VITE_SSL_VISION_WS_ADDR;
+    const vision_port = import.meta.env.VITE_SSL_VISION_WS_PORT;
+    const ssl_vision_socket = new WebSocket(`ws://localhost:${vision_port}/`);
     ssl_vision_socket.binaryType = 'arraybuffer'; // Set binary type to 'arraybuffer'
 
     ssl_vision_socket.onmessage = (event) => {
@@ -57,7 +56,7 @@ function App() {
         }
 
         // Log raw data to check if it's received correctly
-        // console.log("Raw received data:", buffer);
+        console.log("Raw received data:", buffer);
 
         // Decode the protobuf message
         parseProto(buffer, setSSLFieldUpdate, setErrorOverlay);
@@ -66,12 +65,16 @@ function App() {
       }
     };
 
-    const ai_address = import.meta.env.VITE_AI_GAME_VIEWER_SOCKET_ADDR;
-    const ai_port = import.meta.env.VITE_AI_GAME_VIEWER_SOCKET_PORT;
+    var ai_address = import.meta.env.VITE_AI_GAME_VIEWER_SOCKET_ADDR;
+    var ai_port = import.meta.env.VITE_AI_GAME_VIEWER_SOCKET_PORT;
+    if (import.meta.env.VITE_ENVIRONMENT == "simulation") {
+        ai_address = import.meta.env.VITE_DOCKER_NAME_AI;
+        ai_port = import.meta.env.VITE_AI_GAME_VIEWER_SOCKET_PORT;
+    }
     const ai_socket = new WebSocket(`ws://${ai_address}:${ai_port}/ws`);
 
     ai_socket.onerror = (event) => {
-      setErrorOverlay('Failed to connect to AI Controller:(');
+      setErrorOverlay('Failed to connect to AI :(');
       setIsConnectedToController(false);
     };
 

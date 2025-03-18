@@ -1,36 +1,38 @@
 const dgram = require('dgram');
 const ws = require('ws');
 
-const multicastAddress = process.env.SSL_VISION_MULTICAST_ADDR;
-const multicastPort = process.env.SSL_VISION_SIM_MAIN_PORT;
-const wsPort = 3000;
+const visionAddr = process.env.SSL_VISION_MULTICAST_ADDR;
+const visionSimPort = process.env.SSL_VISION_SIM_MAIN_PORT;
+const visionRealPort = process.env.SSL_VISION_REAL_MAIN_PORT;
+const wsAddr = process.env.VITE_SSL_VISION_WS_ADDR;
+const wsPort = process.env.VITE_SSL_VISION_WS_PORT;
+const udpSocket = dgram.createSocket('udp4');
 
-// WebSocket server
 const wss = new ws.WebSocketServer({
+  address: "0.0.0.0",
   port: wsPort,
   'Access-Control-Allow-Origin': '*',
 });
 
 wss.on('connection', (ws) => {
-  console.log('Websocket client connected to SSLVisionServer.');
+  console.log(`Client connected to WebSocket`);
 
   ws.on('message', (message) => {
     console.log(`Received message from client: ${message}`);
   });
+
+  ws.on('close', () => {
+    console.log(`Client disconnected`);
+  });
 });
 
-// UDP socket to listen to multicast packages
-const udpSocket = dgram.createSocket('udp4');
-
-udpSocket.bind(multicastPort, () => {
-  udpSocket.addMembership(multicastAddress);
+udpSocket.bind(visionSimPort, () => {
+  udpSocket.addMembership(visionAddr);
 });
 
 udpSocket.on('message', (msg) => {
-  // Process the message and send it to connected WebSocket clients
-  // console.log(`Received multicast message: ${msg}`);
+  //console.log(`Received multicast message: ${msg}`);
 
-  // Broadcast the message to all connected WebSocket clients
   wss.clients.forEach((client) => {
     if (client.readyState === ws.OPEN) {
       client.send(msg);
