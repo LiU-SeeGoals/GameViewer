@@ -119,7 +119,7 @@ const FootballField: React.FC<FootBallFieldProps> = ({
       context.fill();
       context.stroke();
     } catch (e) {
-      console.error('Ball does not exist to draw');
+      //console.error('Ball does not exist to draw');
     }
   };
 
@@ -141,7 +141,7 @@ const FootballField: React.FC<FootBallFieldProps> = ({
 
       if (robot.robotId) {
         const action = getRobotAction(robotActions, robot.robotId);
-        console.log(action);
+        //console.log(action);
         if (action !== undefined) {
           switch (actionToStr(action.Action)) {
             case 'MOVE': {

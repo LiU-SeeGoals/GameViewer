@@ -1,15 +1,16 @@
 const dgram = require('dgram');
 const ws = require('ws');
 
+const env = process.env.ENVIRONMENT;
 const visionAddr = process.env.SSL_VISION_MULTICAST_ADDR;
-const visionSimPort = process.env.SSL_VISION_SIM_MAIN_PORT;
-const visionRealPort = process.env.SSL_VISION_REAL_MAIN_PORT;
+const visionPort = env == "simulation" ? process.env.SSL_VISION_SIM_MAIN_PORT :
+                                         process.env.SSL_VISION_REAL_MAIN_PORT;
 const wsAddr = process.env.VITE_SSL_VISION_WS_ADDR;
 const wsPort = process.env.VITE_SSL_VISION_WS_PORT;
 const udpSocket = dgram.createSocket('udp4');
 
 const wss = new ws.WebSocketServer({
-  address: "0.0.0.0",
+  address: wsAddr,
   port: wsPort,
   'Access-Control-Allow-Origin': '*',
 });
@@ -26,7 +27,7 @@ wss.on('connection', (ws) => {
   });
 });
 
-udpSocket.bind(visionSimPort, () => {
+udpSocket.bind(visionPort, () => {
   udpSocket.addMembership(visionAddr);
 });
 

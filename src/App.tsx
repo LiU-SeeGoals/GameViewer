@@ -36,74 +36,83 @@ function App() {
   const [isConnectedToController, setIsConnectedToController] = useState(false);
 
   useEffect(() => {
-    const vision_addr = import.meta.env.VITE_SSL_VISION_WS_ADDR;
-    const vision_port = import.meta.env.VITE_SSL_VISION_WS_PORT;
-    const ssl_vision_socket = new WebSocket(`ws://localhost:${vision_port}/`);
-    ssl_vision_socket.binaryType = 'arraybuffer'; // Set binary type to 'arraybuffer'
+    const vision_ws_addr = import.meta.env.VITE_SSL_VISION_WS_ADDR;
+    const vision_ws_port = import.meta.env.VITE_SSL_VISION_WS_PORT;
+    const ssl_vision_socket = new WebSocket(`ws://${vision_ws_addr}:${vision_ws_port}/`);
+    ssl_vision_socket.binaryType = 'arraybuffer';
 
     ssl_vision_socket.onmessage = (event) => {
       try {
-        if (!event.data) {
-          return;
-        }
+        if (!event.data) return;
         const buffer = new Uint8Array(event.data);
-        // Check if the data is an ArrayBuffer
-        // const buffer = Uint8Array.from(atob(event.data), c => c.charCodeAt(0));
-
         if (!buffer) {
           console.error('Expected ArrayBuffer, got', typeof event.data);
           return;
         }
-
-        // Log raw data to check if it's received correctly
-        console.log("Raw received data:", buffer);
-
-        // Decode the protobuf message
         parseProto(buffer, setSSLFieldUpdate, setErrorOverlay);
       } catch (e) {
         console.error('Error parsing message JSON', e);
       }
     };
 
-    var ai_address = import.meta.env.VITE_AI_GAME_VIEWER_SOCKET_ADDR;
-    var ai_port = import.meta.env.VITE_AI_GAME_VIEWER_SOCKET_PORT;
-    if (import.meta.env.VITE_ENVIRONMENT == "simulation") {
-        ai_address = import.meta.env.VITE_DOCKER_NAME_AI;
-        ai_port = import.meta.env.VITE_AI_GAME_VIEWER_SOCKET_PORT;
-    }
-    const ai_socket = new WebSocket(`ws://${ai_address}:${ai_port}/ws`);
+    let aiSocket;
+    let retryInterval;
 
-    ai_socket.onerror = (event) => {
-      setErrorOverlay('Failed to connect to AI :(');
-      setIsConnectedToController(false);
-    };
+    const connectToAI = () => {
+      const ai_address = import.meta.env.VITE_AI_GAME_VIEWER_SOCKET_ADDR;
+      const ai_port = import.meta.env.VITE_AI_GAME_VIEWER_SOCKET_PORT;
+      aiSocket = new WebSocket(`ws://${ai_address}:${ai_port}/ws`);
 
-    ai_socket.onopen = (event) => {
-      setErrorOverlay('Connected!!!!');
-      setIsConnectedToController(true);
-    };
+      aiSocket.onerror = () => {
+        setErrorOverlay('Failed to connect to AI :(');
+        setIsConnectedToController(false);
 
-    ai_socket.onmessage = (event) => {
-      try {
-        if (!event.data) {
-          return;
+        // Retry connection after 1 second
+        if (!retryInterval) {
+          retryInterval = setInterval(() => {
+            console.log('Retrying AI WebSocket connection...');
+            connectToAI();
+          }, 1000);
         }
-        // console.log(event.data)
-        parseJson(
-          event.data,
-          setAIUpdate,
-          setRobotActions,
-          setTerminalLog,
-          setErrorOverlay,
-          setvisibleRobots
-        );
-      } catch (e) {
-        console.error('Error parsing message JSON', e);
-      }
+      };
+
+      aiSocket.onopen = () => {
+        setErrorOverlay('Connected!!!!');
+        setIsConnectedToController(true);
+
+        // Clear the retry interval on successful connection
+        if (retryInterval) {
+          clearInterval(retryInterval);
+          retryInterval = null;
+        }
+      };
+
+      aiSocket.onmessage = (event) => {
+        try {
+          if (!event.data) return;
+          console.log(event.data);
+          parseJson(
+            event.data,
+            setAIUpdate,
+            setRobotActions,
+            setTerminalLog,
+            setErrorOverlay,
+            setvisibleRobots
+          );
+        } catch (e) {
+          console.error('Error parsing message JSON', e);
+        }
+      };
     };
 
-    // Clean up the WebSocket connection on unmount
-    return () => {};
+    connectToAI();
+
+    return () => {
+      // Cleanup function to close sockets and clear intervals
+      ssl_vision_socket.close();
+      if (aiSocket) aiSocket.close();
+      if (retryInterval) clearInterval(retryInterval);
+    };
   }, []);
 
   // Setting the text shown in the browser tab
