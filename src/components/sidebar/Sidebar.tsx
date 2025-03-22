@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Sidebar.css';
 import useResizeSidebar from '../../hooks/useResizeSidebar';
 import ExternalLink from './externalLink/ExternalLink';
@@ -20,6 +20,9 @@ interface SidebarProps {
   robotActions: Action[];
   visibleRobots: boolean[];
   isConnectedToController: boolean;
+  sslFieldUpdate: SSLFieldUpdate;
+  sidebarWidth: number,
+  setSidebarWidth: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({
@@ -32,26 +35,19 @@ const Sidebar: React.FC<SidebarProps> = ({
   robotActions,
   visibleRobots,
   isConnectedToController,
+  sslFieldUpdate,
+  sidebarWidth,
+  setSidebarWidth,
 }) => {
-  // Resizeble sidebar stuff
-  const minSidebarContentWidth = 250;
-  const startWidthSidebar = 400;
   const resizerWidth = 5;
 
-  const { value: resizerValue, startResizing } = useResizeSidebar(
-    false,
-    startWidthSidebar
-  );
+  const { value: resizerValue, startResizing, isHidden } = useResizeSidebar(false, sidebarWidth);
 
-  const contentDisplay: string =
-    resizerValue < minSidebarContentWidth + resizerWidth ? 'none' : 'inline';
-  const sidebarWidth: number =
-    resizerValue < minSidebarContentWidth + resizerWidth ? 0 : resizerValue;
+  useEffect(() => {
+    setSidebarWidth(resizerValue);
+  }, [resizerValue, setSidebarWidth]);
 
-  const sidebarStyle = {
-    width: sidebarWidth,
-    display: contentDisplay,
-  };
+  const contentDisplay: string = resizerValue < resizerWidth ? 'none' : 'inline';
 
   const vectorTip = "Are you stupid? It's kind of self-explanatory";
   const traceTip =
@@ -59,56 +55,51 @@ const Sidebar: React.FC<SidebarProps> = ({
 
   return (
     <div className="sidebar-wrapper">
-      <div className="sidebar" style={sidebarStyle}>
+      <div className="sidebar" style={{
+        display: isHidden ? "none" : "inline",
+        width: sidebarWidth
+      }}>
         <div className="sidebar-content">
           <div className="header-status-container">
             <Header />
             <StatusCircle isConnected={isConnectedToController} />
-            <ExternalLink
-              text={'Feature Request'}
-              link={
-                'https://github.com/LiU-SeeGoals/GameViewer/issues/new?template=Blank+issue'
-              }
-              title={
-                'Feel a feature is missing? Create a feature request on the GitHub!'
-              }
-            ></ExternalLink>
           </div>
-          <hr />
-          <ExternalLink text={'SSL vision'} link={'https://www.google.com'} />
-          <ExternalLink
-            text={'Game controller'}
-            link={'https://www.google.com'}
-          />
-          <ExternalLink
-            text={'Jenkins (container config)'}
-            link={'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}
-          />
-          <hr />
-          <ToggleSetting
-            name={'Show vector'}
-            settingsBlue={vectorSettingBlue}
-            settingsYellow={vectorSettingYellow}
-            setSettingsBlue={setVectorSettingBlue}
-            setSettingsYellow={setVectorSettingYellow}
-            itemName="Robot"
-            tip={vectorTip}
-          />
-          <ToggleSetting
-            name={'Show trace'}
-            settingsBlue={traceSetting}
-            settingsYellow={traceSetting}
-            setSettingsBlue={setTraceSetting}
-            setSettingsYellow={setTraceSetting}
-            itemName="Robot"
-            tip={traceTip}
-          />
-          <ButtonSetting /> {/* Not implemented yet */}
-          <hr />
-          <RobotTable
-            robotActions={robotActions}
-            visibleRobots={visibleRobots}
-          />
+          <div>
+              <ExternalLink
+                text={'Feature Request'}
+                link={'https://github.com/LiU-SeeGoals/GameViewer/issues/new?template=Blank+issue'}
+                target="_blank"
+              />
+              <hr />
+              <ExternalLink text={"SSL Game Controller"} link={"http://localhost:8081"} target="_blank" />
+              <ExternalLink text={"SSL Vision Client"} link={"http://localhost:8082"} target="_blank" />
+              <hr />
+              <ToggleSetting
+                name={'Show vector'}
+                settingsBlue={vectorSettingBlue}
+                settingsYellow={vectorSettingYellow}
+                setSettingsBlue={setVectorSettingBlue}
+                setSettingsYellow={setVectorSettingYellow}
+                itemName="Robot"
+                tip={vectorTip}
+              />
+              <ToggleSetting
+                name={'Show trace'}
+                settingsBlue={traceSetting}
+                settingsYellow={traceSetting}
+                setSettingsBlue={setTraceSetting}
+                setSettingsYellow={setTraceSetting}
+                itemName="Robot"
+                tip={traceTip}
+              />
+              <ButtonSetting /> {/* Not implemented yet */}
+              <hr />
+              <RobotTable
+                robotActions={[]}
+                visibleRobots={visibleRobots}
+                sslFieldUpdate={sslFieldUpdate}
+              />
+          </div>
         </div>
       </div>
       <div

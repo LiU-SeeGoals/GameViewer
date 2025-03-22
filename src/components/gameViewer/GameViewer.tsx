@@ -1,11 +1,7 @@
-import React from 'react';
 import './GameViewer.css';
 import useResizeSidebar from '../../hooks/useResizeSidebar';
 import FootballField from './footballField/FootballField';
 import BottomBar from './bottomBar/BottomBar';
-import { SSLFieldUpdate } from '../../types/SSLFieldUpdate';
-import { AIRobotUpdate } from '../../types/AIRobotUpdate';
-import { Action } from '../../types/Action';
 
 interface gameViewerProps {
   sslFieldUpdate: SSLFieldUpdate;
@@ -15,6 +11,7 @@ interface gameViewerProps {
   errorOverlay: string;
   vectorSettingBlue: boolean[];
   vectorSettingYellow: boolean[];
+  sidebarWidth: number;
 }
 
 const GameViewer: React.FC<gameViewerProps> = ({
@@ -25,22 +22,25 @@ const GameViewer: React.FC<gameViewerProps> = ({
   errorOverlay,
   vectorSettingBlue,
   vectorSettingYellow,
+  sidebarWidth,
 }) => {
-  const startHeightResizer = 709;
+  const startHeightResizer = 1000;
   const resizerWidth = 5;
 
-  const { value: resizerValue, startResizing } = useResizeSidebar(
+  const { value: resizerValue, startResizing, isHidden } = useResizeSidebar(
     true,
     startHeightResizer
   );
-  const bottomBarHeight: number =
-    window.innerHeight - resizerValue < resizerWidth
-      ? window.innerHeight - resizerWidth
-      : resizerValue;
+  const width: number = window.innerWidth - sidebarWidth;
+  const bottomBarHeight: number = isHidden ? 0 : window.innerHeight - resizerValue;
+  const footballFieldHeight: number = isHidden
+    ? window.innerHeight
+    : window.innerHeight - bottomBarHeight;
   return (
     <div className="game-viewer">
       <FootballField
-        height={bottomBarHeight}
+        height={footballFieldHeight}
+        width={width}
         sslFieldUpdate={sslFieldUpdate}
         aiRobotUpdate={aiRobotUpdate}
         robotActions={robotActions}
@@ -51,11 +51,19 @@ const GameViewer: React.FC<gameViewerProps> = ({
 
       <div
         className="game-viewer-resizer"
-        style={{ height: resizerWidth }}
+        style={{
+            height: resizerWidth,
+            zIndex: 11,
+        }}
         onMouseDown={startResizing}
       />
 
-      <BottomBar terminalLog={terminalLog} />
+      {!isHidden && (
+        <BottomBar
+          style={{ zIndex: 10, height: bottomBarHeight }}
+          terminalLog={terminalLog}
+        />
+      )}
     </div>
   );
 };

@@ -3,11 +3,16 @@
   display: grid;
 }
 
+.robotTable-wrapper .header {
+  font-weight: bold;
+}
+
 .robotTable-wrapper .robotItem {
   display: grid;
-  grid-template-columns: 0.5fr 1fr 1fr 0.6fr 0.1fr;
+  grid-template-columns: 0.2fr 0.3fr 0.3fr 0.3fr;
   padding: 5px;
   align-items: center;
+  font-family: monospace;
 }
 
 .robotTable-wrapper .robotItem:nth-child(odd) {

@@ -7,14 +7,18 @@
 }
 
 .sidebar-wrapper .sidebar {
-  padding: 10px;
+  padding: 0px;
   box-sizing: border-box;
   overflow: scroll;
 }
 
 .sidebar-wrapper .sidebar-resizer {
   background-color: rgb(44, 131, 190);
-  cursor: ew-resize; /* Change the cursor to resize when hovering */
+  cursor: ew-resize;
+}
+
+.sidebar-wrapper .sidebar-resizer:hover {
+  background-color: rgb(100, 150, 200);
 }
 
 .sidebar-wrapper hr {
@@ -22,19 +26,16 @@
   margin-bottom: 15px;
 }
 
-/* Ensures the header and status circle are placed in a row */
 .header-status-container {
   display: flex;
-  justify-content: flex-start; /* Aligns both items to the left */
-  align-items: center; /* Centers them vertically */
+  justify-content: flex-start;
+  align-items: center;
 }
 
-/* Optional: Adds space between the header and the status circle */
 .header-status-container > *:not(:last-child) {
-  margin-right: 10px; /* Adds space between the header and the circle */
+  margin-right: 10px;
 }
 
-/* Optional: Styling for the status circle if you want it to be smaller or more specific */
 .status-circle {
   width: 12px;
   height: 12px;
@@ -42,7 +43,6 @@
   border: 2px solid black;
 }
 
-/* Styling the sidebar content if needed */
 .sidebar-content {
   padding: 10px;
 }

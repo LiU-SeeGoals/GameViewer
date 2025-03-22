@@ -13,7 +13,7 @@ const StatusCircle: React.FC<StatusCircleProps> = ({ isConnected }) => {
         style={{
           backgroundColor: isConnected ? 'green' : 'red', // Change circle color based on connection status
         }}
-      ></div>
+      />
       <span className="hover-text">
         Controller Status: {isConnected ? 'Connected' : 'Disconnected'}
       </span>

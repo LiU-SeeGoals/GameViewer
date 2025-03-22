@@ -8,38 +8,54 @@ import { actionToStr } from '../../../helper/defaultValues';
 interface RobotTableProps {
   robotActions: Action[];
   visibleRobots: boolean[];
+  sslFieldUpdate: SSLFieldUpdate;
 }
 
 const RobotTable: React.FC<RobotTableProps> = ({
   robotActions,
   visibleRobots,
+  sslFieldUpdate,
 }) => {
   const tip = 'This only shows if the SSL vision can currenty see the robot';
 
   return (
-    <div className="robotTable-wrapper">
-      <div className="robotItem header">
-        <p>ID</p>
-        <p>Curr. act.</p>
-        <p>Prev. act.</p>
-        <p>batt.</p>
-        <span className="icon-info">
-          <InfoIcon className="icon" />
-          <span className="tooltip">{tip}</span>
-        </span>
-      </div>
-      {robotActions.map((action, index) => (
-        <div className="robotItem" key={index}>
-          <p>{action.Id}</p>
-          <p>{actionToStr(action.Action)}</p>
-          <p>{actionToStr(action.PreviousAction)}</p>
-          <p>-</p>
-          <LensIcon
-            className="icon"
-            style={{ color: visibleRobots[index] ? 'green' : 'red' }}
-          />
+    <div>
+      <h4>Robots</h4>
+      <h5>Yellow</h5>
+      <div className="robotTable-wrapper">
+        <div className="robotItem header">
+          <p>ID</p>
+          <p>x</p>
+          <p>y</p>
+          <p>Angle</p>
         </div>
-      ))}
+        {sslFieldUpdate.robotsYellow.map((robot, index) => (
+        <div className="robotItem" key={index}>
+          <p>{robot.robotId}</p>
+          <p>{robot.x.toFixed(1)}</p>
+          <p>{robot.y.toFixed(1)}</p>
+          <p>{robot.orientation.toFixed(5)}</p>
+        </div>
+        ))}
+      </div>
+
+      <h5>Blue</h5>
+      <div className="robotTable-wrapper">
+        <div className="robotItem header">
+          <p>ID</p>
+          <p>x</p>
+          <p>y</p>
+          <p>Angle</p>
+        </div>
+        {sslFieldUpdate.robotsBlue.map((robot, index) => (
+        <div className="robotItem" key={index}>
+          <p>{robot.robotId}</p>
+          <p>{robot.x.toFixed(1)}</p>
+          <p>{robot.y.toFixed(1)}</p>
+          <p>{robot.orientation.toFixed(5)}</p>
+        </div>
+        ))}
+      </div>
     </div>
   );
 };

@@ -1,11 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './FootballField.css';
-import { SSLFieldUpdate } from '../../../types/SSLFieldUpdate';
-import { SSLRobot } from '../../../types/SSLRobot';
-import { SSLBall } from '../../../types/SSLBall';
-import { AIRobotUpdate } from '../../../types/AIRobotUpdate';
 import { AIRobot } from '../../../types/AIRobot';
-import { Action } from '../../../types/Action';
 import { actionToStr } from '../../../helper/defaultValues';
 
 const TEAM_IDS = Object.freeze({
@@ -32,9 +27,9 @@ const COLOR_MAP: Record<string, string> = {
 const withAlpha = (color: string, alpha: number): string => {
   if (color.startsWith('#')) {
     // Convert hex to RGB
-    const r = parseInt(color.slice(1, 3), 16);
-    const g = parseInt(color.slice(3, 5), 16);
-    const b = parseInt(color.slice(5, 7), 16);
+    const r = color.slice(1, 3).parseInt(16);
+    const g = color.slice(3, 5).parseInt(16);
+    const b = color.slice(5, 7).parseInt(16);
     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
   } else if (color.startsWith('rgb')) {
     // Modify existing rgb/rgba
@@ -48,6 +43,7 @@ const withAlpha = (color: string, alpha: number): string => {
 
 interface FootBallFieldProps {
   height: number;
+  width: number;
   sslFieldUpdate: SSLFieldUpdate;
   aiRobotUpdate: AIRobotUpdate;
   robotActions: Action[];
@@ -58,6 +54,7 @@ interface FootBallFieldProps {
 
 const FootballField: React.FC<FootBallFieldProps> = ({
   height,
+  width,
   sslFieldUpdate,
   aiRobotUpdate,
   robotActions,
@@ -65,8 +62,10 @@ const FootballField: React.FC<FootBallFieldProps> = ({
   vectorSettingBlue,
   vectorSettingYellow,
 }) => {
+  const minimumWidthForVertical = 810;
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
   const containerRef = React.useRef<HTMLDivElement>(null);
+  const [zoomLevel, setZoomLevel] = useState(1);
 
   // Creats a canvas for the football field image
   const canvasInit = (event: any) => {
@@ -76,19 +75,13 @@ const FootballField: React.FC<FootBallFieldProps> = ({
     }
 
     const canvas: HTMLCanvasElement = canvasRef.current;
-    // Adjust canvas width to match the image width
-    canvas.width = event.target.width;
-    canvas.height = event.target.height;
+    canvas.width = width;
+    canvas.height = height;
 
     draw(canvas);
   };
 
-  // Only the team we control have actions, currently that is YELLOW
-  function getRobotAction(actions: Action[], robotId: number) {
-    return actions.find((action) => action.Id === robotId);
-  }
 
-  // draws everything on canvas
   function draw(canvas: HTMLCanvasElement) {
     const context: CanvasRenderingContext2D | null = canvas.getContext('2d');
     if (!context) {
@@ -98,9 +91,16 @@ const FootballField: React.FC<FootBallFieldProps> = ({
     // Clear the canvas
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 
+    context.save();
+    context.translate(context.canvas.width / 2, context.canvas.height / 2);
+    context.scale(zoomLevel, zoomLevel);
+    context.translate(-context.canvas.width / 2, -context.canvas.height / 2);
+
     drawAllRobots(context);
     drawBall(context);
-    //drawRobot(context, {x: 0, y: 0, speed_x: 3, speed_y: 3, team: "yellow", selected: false});
+    drawActions(context);
+
+    context.restore();
   }
 
   // Draws ball on the canvas
@@ -114,7 +114,7 @@ const FootballField: React.FC<FootBallFieldProps> = ({
       );
       context.beginPath();
       context.arc(canvasX, canvasY, 5, 0, 2 * Math.PI);
-      context.strokeStyle = 'rgba(0, 0, 0, 0)'; // make the border transparent
+      context.strokeStyle = 'rgba(0, 0, 0, 0)';
       context.fillStyle = 'orange';
       context.fill();
       context.stroke();
@@ -124,8 +124,6 @@ const FootballField: React.FC<FootBallFieldProps> = ({
   };
 
   const drawAllRobots = (context: CanvasRenderingContext2D) => {
-    //drawing all of gamestate here
-
     sslFieldUpdate.robotsBlue.map((robot) => {
       drawRobot(context, robot, COLOR_MAP.blue, COLOR_MAP.white, 1.0);
       // if (robot.robotId) {
@@ -139,23 +137,46 @@ const FootballField: React.FC<FootBallFieldProps> = ({
     sslFieldUpdate.robotsYellow.map((robot) => {
       drawRobot(context, robot, COLOR_MAP.yellow, COLOR_MAP.black, 1.0);
 
-      if (robot.robotId) {
-        const action = getRobotAction(robotActions, robot.robotId);
-        //console.log(action);
-        if (action !== undefined) {
-          switch (actionToStr(action.Action)) {
-            case 'MOVE': {
-            }
-          }
-        }
-      }
-
       // if (robot.robotId) {
       //     if (vectorSettingYellow[robot.robotId]) {
       //         drawArrow(context, robot, SPEED_ARROW_COLOR, SPEED_ARROW_THICKNESS);
       //     }
       // }
     });
+  };
+
+  const drawActions = (context: CanvasRenderingContext2D) => {
+    const actions: Action[] = robotActions;
+
+    if (robotActions && robotActions.length > 0) {
+      for (const action of robotActions) {
+        const { canvasX, canvasY } = getCanvasCoordinates(
+          action.Dest.X,
+          action.Dest.Y,
+          context
+        );
+
+        const dotColor = "black";
+        context.beginPath();
+        context.arc(canvasX, canvasY, 4, 0, 2 * Math.PI);
+        context.fillStyle = dotColor;
+        context.fill();
+        context.closePath();
+
+        context.fillStyle = "white";
+        context.font = "bold 8px Arial";
+        context.textAlign = "center";
+        context.textBaseline = "middle";
+        context.fillText(`${action.Id}`, canvasX, canvasY);
+
+        if (action.Dribble) {
+          const dribbleText = "Dribbling";
+          context.fillStyle = "blue";
+          context.font = "italic 10px Arial";
+          context.fillText(dribbleText, canvasX, canvasY + 20);
+        }
+      }
+    }
   };
 
   // Draws all robots on the canvas
@@ -174,9 +195,8 @@ const FootballField: React.FC<FootBallFieldProps> = ({
     const canvasRadius = ROBOT_RADIUS * getScaler(context);
     const flatStartFrontAngle = (45 * Math.PI) / 180;
     const robotOrientation =
-      robot.orientation != undefined ? robot.orientation : 0;
+      robot.orientation !== undefined ? robot.orientation : 0;
 
-    // const start
     // Draw the "half moon" of the robot, leaving a flat front.
     context.beginPath();
     context.arc(
@@ -314,28 +334,55 @@ const FootballField: React.FC<FootBallFieldProps> = ({
   useEffect(() => {
     const canvas = canvasRef.current;
     if (canvas) {
+      canvas.width = width;
+      canvas.height = height;
       draw(canvas);
     }
-  }, [sslFieldUpdate]); // Dependency array - redraws when gameState changes
+  }, [sslFieldUpdate, width, height, zoomLevel]);
+
+  useEffect(() => {
+    const handleWheel = (event: WheelEvent) => {
+      event.preventDefault();
+      const newZoomLevel = zoomLevel + event.deltaY * -0.001;
+      setZoomLevel(Math.max(0.5, Math.min(2, newZoomLevel)));
+    };
+
+    const canvas = canvasRef.current;
+    if (canvas) {
+      canvas.addEventListener('wheel', handleWheel);
+      return () => {
+        canvas.removeEventListener('wheel', handleWheel);
+      };
+    }
+  }, [zoomLevel]);
 
   return (
     <div
       className="football-field-container"
-      style={{ height: height }}
+      style={{
+        height: height,
+        width: width,
+        transform: `
+          ${width <= minimumWidthForVertical ? "rotate(90deg)" : ""}
+          scale(${zoomLevel})
+        `,
+      }}
       ref={containerRef}
     >
-      <p className="overlay-warning">{errorOverlay}</p>
       <img
         src="./src/assets/football_field.svg"
         alt="canvas"
-        style={{ height: height }}
+        style={{
+          height: height,
+          width: width,
+        }}
         onLoad={canvasInit}
       />
       <canvas
         className="football-field-canvas"
         ref={canvasRef}
-        style={{ height: height }}
-      ></canvas>
+        style={{ height: height, width: width }}
+      />
     </div>
   );
 };
@@ -356,7 +403,8 @@ function getCanvasCoordinates(
 function getScaler(context: CanvasRenderingContext2D) {
   const widthScale = context.canvas.width / REAL_WIDTH_FIELD;
   const heightScale = context.canvas.height / REAL_WIDTH_FIELD;
-  return Math.max(widthScale, heightScale);
+  return Math.min(widthScale, heightScale);
 }
 
 export default FootballField;
+

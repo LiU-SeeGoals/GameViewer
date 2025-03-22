@@ -30,10 +30,9 @@ function App() {
   const [traceSetting, setTraceSetting] = useState(getDefaultTraceSetting());
   const [visibleRobots, setvisibleRobots] = useState(getDefaultVisibleRobots());
   const [terminalLog, setTerminalLog] = useState(getDefaultLog());
-  const [errorOverlay, setErrorOverlay] = useState(
-    'Connecting to Controller...'
-  );
+  const [errorOverlay, setErrorOverlay] = useState();
   const [isConnectedToController, setIsConnectedToController] = useState(false);
+  const [sidebarWidth, setSidebarWidth] = useState(320);
 
   useEffect(() => {
     const vision_ws_addr = import.meta.env.VITE_SSL_VISION_WS_ADDR;
@@ -55,32 +54,27 @@ function App() {
       }
     };
 
-    let aiSocket;
-    let retryInterval;
-
+    let aiSocket: WebSocket;
+    let retryInterval: number;
     const connectToAI = () => {
       const ai_address = import.meta.env.VITE_AI_GAME_VIEWER_SOCKET_ADDR;
       const ai_port = import.meta.env.VITE_AI_GAME_VIEWER_SOCKET_PORT;
       aiSocket = new WebSocket(`ws://${ai_address}:${ai_port}/ws`);
 
       aiSocket.onerror = () => {
-        setErrorOverlay('Failed to connect to AI :(');
         setIsConnectedToController(false);
-
-        // Retry connection after 1 second
         if (!retryInterval) {
           retryInterval = setInterval(() => {
-            console.log('Retrying AI WebSocket connection...');
+            console.log("Retrying AI WebSocket connection...");
             connectToAI();
           }, 1000);
         }
       };
 
       aiSocket.onopen = () => {
-        setErrorOverlay('Connected!!!!');
         setIsConnectedToController(true);
+        console.log("Connected to AI WebSocket!");
 
-        // Clear the retry interval on successful connection
         if (retryInterval) {
           clearInterval(retryInterval);
           retryInterval = null;
@@ -90,15 +84,12 @@ function App() {
       aiSocket.onmessage = (event) => {
         try {
           if (!event.data) return;
-          console.log(event.data);
-          parseJson(
-            event.data,
-            setAIUpdate,
-            setRobotActions,
-            setTerminalLog,
-            setErrorOverlay,
-            setvisibleRobots
-          );
+          const parsedData: Action[] = JSON.parse(event.data);
+          if (!parsedData) return;
+          setRobotActions((prevActions) => {
+            const updatedActions = [...prevActions, ...parsedData];
+            return updatedActions.slice(-10);
+          });
         } catch (e) {
           console.error('Error parsing message JSON', e);
         }
@@ -108,16 +99,14 @@ function App() {
     connectToAI();
 
     return () => {
-      // Cleanup function to close sockets and clear intervals
       ssl_vision_socket.close();
       if (aiSocket) aiSocket.close();
       if (retryInterval) clearInterval(retryInterval);
     };
   }, []);
 
-  // Setting the text shown in the browser tab
   useEffect(() => {
-    document.title = 'SeeGoals';
+    document.title = "SeeGoals - GameViewer";
   }, []);
 
   return (
@@ -132,6 +121,9 @@ function App() {
         robotActions={robotActions}
         visibleRobots={visibleRobots}
         isConnectedToController={isConnectedToController}
+        sslFieldUpdate={sslFieldUpdate}
+        sidebarWidth={sidebarWidth}
+        setSidebarWidth={setSidebarWidth}
       />
       <GameViewer
         sslFieldUpdate={sslFieldUpdate}
@@ -141,6 +133,7 @@ function App() {
         errorOverlay={errorOverlay}
         vectorSettingBlue={vectorSettingBlue}
         vectorSettingYellow={vectorSettingYellow}
+        sidebarWidth={sidebarWidth}
       />
     </div>
   );
