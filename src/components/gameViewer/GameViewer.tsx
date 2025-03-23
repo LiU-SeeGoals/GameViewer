@@ -15,6 +15,7 @@ interface gameViewerProps {
     errorOverlay: string;
     vectorSettingBlue: boolean[];
     vectorSettingYellow: boolean[];
+    sslSocket: WebSocket;
 }
 
 const GameViewer: React.FC<gameViewerProps> = ({
@@ -25,6 +26,7 @@ const GameViewer: React.FC<gameViewerProps> = ({
     errorOverlay,
     vectorSettingBlue,
     vectorSettingYellow,
+    sslSocket
 }) => {
     const startHeightResizer = 709;
     const resizerWidth = 5;
@@ -40,7 +42,8 @@ const GameViewer: React.FC<gameViewerProps> = ({
                 robotActions={robotActions}
                 errorOverlay={errorOverlay} 
                 vectorSettingBlue={vectorSettingBlue}
-                vectorSettingYellow={vectorSettingYellow}/>
+                vectorSettingYellow={vectorSettingYellow}
+                sslSocket={sslSocket}/>
             
             <div className="game-viewer-resizer"
                  style={{height: resizerWidth}}

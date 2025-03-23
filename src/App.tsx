@@ -25,13 +25,12 @@ function App() {
   const [terminalLog, setTerminalLog] = useState(getDefaultLog());
   const [errorOverlay, setErrorOverlay] = useState("Connecting to Controller...");
   const [isConnectedToController, setIsConnectedToController] = useState(false);
-  
+  const [sslSocket, setSSLSocket] = useState(new WebSocket('ws://localhost:3000/'));
   useEffect(() => {
+
+    sslSocket.binaryType = 'arraybuffer';  // Set binary type to 'arraybuffer'
     
-    const ssl_vision_socket = new WebSocket('ws://localhost:3000/');
-    ssl_vision_socket.binaryType = 'arraybuffer';  // Set binary type to 'arraybuffer'
-    
-    ssl_vision_socket.onmessage = (event) => {
+    sslSocket.onmessage = (event) => {
       try {
         if (!event.data) {
           return;
@@ -58,22 +57,22 @@ function App() {
       } catch (e) {
         console.error('Error parsing message JSON', e);
       }
-      
     };
     
-    const ai_socket = new WebSocket("ws://localhost:8080/ws");
 
-    ai_socket.onerror = (event) => {
+    const aiSocket = new WebSocket("ws://localhost:8080/ws");
+
+    aiSocket.onerror = (event) => {
       setErrorOverlay("Failed to connect to AI Controller:(");
       setIsConnectedToController(false);
     };
     
-    ai_socket.onopen = (event) => {
+    aiSocket.onopen = (event) => {
       setErrorOverlay("Connected!!!!");
       setIsConnectedToController(true);
     }
   
-    ai_socket.onmessage = (event) => {
+    aiSocket.onmessage = (event) => {
       try {
         if (!event.data) {
           return;
@@ -123,6 +122,7 @@ function App() {
         errorOverlay={errorOverlay}
         vectorSettingBlue={vectorSettingBlue}
         vectorSettingYellow={vectorSettingYellow}
+        sslSocket={sslSocket}
         />
     </div>
   );

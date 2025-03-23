@@ -7,6 +7,7 @@ import { AIRobotUpdate } from '../../../types/AIRobotUpdate';
 import { AIRobot } from '../../../types/AIRobot';
 import { Action } from '../../../types/Action';
 import { actionToStr } from '../../../helper/defaultValues';
+import { createSimulatorControl } from '../../../helper/ParseProto';
 
 
 const TEAM_IDS = Object.freeze({
@@ -56,6 +57,7 @@ interface FootBallFieldProps {
     errorOverlay: string;
     vectorSettingBlue: boolean[];
     vectorSettingYellow: boolean[];
+    sslSocket: WebSocket;
 }
 
 const FootballField: React.FC<FootBallFieldProps> = ({
@@ -65,7 +67,8 @@ const FootballField: React.FC<FootBallFieldProps> = ({
     robotActions,
     errorOverlay, 
     vectorSettingBlue, 
-    vectorSettingYellow
+    vectorSettingYellow,
+    sslSocket,
 }) => {
     const canvasRef = React.useRef<HTMLCanvasElement>(null);
     const containerRef = React.useRef<HTMLDivElement>(null);
@@ -143,11 +146,16 @@ const FootballField: React.FC<FootBallFieldProps> = ({
             
             if (robot.robotId) {
                 const action = getRobotAction(robotActions, robot.robotId);
-                console.log(action);
+                console.log("Action:", action);
                 if (action !== undefined) {
                     switch (actionToStr(action.Action)) {
                         case ("MOVE"): {
-                            
+                            var tmpRobot = robot;
+                            tmpRobot.x = action.DestX;
+                            tmpRobot.y = action.DestY;
+                            tmpRobot.orientation = action.DestW;
+                            drawRobot(context, tmpRobot, COLOR_MAP.yellow, COLOR_MAP.black, 0.3);
+                            drawLine(context, robot.x, robot.y, action.DestX, action.DestY, COLOR_MAP.black, 2, true);
                         }
                     } 
                 }
@@ -225,6 +233,26 @@ const FootballField: React.FC<FootBallFieldProps> = ({
         context.stroke();
     };
 
+    // Function to draw a line between two points
+    function drawLine(context: CanvasRenderingContext2D, x1: number, y1: number, x2: number, y2: number, color: string = "red", lineWidth: number = 2, dashed: boolean = true) {
+        context.beginPath();
+        const { canvasX: startX, canvasY: startY } = getCanvasCoordinates(x1, y1, context);
+        context.moveTo(startX, startY);
+        const { canvasX: endX, canvasY: endY } = getCanvasCoordinates(x2, y2, context);
+        context.lineTo(endX, endY);
+        context.strokeStyle = color;
+        context.lineWidth = lineWidth;
+        
+        if (dashed) {
+            context.setLineDash([5, 5]); // Dashed line
+        } else {
+            context.setLineDash([]); // Solid line
+        }
+
+        context.stroke();
+        context.setLineDash([]); // Reset line dash after drawing
+    }
+
     // Draws the robots number id on the robot
     const drawId = (context: CanvasRenderingContext2D, robot: SSLRobot, textColor: string) => {
         const {canvasX, canvasY} = getCanvasCoordinates(robot.x, robot.y, context);
@@ -235,6 +263,41 @@ const FootballField: React.FC<FootBallFieldProps> = ({
         context.fillText(String(robot.robotId), canvasX, canvasY);
     }
 
+    // Mouse Event Handlers
+    const handleMouseDown = (event: React.MouseEvent) => {
+        const { x: mouseX, y: mouseY } = getMousePos(event);
+        
+        // Check if a robot was clicked
+        sslFieldUpdate.robotsBlue.forEach(robot => {
+            const context = canvasRef.current!.getContext('2d');
+            const { canvasX, canvasY } = getCanvasCoordinates(robot.x, robot.y, context!);
+            const dx = mouseX - canvasX;
+            const dy = mouseY - canvasY;
+            if (Math.sqrt(dx * dx + dy * dy) < ROBOT_RADIUS*getScaler(context!)) {
+            }
+        });
+        sslFieldUpdate.robotsYellow.forEach(robot => {
+            const context = canvasRef.current!.getContext('2d');
+            const { canvasX, canvasY } = getCanvasCoordinates(robot.x, robot.y, context!);
+            const dx = mouseX - canvasX;
+            const dy = mouseY - canvasY;
+            if (Math.sqrt(dx * dx + dy * dy) < ROBOT_RADIUS*getScaler(context!)) {
+                setSelectedRobot(robot);
+                setIsDragging(true);
+                robot.selected = true;
+            }
+        });
+    };
+
+    // Get mouse position relative to the canvas
+    const getMousePos = (event: React.MouseEvent) => {
+        const canvas = canvasRef.current;
+        const rect = canvas!.getBoundingClientRect();
+        return {
+            x: event.clientX - rect.left,
+            y: event.clientY - rect.top
+        };
+    };
     // Draws a arrow showing the direction of the robot
     /// TODO: When AI starts sending packets again:))))
     // const drawArrow = (context: CanvasRenderingContext2D, robot: Robot, color: string, thickness: number) => {
