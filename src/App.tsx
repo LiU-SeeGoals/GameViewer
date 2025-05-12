@@ -27,7 +27,8 @@ function App() {
   const [vectorSettingYellow, setVectorSettingYellow] = useState(
     getDefaultVectorSetting()
   );
-  const [traceSetting, setTraceSetting] = useState(getDefaultTraceSetting());
+  const [traceSettingBlue, setTraceSettingBlue] = useState(getDefaultTraceSetting());
+  const [traceSettingYellow, setTraceSettingYellow] = useState(getDefaultTraceSetting());
   const [visibleRobots, setvisibleRobots] = useState(getDefaultVisibleRobots());
   const [terminalLog, setTerminalLog] = useState(getDefaultLog());
   const [errorOverlay, setErrorOverlay] = useState();
@@ -116,8 +117,10 @@ function App() {
         setVectorSettingBlue={setVectorSettingBlue}
         vectorSettingYellow={vectorSettingYellow}
         setVectorSettingYellow={setVectorSettingYellow}
-        traceSetting={traceSetting}
-        setTraceSetting={setTraceSetting}
+        traceSettingBlue={traceSettingBlue}
+        setTraceSettingBlue={setTraceSettingBlue}
+        traceSettingYellow={traceSettingYellow}
+        setTraceSettingYellow={setTraceSettingYellow}
         robotActions={robotActions}
         visibleRobots={visibleRobots}
         isConnectedToController={isConnectedToController}

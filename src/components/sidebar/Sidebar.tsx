@@ -15,8 +15,10 @@ interface SidebarProps {
   setVectorSettingBlue: React.Dispatch<React.SetStateAction<boolean[]>>;
   vectorSettingYellow: boolean[];
   setVectorSettingYellow: React.Dispatch<React.SetStateAction<boolean[]>>;
-  traceSetting: boolean[];
-  setTraceSetting: React.Dispatch<React.SetStateAction<boolean[]>>;
+  traceSettingBlue: boolean[];
+  setTraceSettingBlue: React.Dispatch<React.SetStateAction<boolean[]>>;
+  traceSettingYellow: boolean[];
+  setTraceSettingYellow: React.Dispatch<React.SetStateAction<boolean[]>>;
   robotActions: Action[];
   visibleRobots: boolean[];
   isConnectedToController: boolean;
@@ -30,8 +32,10 @@ const Sidebar: React.FC<SidebarProps> = ({
   setVectorSettingBlue,
   vectorSettingYellow,
   setVectorSettingYellow,
-  traceSetting,
-  setTraceSetting,
+  traceSettingBlue,
+  setTraceSettingBlue,
+  traceSettingYellow,
+  setTraceSettingYellow,
   robotActions,
   visibleRobots,
   isConnectedToController,
@@ -85,10 +89,10 @@ const Sidebar: React.FC<SidebarProps> = ({
               />
               <ToggleSetting
                 name={'Show trace'}
-                settingsBlue={traceSetting}
-                settingsYellow={traceSetting}
-                setSettingsBlue={setTraceSetting}
-                setSettingsYellow={setTraceSetting}
+                settingsBlue={traceSettingBlue}
+                settingsYellow={traceSettingYellow}
+                setSettingsBlue={setTraceSettingBlue}
+                setSettingsYellow={setTraceSettingYellow}
                 itemName="Robot"
                 tip={traceTip}
               />
